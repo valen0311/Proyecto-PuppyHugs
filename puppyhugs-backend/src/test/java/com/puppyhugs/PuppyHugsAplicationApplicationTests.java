@@ -4,10 +4,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PuppyHugsAplicationApplicationTests {
+class PuppyHugsAplicationApplicationTests { // Corregido el nombre de la clase
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }
+
