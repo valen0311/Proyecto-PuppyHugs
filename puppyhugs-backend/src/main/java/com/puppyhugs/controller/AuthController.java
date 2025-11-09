@@ -1,7 +1,5 @@
 package com.puppyhugs.controller;
 
-
-
 import com.puppyhugs.dto.LoginRequest; // Importamos el DTO
 import com.puppyhugs.model.Cliente;
 import com.puppyhugs.service.ClienteService;
