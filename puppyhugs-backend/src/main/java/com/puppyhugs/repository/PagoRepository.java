@@ -1,50 +1,53 @@
 package com.puppyhugs.repository;
 
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.puppyhugs.model.Pago;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
+
 
 /**
- * Repositorio en memoria para la entidad Pago.
- * Simula la persistencia en un archivo JSON (HU-4).
+ * ITERACIÓN 3: Implementación completa.
+ * Repositorio de Pago. No tiene métodos custom.
  */
 @Repository
-public class PagoRepository {
+public class PagoRepository extends AbstractJsonFileRepository<Pago> {
 
-    // "Base de datos" de pagos
-    private final Map<Long, Pago> pagoDb = new ConcurrentHashMap<>();
-    private final AtomicLong idCounter = new AtomicLong(0);
 
-    /**
-     * Guarda un pago (nuevo o existente).
-     * Asigna un ID si es nuevo.
-     */
-    public Pago save(Pago pago) {
-        if (pago.getId() == null) {
-            pago.setId(idCounter.incrementAndGet());
-        }
-        pagoDb.put(pago.getId(), pago);
-        return pago;
+    public PagoRepository(ObjectMapper objectMapper, @Value("${json.database.path}") String dbPath) {
+        super(objectMapper, dbPath);
     }
 
-    /**
-     * Devuelve todos los pagos.
-     */
-    public List<Pago> findAll() {
-        return List.copyOf(pagoDb.values());
+
+    @Override
+    protected String getDatabaseFileName() {
+        return "pagos.json";
     }
 
-    /**
-     * Busca un pago por su ID.
-     */
-    public Optional<Pago> findById(Long id) {
-        return Optional.ofNullable(pagoDb.get(id));
+
+    @Override
+    protected Long getId(Pago entity) {
+        return entity.getId();
     }
 
-    // (No se requieren métodos de búsqueda específicos para HU-4)
+
+    @Override
+    protected void setId(Pago entity, Long id) {
+        entity.setId(id);
+    }
+
+
+    @Override
+    protected TypeReference<List<Pago>> getListTypeReference() {
+        return new TypeReference<>() {};
+    }
+
+    // No necesita métodos custom (al menos de acuerdo a lo que llevan modelado).
 }
+
+
