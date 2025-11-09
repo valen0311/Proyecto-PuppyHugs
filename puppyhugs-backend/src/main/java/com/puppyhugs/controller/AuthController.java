@@ -1,4 +1,4 @@
-/**package com.puppyhugs.controller;
+package com.puppyhugs.controller;
 
 import com.puppyhugs.dto.LoginRequest; // Importamos el DTO
 import com.puppyhugs.model.Cliente;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * Controlador REST para gestionar la Autenticación (Login).
-
+ */
 @RestController
 // Usamos una URL base "/api/auth" para agrupar los endpoints de seguridad
 @RequestMapping("/api/auth")
@@ -20,7 +20,7 @@ public class AuthController {
   @Autowired
   private ClienteService clienteService;
 
-
+  /**
    * Endpoint para el Login de Clientes y Administradores.
    * Escucha peticiones POST en "/api/auth/login".
    *
@@ -29,7 +29,7 @@ public class AuthController {
    * @return Un ResponseEntity:
    * - 200 OK: con el objeto Cliente (incluyendo su rol).
    * - 401 Unauthorized: si el correo o la contraseña son incorrectos.
-
+   */
   @PostMapping("/login")
   public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
     try {
@@ -55,4 +55,3 @@ public class AuthController {
     }
   }
 }
-  */
