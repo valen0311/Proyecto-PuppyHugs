@@ -2,23 +2,37 @@ package com.puppyhugs.model;
 
 /**
  * Clase POJO que representa la entidad Cliente.
- * (No es parte del Sprint 1, pero sí del modelo general).
+ * AHORA INCLUYE LÓGICA DE ROLES.
  */
 public class Cliente {
 
+    /**
+     * Enumeración para los roles de usuario.
+     * ROL_CLIENTE: Un comprador normal.
+     * ROL_ADMIN: Un administrador con permisos elevados.
+     */
+    public enum Role {
+        ROL_CLIENTE,
+        ROL_ADMIN
+    }
+
     private Long id;
     private String nombreCompleto;
-    private String correoElectronico; // Debería ser único
-    private String password; // En un sistema real, esto iría hasheado
+    private String correoElectronico;
+    private String password;
     private String direccion;
     private String telefono;
 
-    // --- Constructor ---
+    // --- CAMPO NUEVO ---
+    private Role rol; // Aquí definimos si es Admin o Cliente
+
+    // --- CONSTRUCTOR MODIFICADO ---
     public Cliente() {
-        // Constructor vacío para JSON
+        // Por defecto, cualquier cliente nuevo se registra como CLIENTE.
+        this.rol = Role.ROL_CLIENTE;
     }
 
-    // --- Getters y Setters (Necesarios) ---
+    // --- Getters y Setters (Existentes) ---
 
     public Long getId() {
         return id;
@@ -66,5 +80,15 @@ public class Cliente {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    // --- GETTER Y SETTER NUEVOS (Para Rol) ---
+
+    public Role getRol() {
+        return rol;
+    }
+
+    public void setRol(Role rol) {
+        this.rol = rol;
     }
 }
