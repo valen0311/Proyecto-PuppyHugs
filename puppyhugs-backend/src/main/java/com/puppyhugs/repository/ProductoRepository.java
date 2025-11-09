@@ -1,76 +1,96 @@
 package com.puppyhugs.repository;
 
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.puppyhugs.model.Producto;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
+
 
 /**
- * Repositorio en memoria para la entidad Producto.
- * Simula la persistencia en un archivo JSON (HU-1).
- * Usamos ConcurrentHashMap para ser seguro en ambientes multi-hilo.
+ * ITERACIÓN 2: Repositorio Refactorizado.
+ *
+ * ¡Miren qué limpio! Ya no hay lógica de archivos.
+ * Solo se "hereda" (extends) de la plantilla AbstractJsonFileRepository
+ * y se le proporciona las 4 cosas que pide.
  */
 @Repository
-public class ProductoRepository {
+public class ProductoRepository extends AbstractJsonFileRepository<Producto> {
 
-  // Nuestra "base de datos" en memoria
-  private final Map<Long, Producto> productoDb = new ConcurrentHashMap<>();
-
-  // Un contador atómico para generar IDs únicos
-  private final AtomicLong idCounter = new AtomicLong(0);
 
   /**
-   * Guarda un producto (nuevo o existente).
-   * Si el producto es nuevo (ID es null), le asigna un nuevo ID.
+   * Constructor:
+   * Recibe las dependencias (ObjectMapper y la ruta) de Spring...
    */
-  public Producto save(Producto producto) {
-    if (producto.getId() == null) {
-      // Es un producto nuevo, generamos ID
-      producto.setId(idCounter.incrementAndGet());
-    }
-    // Agregamos o actualizamos en el mapa
-    productoDb.put(producto.getId(), producto);
-    return producto;
+  public ProductoRepository(ObjectMapper objectMapper, @Value("${json.database.path}") String dbPath) {
+    // ...y se las pasa a la plantilla "padre" (super).
+    super(objectMapper, dbPath);
   }
 
-  /**
-   * Devuelve todos los productos de la base de datos.
-   */
-  public List<Producto> findAll() {
-    return List.copyOf(productoDb.values());
+
+  // --- TAREA 1: ¿Cómo se llama tu archivo? ---
+  @Override
+  protected String getDatabaseFileName() {
+    return "productos.json";
   }
 
-  /**
-   * Busca un producto por su ID.
-   */
-  public Optional<Producto> findById(Long id) {
-    return Optional.ofNullable(productoDb.get(id));
+
+  // --- TAREA 2: ¿Cómo se obtiene el ID en este repo concreto? ---
+  @Override
+  protected Long getId(Producto entity) {
+    return entity.getId();
   }
+
+
+  // --- TAREA 3: ¿Cómo se establece el ID en este repo concreto? ---
+  @Override
+  protected void setId(Producto entity, Long id) {
+    entity.setId(id);
+  }
+
+
+  // --- TAREA 4: ¿Cuál es el "Tipo de Lista" de este repo concreto? ---
+  @Override
+  protected TypeReference<List<Producto>> getListTypeReference() {
+    // Nota: new TypeReference<>() {} es una sintaxis especial
+    // de Java para capturar el tipo genérico (List<Producto>).
+    return new TypeReference<>() {};
+  }
+
+
+
+
+  // --- MÉTODOS CUSTOM (Específicos de Producto) ---
+
+  // Los métodos CRUD (save, findById, findAll) ya vienen "gratis"
+  // de la clase abstracta. Solo se necesitan agregar aquellos que son
+  // únicos de Producto.
+
 
   /**
    * Criterio HU-1: Busca un producto por su Nombre.
-   * Es case-insensitive para robustez.
+   * ¡MUY RÁPIDO! Busca en el caché 'inMemoryDb' heredado.
    */
   public Optional<Producto> findByNombre(String nombre) {
-    return productoDb.values().stream()
-      .filter(p -> p.getNombre().equalsIgnoreCase(nombre))
-      .findFirst();
+    // 'inMemoryDb' es 'protected' en la clase padre, así que podemos usarlo.
+    return this.inMemoryDb.values().stream()
+            .filter(p -> p.getNombre().equalsIgnoreCase(nombre))
+            .findFirst();
   }
+
 
   /**
    * Criterio HU-1: Busca un producto por su CodigoInterno.
-   * Es case-insensitive.
+   * ¡MUY RÁPIDO! Busca en el caché 'inMemoryDb' heredado.
    */
   public Optional<Producto> findByCodigoInterno(String codigo) {
-    return productoDb.values().stream()
-      .filter(p -> p.getCodigoInterno().equalsIgnoreCase(codigo))
-      .findFirst();
+    return this.inMemoryDb.values().stream()
+            .filter(p -> p.getCodigoInterno().equalsIgnoreCase(codigo))
+            .findFirst();
   }
-
-  // (Opcional: Métodos deleteById, etc. si fueran necesarios)
 }
