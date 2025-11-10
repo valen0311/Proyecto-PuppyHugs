@@ -1,6 +1,6 @@
 <div class="register-container">
 
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
 
     <h2>Crear Cuenta</h2>
 
@@ -58,6 +58,10 @@
 
     <div *ngIf="errorMessage" class="error-message">
       {{ errorMessage }}
+    </div>
+
+    <div class="login-link">
+      ¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a>
     </div>
 
   </form>
