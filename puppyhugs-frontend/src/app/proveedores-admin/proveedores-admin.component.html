@@ -1,1 +1,61 @@
-<p>proveedores-admin works!</p>
+<app-sidebar-admin></app-sidebar-admin>
+
+<div class="admin-content">
+
+  <div class="header-container">
+    <h1>Gestión de Proveedores</h1>
+
+    <button (click)="abrirDialogCrear()" class="btn-crear">
+      + Registrar Nuevo Proveedor
+    </button>
+  </div>
+
+  <hr>
+
+  <div class="table-container">
+
+    <div *ngIf="isLoading" class="loading-spinner">
+      Cargando proveedores...
+    </div>
+
+    <table *ngIf="!isLoading">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre Comercial</th>
+        <th>ID Fiscal</th>
+        <th>Correo</th>
+        <th>Teléfono</th>
+        <th>Contacto</th>
+        <th>Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let proveedor of proveedores">
+        <td>{{ proveedor.id }}</td>
+        <td>{{ proveedor.nombreComercial }}</td>
+        <td>{{ proveedor.identificacionFiscal }}</td>
+        <td>{{ proveedor.correoElectronico }}</td>
+        <td>{{ proveedor.telefono }}</td>
+        <td>{{ proveedor.personaContacto }}</td>
+        <td class="acciones">
+          <button (click)="abrirDialogEditar(proveedor)" class="btn-editar">
+            Editar
+          </button>
+          <button (click)="eliminarProveedor(proveedor.id)" class="btn-eliminar">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+
+      <tr *ngIf="proveedores.length === 0 && !isLoading">
+        <td colspan="7" class="no-data">
+          No hay proveedores registrados.
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+</div>
