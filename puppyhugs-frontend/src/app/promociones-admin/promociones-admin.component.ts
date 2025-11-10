@@ -1,11 +1,13 @@
 // Archivo: src/app/promociones-admin/promociones-admin.component.ts
+// (Versión actualizada que USA el Diálogo)
 
 import { Component, OnInit } from '@angular/core';
-import { PromocionService } from '../services/promocion.service'; // Importamos el servicio
-import { Promocion } from '../model/promocion.interface'; // Importamos el modelo
-// (Importaremos el Dialog más adelante)
-// import { MatDialog } from '@angular/material/dialog';
-// import { CrearPromocionDialogComponent } from '../crear-promocion-dialog/crear-promocion-dialog.component';
+import { PromocionService } from '../services/promocion.service';
+import { Promocion } from '../model/promocion.interface';
+
+// <<< CAMBIO 1: Importar el MatDialog y el componente del Diálogo
+import { MatDialog } from '@angular/material/dialog';
+import { CrearPromocionDialogComponent } from '../crear-promocion-dialog/crear-promocion-dialog.component';
 
 @Component({
   selector: 'app-promociones-admin',
@@ -15,23 +17,18 @@ import { Promocion } from '../model/promocion.interface'; // Importamos el model
 })
 export class PromocionesAdminComponent implements OnInit {
 
-  // Arreglo para guardar las promociones de la API
   promociones: Promocion[] = [];
   isLoading: boolean = true;
 
   constructor(
-    private promocionService: PromocionService
-    // private dialog: MatDialog // Para el Pop-up (luego)
+    private promocionService: PromocionService,
+    private dialog: MatDialog // <<< CAMBIO 2: Inyectar el servicio de Diálogos
   ) { }
 
   ngOnInit(): void {
-    // 1. Cuando el componente carga, llama a la función de cargar
     this.cargarPromociones();
   }
 
-  /**
-   * 2. Llama al servicio para obtener todas las promociones
-   */
   cargarPromociones(): void {
     this.isLoading = true;
     this.promocionService.getPromociones().subscribe({
@@ -52,17 +49,17 @@ export class PromocionesAdminComponent implements OnInit {
    */
   abrirDialogCrear(): void {
     console.log("Abriendo diálogo para crear promoción...");
-    /*
+
+    // <<< CAMBIO 3: Descomentar y usar 'this.dialog.open'
     const dialogRef = this.dialog.open(CrearPromocionDialogComponent, {
-      width: '500px'
+      width: '550px' // Ancho para los campos de fecha
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.cargarPromociones(); // Si es exitoso, recarga la lista
+        this.cargarPromociones(); // Recargamos la lista
       }
     });
-    */
   }
 
   /**
@@ -70,18 +67,18 @@ export class PromocionesAdminComponent implements OnInit {
    */
   abrirDialogEditar(promocion: Promocion): void {
     console.log("Abriendo diálogo para editar promoción:", promocion);
-    /*
+
+    // <<< CAMBIO 4: Descomentar y usar 'this.dialog.open'
     const dialogRef = this.dialog.open(CrearPromocionDialogComponent, {
-      width: '500px',
-      data: promocion // Pasamos la promoción al diálogo
+      width: '550px',
+      data: promocion // <<< Pasamos la promoción al diálogo
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.cargarPromociones(); // Si es exitoso, recarga la lista
+        this.cargarPromociones(); // Recargamos la lista
       }
     });
-    */
   }
 
 
@@ -89,11 +86,11 @@ export class PromocionesAdminComponent implements OnInit {
    * 5. Llama al servicio para eliminar una promoción
    */
   eliminarPromocion(id: number): void {
+    // (Esta función no cambia)
     if (confirm('¿Estás seguro de que deseas eliminar esta promoción?')) {
       this.promocionService.eliminarPromocion(id).subscribe({
         next: () => {
           console.log('Promoción eliminada');
-          // Quita la promoción de la lista local
           this.promociones = this.promociones.filter(p => p.id !== id);
         },
         error: (err) => {
