@@ -1,5 +1,5 @@
 // Archivo: src/app/model/cliente.interface.ts
-// (Define la respuesta que esperamos del backend al hacer login)
+// (Define la respuesta que esperamos del backend si el login es exitoso)
 
 export enum Role {
   ROL_CLIENTE = 'ROL_CLIENTE',
