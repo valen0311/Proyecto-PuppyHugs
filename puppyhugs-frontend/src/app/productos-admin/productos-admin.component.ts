@@ -1,11 +1,13 @@
 // Archivo: src/app/productos-admin/productos-admin.component.ts
+// (Versión actualizada que USA el Diálogo)
 
 import { Component, OnInit } from '@angular/core';
-import { ProductoService } from '../services/producto.service'; // Importamos el servicio
-import { Producto } from '../model/producto.interface'; // Importamos el modelo
-// (Importaremos el Dialog más adelante)
-// import { MatDialog } from '@angular/material/dialog';
-// import { CrearProductoDialogComponent } from '../crear-producto-dialog/crear-producto-dialog.component';
+import { ProductoService } from '../services/producto.service';
+import { Producto } from '../model/producto.interface';
+
+// <<< CAMBIO 1: Importar el MatDialog y el componente del Diálogo
+import { MatDialog } from '@angular/material/dialog';
+import { CrearProductoDialogComponent } from '../crear-producto-dialog/crear-producto-dialog.component';
 
 @Component({
   selector: 'app-productos-admin',
@@ -14,23 +16,18 @@ import { Producto } from '../model/producto.interface'; // Importamos el modelo
 })
 export class ProductosAdminComponent implements OnInit {
 
-  // Arreglo para guardar los productos que vienen de la API
   productos: Producto[] = [];
   isLoading: boolean = true;
 
   constructor(
-    private productoService: ProductoService
-    // private dialog: MatDialog // Para el Pop-up (luego)
+    private productoService: ProductoService,
+    private dialog: MatDialog // <<< CAMBIO 2: Inyectar el servicio de Diálogos
   ) { }
 
   ngOnInit(): void {
-    // 1. Cuando el componente carga, llama a la función de cargar productos
     this.cargarProductos();
   }
 
-  /**
-   * 2. Llama al servicio para obtener todos los productos
-   */
   cargarProductos(): void {
     this.isLoading = true;
     this.productoService.getProductos().subscribe({
@@ -51,17 +48,20 @@ export class ProductosAdminComponent implements OnInit {
    */
   abrirDialogCrear(): void {
     console.log("Abriendo diálogo para crear...");
-    /*
+
+    // <<< CAMBIO 3: Descomentar y usar 'this.dialog.open'
     const dialogRef = this.dialog.open(CrearProductoDialogComponent, {
-      width: '500px'
+      width: '500px',
+      // No pasamos 'data' porque es modo creación
     });
 
+    // Escuchamos el resultado del diálogo
     dialogRef.afterClosed().subscribe(result => {
+      // Si el diálogo nos devolvió 'true' (porque se guardó exitosamente)
       if (result) {
-        this.cargarProductos(); // Si el diálogo fue exitoso, recarga la lista
+        this.cargarProductos(); // Recargamos la lista
       }
     });
-    */
   }
 
   /**
@@ -69,18 +69,18 @@ export class ProductosAdminComponent implements OnInit {
    */
   abrirDialogEditar(producto: Producto): void {
     console.log("Abriendo diálogo para editar:", producto);
-    /*
+
+    // <<< CAMBIO 4: Descomentar y usar 'this.dialog.open'
     const dialogRef = this.dialog.open(CrearProductoDialogComponent, {
       width: '500px',
-      data: producto // Pasamos el producto al diálogo
+      data: producto // <<< Pasamos el producto al diálogo
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.cargarProductos(); // Si el diálogo fue exitoso, recarga la lista
+        this.cargarProductos(); // Recargamos la lista
       }
     });
-    */
   }
 
 
@@ -88,12 +88,11 @@ export class ProductosAdminComponent implements OnInit {
    * 5. Llama al servicio para eliminar un producto
    */
   eliminarProducto(id: number): void {
-    // Pedimos confirmación
+    // (Esta función no cambia, pero la dejamos para completitud)
     if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
       this.productoService.eliminarProducto(id).subscribe({
         next: () => {
           console.log('Producto eliminado');
-          // Quita el producto de la lista local para feedback instantáneo
           this.productos = this.productos.filter(p => p.id !== id);
         },
         error: (err) => {

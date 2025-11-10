@@ -3,6 +3,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+// --- IMPORTACIONES DE ANGULAR MATERIAL ---
+// (Necesarias para los diálogos y formularios)
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+
 // --- MÓDULOS ESENCIALES ---
 // 1. Para que funcionen las rutas (el AppRoutingModule que creaste)
 import { AppRoutingModule } from './app-routing.module';
@@ -10,6 +19,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 // 3. Para que los Servicios puedan llamar a tu API (HttpClient)
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+
 
 // --- COMPONENTES PRINCIPALES (Páginas y Vistas) ---
 import { AppComponent } from './app.component';
@@ -60,6 +71,13 @@ import { EliminarDialogComponent } from './eliminar-dialog/eliminar-dialog.compo
     AppRoutingModule,   // El módulo de rutas
     ReactiveFormsModule, // El módulo de formularios
     HttpClientModule    // El módulo para llamar a la API
+
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule
   ],
   providers: [
     // (Aquí irían los servicios si no usaran 'providedIn: root')

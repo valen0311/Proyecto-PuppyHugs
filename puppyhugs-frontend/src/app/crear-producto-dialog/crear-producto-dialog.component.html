@@ -1,1 +1,79 @@
-<p>crear-producto-dialog works!</p>
+<h1 mat-dialog-title>
+  {{ modoEdicion ? 'Editar Producto' : 'Crear Nuevo Producto' }}
+</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="productoForm" class="dialog-form">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre del Producto</mat-label>
+      <input matInput formControlName="nombre">
+      <mat-error *ngIf="productoForm.get('nombre')?.invalid">
+        El nombre es obligatorio.
+      </mat-error>
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Código Interno</mat-label>
+        <input matInput formControlName="codigoInterno">
+        <mat-error *ngIf="productoForm.get('codigoInterno')?.invalid">
+          El código es obligatorio.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Categoría</mat-label>
+        <mat-select formControlName="categoria">
+          <mat-option *ngFor="let cat of categorias" [value]="cat">
+            {{ cat }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="productoForm.get('categoria')?.invalid">
+          Selecciona una categoría.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Cantidad Disponible</mat-label>
+        <input matInput type="number" formControlName="cantidadDisponible">
+        <mat-error *ngIf="productoForm.get('cantidadDisponible')?.invalid">
+          La cantidad es obligatoria.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Precio</mat-label>
+        <input matInput type="number" formControlName="precio">
+        <mat-error *ngIf="productoForm.get('precio')?.invalid">
+          El precio es obligatorio.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="estado">
+        <mat-option *ngFor="let est of estados" [value]="est">
+          {{ est }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="productoForm.get('estado')?.invalid">
+        Selecciona un estado.
+      </mat-error>
+    </mat-form-field>
+
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onCancelar()" [disabled]="isLoading">
+    Cancelar
+  </button>
+  <button mat-raised-button color="primary" (click)="onGuardar()" [disabled]="productoForm.invalid || isLoading">
+    <span *ngIf="!isLoading">{{ modoEdicion ? 'Actualizar' : 'Guardar' }}</span>
+    <span *ngIf="isLoading">Guardando...</span>
+  </button>
+</div>
