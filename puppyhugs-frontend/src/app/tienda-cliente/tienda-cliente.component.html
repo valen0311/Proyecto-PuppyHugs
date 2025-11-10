@@ -1,1 +1,54 @@
-<p>tienda-cliente works!</p>
+<header class="client-header">
+  <div class="header-content">
+    <div class="logo">PuppyHugs Tienda</div>
+    <div class="user-info">
+      <span *ngIf="nombreCliente">Hola, {{ nombreCliente }}</span>
+      <a routerLink="/carrito-cliente" class="cart-button">
+        🛒 Carrito (0)
+      </a>
+      <button (click)="cerrarSesionCliente()" class="logout-button">
+        Cerrar Sesión
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="store-container">
+
+  <h2>Nuestro Catálogo</h2>
+
+  <div *ngIf="isLoading" class="loading-spinner">
+    Cargando productos...
+  </div>
+
+  <div class="product-grid" *ngIf="!isLoading">
+
+    <div class="product-card" *ngFor="let producto of productos">
+
+      <div class="product-image">
+        <span>🐾</span>
+      </div>
+
+      <div class="product-info">
+        <h3>{{ producto.nombre }}</h3>
+
+        <p class="product-price">
+          {{ producto.precio | currency:'$' }}
+        </p>
+
+        <p class="product-stock">
+          {{ producto.cantidadDisponible }} disponibles
+        </p>
+
+        <button (click)="agregarAlCarrito(producto)" class="btn-add-cart">
+          Añadir al Carrito
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="productos.length === 0 && !isLoading" class="no-data">
+      No hay productos disponibles en este momento.
+    </div>
+
+  </div>
+</main>

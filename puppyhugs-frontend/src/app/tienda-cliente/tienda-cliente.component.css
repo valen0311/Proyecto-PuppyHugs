@@ -1,0 +1,158 @@
+/* Archivo: src/app/tienda-cliente/tienda-cliente.component.css */
+
+/* --- 1. Header del Cliente --- */
+.client-header {
+  background-color: #ffffff;
+  padding: 15px 30px;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  color: #007bff; /* Azul */
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.user-info span {
+  font-weight: 600;
+  color: #555;
+}
+
+.cart-button {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+.cart-button:hover {
+  background-color: #e9ecef;
+}
+
+.logout-button {
+  background-color: #dc3545; /* Rojo */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.logout-button:hover {
+  background-color: #c82333;
+}
+
+/* --- 2. Contenedor de la Tienda --- */
+.store-container {
+  max-width: 1200px;
+  margin: 20px auto; /* Centrado */
+  padding: 20px;
+}
+
+.store-container h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* --- 3. Rejilla de Productos --- */
+.product-grid {
+  display: grid;
+  /* Crea columnas automáticas (mín 280px, máx 1 fracción) */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px; /* Espacio entre tarjetas */
+}
+
+/* --- 4. Tarjeta de Producto --- */
+.product-card {
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Para que el radius funcione */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.product-image {
+  height: 200px;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  color: #ccc;
+}
+
+.product-info {
+  padding: 15px;
+  flex-grow: 1; /* Ocupa el espacio restante */
+  display: flex;
+  flex-direction: column;
+}
+
+.product-info h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 10px 0;
+}
+
+.product-price {
+  font-size: 20px;
+  font-weight: 700;
+  color: #007bff; /* Azul */
+  margin: 0 0 5px 0;
+}
+
+.product-stock {
+  font-size: 14px;
+  color: #777;
+  margin: 0 0 15px 0;
+  margin-top: auto; /* Empuja el botón hacia abajo */
+}
+
+.btn-add-cart {
+  background-color: #28a745; /* Verde */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.btn-add-cart:hover {
+  background-color: #218838;
+}
+
+/* --- Mensajes de Carga / Vacío --- */
+.loading-spinner, .no-data {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #555;
+  width: 100%;
+}
