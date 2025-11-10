@@ -1,1 +1,66 @@
-<p>productos-admin works!</p>
+<app-sidebar-admin></app-sidebar-admin>
+
+<div class="admin-content">
+
+  <div class="header-container">
+    <h1>Gestión de Productos</h1>
+
+    <button (click)="abrirDialogCrear()" class="btn-crear">
+      + Crear Nuevo Producto
+    </button>
+  </div>
+
+  <hr>
+
+  <div class="table-container">
+
+    <div *ngIf="isLoading" class="loading-spinner">
+      Cargando productos...
+    </div>
+
+    <table *ngIf="!isLoading">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Código</th>
+        <th>Categoría</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let producto of productos">
+        <td>{{ producto.id }}</td>
+        <td>{{ producto.nombre }}</td>
+        <td>{{ producto.codigoInterno }}</td>
+        <td>{{ producto.categoria }}</td>
+        <td>{{ producto.cantidadDisponible }}</td>
+        <td>{{ producto.precio | currency:'$' }}</td> <td>
+            <span [ngClass]="producto.estado === 'ACTIVO' ? 'estado-activo' : 'estado-agotado'">
+              {{ producto.estado }}
+            </span>
+      </td>
+        <td class="acciones">
+          <button (click)="abrirDialogEditar(producto)" class="btn-editar">
+            Editar
+          </button>
+          <button (click)="eliminarProducto(producto.id)" class="btn-eliminar">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+
+      <tr *ngIf="productos.length === 0 && !isLoading">
+        <td colspan="8" class="no-data">
+          No hay productos registrados.
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+</div>

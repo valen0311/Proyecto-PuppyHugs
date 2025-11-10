@@ -1,13 +1,16 @@
+// Archivo: src/app/services/producto.service.ts
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Producto } from '../model/producto.interface';
+import { Producto } from '../model/producto.interface'; // Importamos el modelo
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductoService {
 
+  // URL base del ProductoController
   private apiUrl = 'http://localhost:8080/api/productos';
 
   constructor(private http: HttpClient) { }
@@ -32,9 +35,8 @@ export class ProductoService {
    * Conecta con: ProductoController -> @PostMapping
    * (HU-1: Registrar Producto)
    * Envía un objeto Producto nuevo.
-   * Nota: El backend le asignará el ID.
    */
-  registrarProducto(producto: Producto): Observable<Producto> {
+  registrarProducto(producto: Omit<Producto, 'id'>): Observable<Producto> {
     return this.http.post<Producto>(this.apiUrl, producto);
   }
 

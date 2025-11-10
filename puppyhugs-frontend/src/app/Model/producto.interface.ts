@@ -1,3 +1,7 @@
+// Archivo: src/app/model/producto.interface.ts
+// (Define el modelo Producto, debe ser idéntico al del backend)
+
+// Definimos los Enums (tipos fijos)
 export enum CategoriaProducto {
   JUGUETE = 'JUGUETE',
   ACCESORIO = 'ACCESORIO',
