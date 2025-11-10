@@ -1,8 +1,13 @@
+// src/app/services/auth.service.ts
+
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { LoginRequest } from '../models/login-request.model';
-import { Cliente } from '../models/cliente.model';
+
+// --- ¡ARREGLO AQUÍ! ---
+// La ruta debe ser '../models/' (plural)
+import { LoginRequest } from '../../models/login-request.model';
+import { Cliente } from '.../models/cliente.model';
 
 @Injectable({
   providedIn: 'root',
