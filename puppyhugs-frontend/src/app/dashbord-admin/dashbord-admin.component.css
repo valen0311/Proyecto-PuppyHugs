@@ -1,55 +1,109 @@
-/*
- * Esta es la regla más importante.
- * El sidebar tiene un 'width' de 250px.
- * Usamos 'margin-left' de 250px para empujar
- * todo nuestro contenido hacia la derecha.
-*/
-.admin-content {
-  margin-left: 250px; /* ¡Debe coincidir con el ancho del .sidebar! */
-  padding: 30px;
-  background-color: #f4f7f6; /* Un fondo gris muy claro */
-  min-height: 100vh; /* Asegura que ocupe al menos toda la altura */
-}
+/* Archivo: src/app/dashbord-admin/dashbord-admin.component.css */
 
-.admin-content h1 {
-  color: #333;
-  font-size: 28px;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 10px;
-}
-
-.admin-content p {
-  font-size: 16px;
-  color: #555;
-  line-height: 1.6;
-}
-
-/* Estilos para las tarjetas de estadísticas (stats) */
-.stats-container {
+/* Contenedor principal con diseño de dos columnas */
+.dashboard-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px; /* Espacio entre tarjetas */
-  margin-top: 30px;
+  height: 100vh;
+  background-color: #f4f7f6; /* Fondo suave */
 }
 
-.stat-card {
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+/* --- 1. Sidebar --- */
+.sidebar {
+  width: 250px;
+  background-color: #34495e; /* Azul oscuro */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
   padding: 20px;
-  flex-grow: 1; /* Permite que crezcan */
-  min-width: 200px; /* Ancho mínimo */
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  border-bottom: 1px solid #4a6681;
+}
+.logo img {
+  width: 40px;
+  margin-right: 10px;
+  vertical-align: middle;
 }
 
-.stat-card h2 {
-  margin: 0 0 10px 0;
-  color: #007bff; /* Azul */
-  font-size: 20px;
+.nav-menu {
+  flex-grow: 1; /* Ocupa el espacio restante */
+  padding: 20px 0;
 }
 
-.stat-card p {
-  font-size: 24px;
-  font-weight: 600;
-  color: #333;
-  margin: 0;
+.nav-menu a {
+  display: block;
+  padding: 15px 25px;
+  color: #ecf0f1;
+  text-decoration: none;
+  font-size: 1.05em;
+  transition: background-color 0.3s;
+}
+
+.nav-menu a:hover {
+  background-color: #4a6681; /* Un tono más claro al pasar el ratón */
+}
+
+/* Estilo para el enlace activo */
+.nav-menu a.active {
+  background-color: #1abc9c; /* Verde/Cian brillante para el activo */
+  color: white;
+  border-left: 5px solid #16a085;
+  padding-left: 20px; /* Ajuste por el borde */
+}
+
+.sidebar-footer {
+  padding: 20px;
+  border-top: 1px solid #4a6681;
+}
+
+.logout-btn {
+  width: 100%;
+  background-color: #e74c3c; /* Rojo */
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s;
+}
+.logout-btn:hover {
+  background-color: #c0392b;
+}
+
+/* --- 2. Main Content --- */
+.main-content {
+  flex-grow: 1; /* Ocupa el resto del espacio */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header Superior */
+.admin-header {
+  background-color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.greeting {
+  font-size: 1.2em;
+  color: #2c3e50;
+}
+.date-time {
+  color: #7f8c8d;
+}
+
+/* Área donde se carga el contenido de las rutas hijas */
+.content-area {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto; /* Permite desplazamiento vertical */
 }
