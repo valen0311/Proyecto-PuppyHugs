@@ -1,0 +1,53 @@
+<div class="login-container">
+
+  <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+    <h2>Iniciar Sesión</h2>
+    <p class="subtitle">Bienvenido a PuppyHugs</p>
+
+    <div class="form-group">
+      <label for="correo">Correo Electrónico</label>
+      <input
+        id="correo"
+        type="email"
+        formControlName="correo"
+        [class.invalid]="isFieldInvalid('correo')">
+
+      <div *ngIf="isFieldInvalid('correo')" class="error-message">
+        <span *ngIf="loginForm.get('correo')?.errors?.['required']">
+          El correo es obligatorio.
+        </span>
+        <span *ngIf="loginForm.get('correo')?.errors?.['email']">
+          El correo no tiene un formato válido.
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Contraseña</label>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        [class.invalid]="isFieldInvalid('password')">
+
+      <div *ngIf="isFieldInvalid('password')" class="error-message">
+        <span *ngIf="loginForm.get('password')?.errors?.['required']">
+          La contraseña es obligatoria.
+        </span>
+      </div>
+    </div>
+
+    <div *ngIf="errorMessage" class="server-error">
+      {{ errorMessage }}
+    </div>
+
+    <button type="submit" [disabled]="loginForm.invalid" class="submit-btn">
+      Ingresar
+    </button>
+
+    <div class="register-link">
+      <p>¿No tienes cuenta? <a routerLink="/register">Regístrate aquí</a></p>
+    </div>
+  </form>
+</div>
