@@ -1,9 +1,29 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Venta } from '../models/venta.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class ProveedorService {
+export class VentaService {
 
-  constructor() { }
+  private http = inject(HttpClient);
+  // URL del VentaController
+  private apiUrl = 'http://localhost:8080/api/ventas';
+
+  /**
+   * Llama al endpoint: GET /api/ventas
+   */
+  public getVentas(): Observable<Venta[]> {
+    return this.http.get<Venta[]>(this.apiUrl);
+  }
+
+  /**
+   * Llama al endpoint: POST /api/ventas
+   * @param venta El objeto Venta a crear (sin ID)
+   */
+  public crearVenta(venta: Venta): Observable<Venta> {
+    return this.http.post<Venta>(this.apiUrl, venta);
+  }
 }
