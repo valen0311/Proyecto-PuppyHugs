@@ -3,7 +3,7 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router'; // 1. Importar RouterLink
 import { CommonModule } from '@angular/common';
-import { Cliente } from '../model/cliente.model'; // 2. Importar el modelo
+import { Cliente } from '../../../models/cliente.model'; // 2. Importar el modelo
 
 @Component({
   selector: 'app-sidebar-admin', // <app-sidebar-admin>

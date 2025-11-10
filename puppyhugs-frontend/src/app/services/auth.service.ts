@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
 
 // --- ¡ARREGLO AQUÍ! ---
 // La ruta debe ser '../models/' (plural)
-import { LoginRequest } from '../../models/login-request.model';
-import { Cliente } from '.../models/cliente.model';
+import { LoginRequest } from './../models/login-request.model';
+import { Cliente } from './../models/cliente.model';
 
 @Injectable({
   providedIn: 'root',
