@@ -1,79 +1,131 @@
-/// Archivo: src/app/register/register.component.ts
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background-color: #f4f4f4;
+  /* min-height es mejor para formularios largos */
+  min-height: 100vh;
+  box-sizing: border-box;
+}
 
- import { Component } from '@angular/core';
- import { FormBuilder, FormGroup, Validators } from '@angular/forms';
- import { Router } from '@angular/router';
- import { ClienteService } from '../services/cliente.service'; // Importamos el servicio
- import { RegistroRequest } from '../model/registro.interfaces'; // Importamos el modelo
+form {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 24px 32px;
+  width: 100%;
+  max-width: 450px; /* Un poco más ancho para más campos */
+}
 
- @Component({
-   selector: 'app-register',
-   templateUrl: './register.component.html',
-   styleUrls: ['./register.component.css']
- })
- export class RegisterComponent {
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 24px;
+  font-family: Arial, sans-serif;
+}
 
-   registerForm: FormGroup;
-   errorMessage: string | null = null;
-   isLoading: boolean = false;
-   successMessage: string | null = null;
+.form-field {
+  margin-bottom: 16px;
+}
 
-   constructor(
-     private fb: FormBuilder,
-     private clienteService: ClienteService, // El "Puente"
-     private router: Router
-   ) {
-     // 1. Definir la estructura del formulario y sus validaciones
-     this.registerForm = this.fb.group({
-       nombreCompleto: ['', [Validators.required, Validators.minLength(5)]],
-       correoElectronico: ['', [Validators.required, Validators.email]],
-       password: ['', [Validators.required, Validators.minLength(6)]],
-       direccion: ['', [Validators.required]],
-       telefono: ['', [Validators.required, Validators.pattern('^[0-9]+$')]] // Solo números
-     });
-   }
+.form-field label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #555;
+}
 
-   /**
-    * Se llama cuando el usuario presiona el botón "Registrarse".
-    */
-   onSubmit(): void {
-     if (this.registerForm.invalid) {
-       this.registerForm.markAllAsTouched(); // Marca todos los campos
-       return; // Si el formulario es inválido, no hacer nada
-     }
+.form-field input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
 
-     this.isLoading = true;
-     this.errorMessage = null;
-     this.successMessage = null;
+/* Estilo para inputs inválidos (tocados) */
+input.ng-invalid.ng-touched {
+  border-color: #d9534f;
+}
 
-     // 2. Crear el DTO (JSON) a partir de los datos del formulario
-     const datosRegistro: RegistroRequest = this.registerForm.value;
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #28a745; /* Verde para Registrar */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-     // 3. Llamar al servicio (el puente)
-     this.clienteService.registrarCliente(datosRegistro).subscribe({
-       next: (usuarioRegistrado) => {
-         // --- ÉXITO ---
-         this.isLoading = false;
-         console.log('Registro exitoso:', usuarioRegistrado);
-         this.successMessage = "¡Registro exitoso! Serás redirigido al login...";
+button:hover {
+  background-color: #218838;
+}
 
-         // 4. Redirigir al login después de 2 segundos
-         setTimeout(() => {
-           this.router.navigate(['/login']);
-         }, 2000);
-       },
-       error: (error) => {
-         // --- ERROR ---
-         this.isLoading = false;
-         console.error('Error en el registro:', error);
+button:disabled {
+  background-color: #a0a0a0;
+  cursor: not-allowed;
+}
 
-         // El backend debería responder con un error 400 o 409
-         if (error.status === 400 || error.status === 409) {
-            this.errorMessage = 'No se pudo completar el registro. El correo puede estar en uso.';
-         } else {
-            this.errorMessage = 'Error inesperado. Intente más tarde.';
-         }
-       }
-     });
-   }
- }
+/* --- Mensajes --- */
+.error-text {
+  color: #d9534f; /* Rojo */
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.error-message {
+  color: #d9534f;
+  background-color: #f2dede;
+  border: 1px solid #ebccd1;
+  border-radius: 4px;
+  padding: 10px;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.success-message {
+  color: #3c763d; /* Verde oscuro */
+  background-color: #dff0d8;
+  border: 1px solid #d6e9c6;
+  border-radius: 4px;
+  padding: 10px;
+  text-align: center;
+  margin-top: 16px;
+}
+
+/* --- Enlace a Login --- */
+.login-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.login-link a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* --- Spinner (para isLoading) --- */
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 3px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

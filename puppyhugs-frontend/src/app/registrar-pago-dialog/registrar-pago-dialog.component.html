@@ -1,1 +1,57 @@
-<p>registrar-pago-dialog works!</p>
+<h1 mat-dialog-title>
+  Finalizar Pago
+</h1>
+
+<div mat-dialog-content>
+  <p class="summary-total">
+    Monto Total a Pagar: <strong>{{ data.montoTotal | currency:'$' }}</strong>
+  </p>
+
+  <form [formGroup]="pagoForm" class="dialog-form">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre del Titular</mat-label>
+      <input matInput formControlName="nombreTitular">
+      <mat-error *ngIf="pagoForm.get('nombreTitular')?.invalid">
+        Obligatorio.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Número de Tarjeta (16 dígitos)</mat-label>
+      <input matInput formControlName="numeroTarjeta" type="text" maxlength="16">
+      <mat-error *ngIf="pagoForm.get('numeroTarjeta')?.invalid">
+        Debe ser 16 dígitos.
+      </mat-error>
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Expiración (MM/AA)</mat-label>
+        <input matInput formControlName="expiracion" type="text" placeholder="Ej: 12/26">
+        <mat-error *ngIf="pagoForm.get('expiracion')?.invalid">
+          Formato MM/AA.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>CVV (3 o 4 dígitos)</mat-label>
+        <input matInput formControlName="cvv" type="password" maxlength="4">
+        <mat-error *ngIf="pagoForm.get('cvv')?.invalid">
+          3 o 4 dígitos.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onCancelar()" [disabled]="isLoading">
+    Cancelar
+  </button>
+  <button mat-raised-button color="accent" (click)="onPagar()" [disabled]="pagoForm.invalid || isLoading">
+    <span *ngIf="!isLoading">Pagar {{ data.montoTotal | currency:'$' }}</span>
+    <span *ngIf="isLoading">Procesando...</span>
+  </button>
+</div>
