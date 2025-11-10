@@ -1,0 +1,9 @@
+[ {
+  "id" : 1,
+  "nombreCompleto" : "Admin Principal",
+  "correoElectronico" : "admin@puppyhugs.com",
+  "password" : "admin123",
+  "direccion" : "Oficina Central",
+  "telefono" : "000-0000",
+  "rol" : "ROL_ADMIN"
+} ]
