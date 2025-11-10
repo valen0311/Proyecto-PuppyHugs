@@ -1,0 +1,12 @@
+<div *ngIf="adminUser" class="layout-container">
+
+  <app-sidebar-admin
+    [adminUser]="adminUser"
+    (logoutEvent)="onLogout()">
+  </app-sidebar-admin>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+</div>
