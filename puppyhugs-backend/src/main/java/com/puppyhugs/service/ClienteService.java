@@ -4,6 +4,7 @@ import com.puppyhugs.model.Cliente;
 import com.puppyhugs.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import jakarta.annotation.PostConstruct;
 
 import java.util.List;
 import java.util.Optional; // Necesitamos importar Optional
@@ -17,6 +18,37 @@ public class ClienteService {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+
+    /**
+     * ¡NUEVO!
+     * Se ejecuta una vez al arrancar.
+     * Verifica si el admin existe en "clientes.json" y, si no, lo crea.
+     */
+    @PostConstruct
+    public void initAdmin() {
+        // Usamos el método del repo para buscar al admin por correo
+        Optional<Cliente> adminOpt = clienteRepository.findByCorreoElectronico("admin@puppyhugs.com");
+
+        // Si el admin NO existe, lo creamos
+        if (adminOpt.isEmpty()) {
+            System.out.println("--- No se encontró admin. Creando admin por defecto... ---");
+            Cliente admin = new Cliente();
+            admin.setNombreCompleto("Admin Principal");
+            admin.setCorreoElectronico("admin@puppyhugs.com");
+            admin.setPassword("admin123");
+            admin.setRol(Cliente.Role.ROL_ADMIN);
+            admin.setDireccion("Oficina Central");
+            admin.setTelefono("000-0000");
+
+            clienteRepository.save(admin); // Esto lo guarda en clientes.json
+            System.out.println("Admin 'admin@puppyhugs.com' creado.");
+        } else {
+            System.out.println("Admin 'admin@puppyhugs.com' ya existe. No se necesita crear.");
+        }
+    }
+
+
 
     /**
      * Registra un nuevo cliente.
