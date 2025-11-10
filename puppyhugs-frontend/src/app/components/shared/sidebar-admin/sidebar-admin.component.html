@@ -1,0 +1,51 @@
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <h3>PuppyHugs</h3>
+    <p>Panel de Administrador</p>
+  </div>
+
+  <div class="user-info" *ngIf="adminUser">
+    <p>¡Bienvenido!</p>
+    <strong>{{ adminUser.nombreCompleto }}</strong>
+    <span>(ROL: {{ adminUser.rol }})</span>
+  </div>
+
+  <ul class="nav-links">
+    <li>
+      <a routerLink="/admin/dashboard">
+        <span>Dashboard</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/admin/productos">
+        <span>Gestión de Productos</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/admin/promociones">
+        <span>Gestión de Promociones</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/admin/proveedores">
+        <span>Gestión de Proveedores</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/admin/ventas">
+        <span>Historial de Ventas</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/admin/usuarios">
+        <span>Gestión de Clientes</span>
+      </a>
+    </li>
+  </ul>
+
+  <div class="sidebar-footer">
+    <button (click)="handleLogout()" class="logout-button">
+      Cerrar Sesión
+    </button>
+  </div>
+</nav>
