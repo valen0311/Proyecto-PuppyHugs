@@ -1,1 +1,105 @@
-<p>productos-admin works!</p>
+<div class="container">
+  <header class="header">
+    <h1>Gestión de Productos</h1>
+    <button (click)="toggleForm()" class="toggle-form-btn">
+      {{ isFormVisible ? 'Cancelar' : 'Nuevo Producto (HU-1)' }}
+    </button>
+  </header>
+
+  <div *ngIf="isFormVisible" class="form-container">
+    <h2>Registrar Nuevo Producto</h2>
+
+    <form [formGroup]="productoForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nombre">Nombre del Producto</label>
+          <input id="nombre" type="text" formControlName="nombre">
+        </div>
+        <div class="form-group">
+          <label for="codigoInterno">Código Interno</label>
+          <input id="codigoInterno" type="text" formControlName="codigoInterno">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="categoria">Categoría</label>
+          <select id="categoria" formControlName="categoria">
+            <option *ngFor="let cat of categorias" [value]="cat">
+              {{ cat }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="estado">Estado</label>
+          <select id="estado" formControlName="estado">
+            <option *ngFor="let est of estados" [value]="est">
+              {{ est }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="cantidadDisponible">Cantidad Disponible</label>
+          <input id="cantidadDisponible" type="number" formControlName="cantidadDisponible">
+        </div>
+        <div class="form-group">
+          <label for="precio">Precio (USD)</label>
+          <input id="precio" type="number" formControlName="precio" step="0.01">
+        </div>
+      </div>
+
+      <div *ngIf="errorMessage" class="server-error">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" [disabled]="productoForm.invalid" class="submit-btn">
+        Guardar Producto
+      </button>
+
+    </form>
+  </div>
+
+
+  <div class="table-container">
+    <h2>Lista de Productos Actuales</h2>
+
+    <div *ngIf="!productos.length && !errorMessage" class="no-data">
+      <p>No hay productos registrados en el sistema.</p>
+    </div>
+
+    <table *ngIf="productos.length > 0">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Código</th>
+        <th>Categoría</th>
+        <th>Precio (USD)</th>
+        <th>Cantidad</th>
+        <th>Estado</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let prod of productos">
+        <td>{{ prod.id }}</td>
+        <td>{{ prod.nombre }}</td>
+        <td>{{ prod.codigoInterno }}</td>
+        <td>{{ prod.categoria }}</td>
+        <td>{{ prod.precio | currency:'USD':'symbol':'1.2-2' }}</td>
+        <td>{{ prod.cantidadDisponible }}</td>
+        <td>
+            <span class="status" [class.status-activo]="prod.estado === 'ACTIVO'"
+                  [class.status-agotado]="prod.estado === 'AGOTADO'">
+              {{ prod.estado }}
+            </span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
