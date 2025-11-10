@@ -1,1 +1,67 @@
-<p>promociones-admin works!</p>
+<app-sidebar-admin></app-sidebar-admin>
+
+<div class="admin-content">
+
+  <div class="header-container">
+    <h1>Gestión de Promociones</h1>
+
+    <button (click)="abrirDialogCrear()" class="btn-crear">
+      + Registrar Nueva Promoción
+    </button>
+  </div>
+
+  <hr>
+
+  <div class="table-container">
+
+    <div *ngIf="isLoading" class="loading-spinner">
+      Cargando promociones...
+    </div>
+
+    <table *ngIf="!isLoading">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Código</th>
+        <th>Descripción</th>
+        <th>Tipo</th>
+        <th>Valor</th>
+        <th>Fecha Inicio</th>
+        <th>Fecha Fin</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let promo of promociones">
+        <td>{{ promo.id }}</td>
+        <td>{{ promo.codigo }}</td>
+        <td>{{ promo.descripcion }}</td>
+        <td>{{ promo.tipo }}</td>
+        <td>{{ promo.valorDescuento }}</td>
+        <td>{{ promo.fechaInicio | date:'shortDate' }}</td> <td>{{ promo.fechaFin | date:'shortDate' }}</td> <td>
+            <span [ngClass]="promo.activo ? 'estado-activo' : 'estado-agotado'">
+              {{ promo.activo ? 'ACTIVA' : 'INACTIVA' }}
+            </span>
+      </td>
+        <td class="acciones">
+          <button (click)="abrirDialogEditar(promo)" class="btn-editar">
+            Editar
+          </button>
+          <button (click)="eliminarPromocion(promo.id)" class="btn-eliminar">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+
+      <tr *ngIf="promociones.length === 0 && !isLoading">
+        <td colspan="9" class="no-data">
+          No hay promociones registradas.
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+</div>
