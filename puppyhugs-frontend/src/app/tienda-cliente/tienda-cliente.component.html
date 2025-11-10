@@ -3,9 +3,11 @@
     <div class="logo">PuppyHugs Tienda</div>
     <div class="user-info">
       <span *ngIf="nombreCliente">Hola, {{ nombreCliente }}</span>
+
       <a routerLink="/carrito-cliente" class="cart-button">
-        🛒 Carrito (0)
+        🛒 Carrito ({{ cantidadItemsCarrito$ | async }})
       </a>
+
       <button (click)="cerrarSesionCliente()" class="logout-button">
         Cerrar Sesión
       </button>
