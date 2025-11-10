@@ -1,0 +1,55 @@
+/*
+ * Esta es la regla más importante.
+ * El sidebar tiene un 'width' de 250px.
+ * Usamos 'margin-left' de 250px para empujar
+ * todo nuestro contenido hacia la derecha.
+*/
+.admin-content {
+  margin-left: 250px; /* ¡Debe coincidir con el ancho del .sidebar! */
+  padding: 30px;
+  background-color: #f4f7f6; /* Un fondo gris muy claro */
+  min-height: 100vh; /* Asegura que ocupe al menos toda la altura */
+}
+
+.admin-content h1 {
+  color: #333;
+  font-size: 28px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+.admin-content p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Estilos para las tarjetas de estadísticas (stats) */
+.stats-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Espacio entre tarjetas */
+  margin-top: 30px;
+}
+
+.stat-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  flex-grow: 1; /* Permite que crezcan */
+  min-width: 200px; /* Ancho mínimo */
+}
+
+.stat-card h2 {
+  margin: 0 0 10px 0;
+  color: #007bff; /* Azul */
+  font-size: 20px;
+}
+
+.stat-card p {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}

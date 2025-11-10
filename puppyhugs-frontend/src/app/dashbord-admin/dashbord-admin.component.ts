@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-dashbord-admin',
-  standalone: true,
-  imports: [],
-  templateUrl: './dashbord-admin.component.html',
-  styleUrl: './dashbord-admin.component.css'
+  selector: 'app-dashboard-admin',
+  templateUrl: './dashboard-admin.component.html',
+  styleUrls: ['./dashboard-admin.component.css']
 })
-export class DashbordAdminComponent {
+export class DashboardAdminComponent {
+  // No necesitamos lógica especial para esta vista.
+  // El sidebar que incluimos en el HTML tiene su propia lógica.
+  constructor() { }
 
 }
