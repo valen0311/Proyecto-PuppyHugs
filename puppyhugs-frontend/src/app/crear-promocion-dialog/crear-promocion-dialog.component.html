@@ -1,1 +1,85 @@
-<p>crear-promocion-dialog works!</p>
+<h1 mat-dialog-title>
+  {{ modoEdicion ? 'Editar Promoción' : 'Registrar Nueva Promoción' }}
+</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="promocionForm" class="dialog-form">
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Código de Descuento</mat-label>
+        <input matInput formControlName="codigo">
+        <mat-error *ngIf="promocionForm.get('codigo')?.invalid">
+          Obligatorio.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Descripción</mat-label>
+        <input matInput formControlName="descripcion">
+        <mat-error *ngIf="promocionForm.get('descripcion')?.invalid">
+          Obligatorio.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Tipo de Promoción</mat-label>
+        <mat-select formControlName="tipo">
+          <mat-option *ngFor="let tipo of tiposPromocion" [value]="tipo">
+            {{ tipo }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="promocionForm.get('tipo')?.invalid">
+          Obligatorio.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Valor (Monto o %)</mat-label>
+        <input matInput type="number" formControlName="valorDescuento">
+        <mat-error *ngIf="promocionForm.get('valorDescuento')?.invalid">
+          Obligatorio.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Fecha de Inicio</mat-label>
+        <input matInput type="date" formControlName="fechaInicio">
+        <mat-error *ngIf="promocionForm.get('fechaInicio')?.invalid">
+          Obligatorio.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Fecha de Fin</mat-label>
+        <input matInput type="date" formControlName="fechaFin">
+        <mat-error *ngIf="promocionForm.get('fechaFin')?.invalid">
+          Obligatorio.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="activo">
+        <mat-option [value]="true">ACTIVA</mat-option>
+        <mat-option [value]="false">INACTIVA</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onCancelar()" [disabled]="isLoading">
+    Cancelar
+  </button>
+  <button mat-raised-button color="primary" (click)="onGuardar()" [disabled]="promocionForm.invalid || isLoading">
+    <span *ngIf="!isLoading">{{ modoEdicion ? 'Actualizar' : 'Guardar' }}</span>
+    <span *ngIf="isLoading">Guardando...</span>
+  </button>
+</div>
