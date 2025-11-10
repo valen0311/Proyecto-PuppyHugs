@@ -1,0 +1,174 @@
+/* Archivo: src/app/carrito-cliente/carrito-cliente.component.css */
+
+/* --- 1. Header (Copiado de tienda-cliente.css) --- */
+.client-header {
+  background-color: #ffffff;
+  padding: 15px 30px;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  color: #007bff;
+}
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.user-info span {
+  font-weight: 600;
+  color: #555;
+}
+.cart-button {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+}
+.logout-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* --- 2. Contenedor Principal --- */
+.cart-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+}
+.cart-container h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* --- 3. Carrito Vacío --- */
+.cart-empty {
+  text-align: center;
+  padding: 50px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+.cart-empty p {
+  font-size: 18px;
+  color: #777;
+}
+.btn-shop {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: 600;
+  display: inline-block;
+  margin-top: 15px;
+}
+
+/* --- 4. Contenido del Carrito (Items + Resumen) --- */
+.cart-content {
+  display: flex;
+  flex-wrap: wrap; /* Permite que se apile en móviles */
+  gap: 30px;
+}
+
+/* --- 5. Lista de Items --- */
+.cart-items {
+  flex-grow: 1; /* Ocupa el espacio disponible */
+  flex-basis: 65%; /* Ocupa el 65% del ancho */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  overflow: hidden; /* Para el radius */
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.cart-item.header {
+  background-color: #f9f9f9;
+  font-weight: 600;
+  color: #555;
+}
+.cart-item:last-child {
+  border-bottom: none;
+}
+.cart-item div:nth-child(3),
+.cart-item div:nth-child(4) {
+  text-align: right;
+}
+
+.btn-eliminar {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* --- 6. Resumen de Compra --- */
+.cart-summary {
+  flex-grow: 1;
+  flex-basis: 30%; /* Ocupa el 30% del ancho */
+  background-color: #fdfdfd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  padding: 20px;
+  height: fit-content; /* Se ajusta a su contenido */
+}
+.cart-summary h3 {
+  font-size: 20px;
+  margin: 0 0 15px 0;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #555;
+}
+.summary-row.total {
+  font-size: 18px;
+  color: #333;
+  margin-top: 10px;
+}
+.cart-summary hr {
+  border: 0;
+  border-top: 1px dashed #ccc;
+  margin: 15px 0;
+}
+
+.btn-pagar {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
