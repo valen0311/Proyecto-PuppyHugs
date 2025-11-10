@@ -1,12 +1,74 @@
+// Archivo: src/app/register/register.component.ts
+
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ClienteService } from '../services/cliente.service'; // Importamos el servicio
+import { RegistroRequest } from '../model/registro.interfaces'; // Importamos el modelo
 
 @Component({
   selector: 'app-register',
-  standalone: true,
-  imports: [],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
 
+  registerForm: FormGroup;
+  errorMessage: string | null = null;
+  isLoading: boolean = false;
+  successMessage: string | null = null;
+
+  constructor(
+    private fb: FormBuilder,
+    private clienteService: ClienteService, // El "Puente"
+    private router: Router
+  ) {
+    // 1. Definir la estructura del formulario y sus validaciones
+    this.registerForm = this.fb.group({
+      nombreCompleto: ['', [Validators.required, Validators.minLength(5)]],
+      correoElectronico: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      direccion: ['', [Validators.required]],
+      telefono: ['', [Validators.required, Validators.pattern('^[0-9]+$')]] // Solo números
+    });
+  }
+
+  /**
+   * Se llama cuando el usuario presiona el botón "Registrarse".
+   */
+  onSubmit(): void {
+    if (this.registerForm.invalid) {
+      return; // Si el formulario es inválido, no hacer nada
+    }
+
+    this.isLoading = true;
+    this.errorMessage = null;
+    this.successMessage = null;
+
+    // 2. Crear el DTO (JSON) a partir de los datos del formulario
+    const datosRegistro: RegistroRequest = this.registerForm.value;
+
+    // 3. Llamar al servicio (el puente)
+    this.clienteService.registrarCliente(datosRegistro).subscribe({
+      next: (usuarioRegistrado) => {
+        // --- ÉXITO ---
+        this.isLoading = false;
+        console.log('Registro exitoso:', usuarioRegistrado);
+        this.successMessage = "¡Registro exitoso! Serás redirigido al login...";
+
+        // 4. Redirigir al login después de 2 segundos
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 2000);
+      },
+      error: (error) => {
+        // --- ERROR ---
+        this.isLoading = false;
+        console.error('Error en el registro:', error);
+
+        // (Aquí el backend debería decirnos si el correo ya existe)
+        this.errorMessage = 'No se pudo completar el registro. El correo puede estar en uso.';
+      }
+    });
+  }
 }

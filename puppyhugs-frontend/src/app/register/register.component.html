@@ -1,1 +1,64 @@
-<p>register works!</p>
+<div class="register-container">
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+    <h2>Crear Cuenta</h2>
+
+    <div class="form-field">
+      <label for="nombreCompleto">Nombre Completo</label>
+      <input id="nombreCompleto" type="text" formControlName="nombreCompleto">
+      <div *ngIf="registerForm.get('nombreCompleto')?.invalid && registerForm.get('nombreCompleto')?.touched" class="error-text">
+        <span *ngIf="registerForm.get('nombreCompleto')?.errors?.['required']">El nombre es obligatorio.</span>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="correoElectronico">Correo Electrónico</label>
+      <input id="correoElectronico" type="email" formControlName="correoElectronico">
+      <div *ngIf="registerForm.get('correoElectronico')?.invalid && registerForm.get('correoElectronico')?.touched" class="error-text">
+        <span *ngIf="registerForm.get('correoElectronico')?.errors?.['required']">El correo es obligatorio.</span>
+        <span *ngIf="registerForm.get('correoElectronico')?.errors?.['email']">Debe ser un correo válido.</span>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="password">Contraseña</label>
+      <input id="password" type="password" formControlName="password">
+      <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error-text">
+        <span *ngIf="registerForm.get('password')?.errors?.['required']">La contraseña es obligatoria.</span>
+        <span *ngIf="registerForm.get('password')?.errors?.['minLength']">Mínimo 6 caracteres.</span>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="direccion">Dirección</label>
+      <input id="direccion" type="text" formControlName="direccion">
+      <div *ngIf="registerForm.get('direccion')?.invalid && registerForm.get('direccion')?.touched" class="error-text">
+        <span *ngIf="registerForm.get('direccion')?.errors?.['required']">La dirección es obligatoria.</span>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="telefono">Teléfono</label>
+      <input id="telefono" type="tel" formControlName="telefono">
+      <div *ngIf="registerForm.get('telefono')?.invalid && registerForm.get('telefono')?.touched" class="error-text">
+        <span *ngIf="registerForm.get('telefono')?.errors?.['required']">El teléfono es obligatorio.</span>
+        <span *ngIf="registerForm.get('telefono')?.errors?.['pattern']">Debe contener solo números.</span>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="registerForm.invalid || isLoading">
+      <span *ngIf="!isLoading">Registrarse</span>
+      <span *ngIf="isLoading" class="spinner"></span>
+    </button>
+
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+  </form>
+</div>
