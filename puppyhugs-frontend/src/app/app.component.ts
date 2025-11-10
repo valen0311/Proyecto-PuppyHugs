@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
+  selector: 'app-root', // Esta es la etiqueta principal en index.html
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  // Dejamos un título por si acaso, pero no lo usamos
   title = 'puppyhugs-frontend';
 }
