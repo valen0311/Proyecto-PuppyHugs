@@ -1,69 +1,56 @@
 // Archivo: src/app/usuarios-admin/usuarios-admin.component.ts
 
 import { Component, OnInit } from '@angular/core';
-import { ClienteService } from '../services/cliente.service'; // Importamos el servicio
-import { Cliente, Role } from '../model/cliente.interface'; // Importamos el modelo
+import { AutenticacionService } from '../services/autenticacion.service';
+import { Usuario } from '../model/usuario.interface';
+import { MatDialog } from '@angular/material/dialog';
+// <<< Importar el Diálogo de Eliminación
+import { EliminarDialogComponent } from '../eliminar-dialog/eliminar-dialog.component';
 
 @Component({
-  selector: 'app-usuarios-admin',
-  templateUrl: './usuarios-admin.component.html',
-  // Reusamos el CSS de productos para mantener la consistencia
-  styleUrls: ['../productos-admin/productos-admin.component.css']
+  // ... (metadata) ...
 })
 export class UsuariosAdminComponent implements OnInit {
 
-  // Arreglo para guardar los clientes de la API
-  usuarios: Cliente[] = [];
+  clientes: Usuario[] = [];
   isLoading: boolean = true;
 
-  // Guardamos el Enum Role para usarlo en el HTML
-  Roles = Role;
-
   constructor(
-    private clienteService: ClienteService
+    private autenticacionService: AutenticacionService,
+    private dialog: MatDialog // Asegúrate de que MatDialog esté inyectado
   ) { }
 
-  ngOnInit(): void {
-    this.cargarUsuarios();
-  }
+  // ... (ngOnInit, cargarClientes) ...
 
   /**
-   * Llama al servicio para obtener todos los clientes
+   * Elimina un cliente/usuario usando el diálogo de confirmación
    */
-  cargarUsuarios(): void {
-    this.isLoading = true;
-    this.clienteService.getClientes().subscribe({
-      next: (data) => {
-        this.usuarios = data;
-        this.isLoading = false;
-        console.log('Usuarios cargados:', data);
-      },
-      error: (err) => {
-        console.error('Error cargando usuarios:', err);
-        this.isLoading = false;
+  eliminarCliente(cliente: Usuario): void {
+
+    // <<< CAMBIO: Usar MatDialog en lugar de 'confirm()'
+    const dialogRef = this.dialog.open(EliminarDialogComponent, {
+      width: '350px',
+      // Pasamos el nombre del cliente
+      data: { nombreItem: cliente.nombreCompleto }
+    });
+
+    // Escuchamos el resultado
+    dialogRef.afterClosed().subscribe(result => {
+      // Si el usuario confirma la eliminación (result es true)
+      if (result) {
+        this.autenticacionService.eliminarUsuario(cliente.id).subscribe({
+          next: () => {
+            console.log('Cliente eliminado:', cliente.nombreCompleto);
+            // Filtramos la lista para quitar el eliminado
+            this.clientes = this.clientes.filter(c => c.id !== cliente.id);
+          },
+          error: (err) => {
+            console.error('Error eliminando cliente:', err);
+            // Cambiamos el alert simple por un mensaje en consola
+            alert('No se pudo eliminar el cliente.');
+          }
+        });
       }
     });
   }
-
-  /**
-   * Llama al servicio para eliminar un usuario
-   */
-  eliminarUsuario(id: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este usuario? Esta acción no se puede deshacer.')) {
-      this.clienteService.eliminarCliente(id).subscribe({
-        next: () => {
-          console.log('Usuario eliminado');
-          // Quita el usuario de la lista local
-          this.usuarios = this.usuarios.filter(u => u.id !== id);
-        },
-        error: (err) => {
-          console.error('Error eliminando usuario:', err);
-          alert('No se pudo eliminar el usuario.');
-        }
-      });
-    }
-  }
-
-  // (Nota: No hay 'Editar' ya que no creamos un diálogo para usuarios)
-  // (Nota: No hay 'Crear' ya que los usuarios se crean en el Registro)
 }

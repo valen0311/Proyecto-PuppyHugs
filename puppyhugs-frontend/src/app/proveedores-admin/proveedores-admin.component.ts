@@ -1,19 +1,16 @@
 // Archivo: src/app/proveedores-admin/proveedores-admin.component.ts
-// (Versión actualizada que USA el Diálogo)
 
 import { Component, OnInit } from '@angular/core';
 import { ProveedorService } from '../services/proveedor.service';
 import { Proveedor } from '../model/proveedor.interface';
-
-// <<< CAMBIO 1: Importar el MatDialog y el componente del Diálogo
 import { MatDialog } from '@angular/material/dialog';
+// <<< Importar el Diálogo de Eliminación
+import { EliminarDialogComponent } from '../eliminar-dialog/eliminar-dialog.component';
+// Importar el Diálogo de Creación (ya debe estar)
 import { CrearProveedorDialogComponent } from '../crear-proveedor-dialog/crear-proveedor-dialog.component';
 
 @Component({
-  selector: 'app-proveedores-admin',
-  templateUrl: './proveedores-admin.component.html',
-  // Usamos el CSS de productos (o el que copiaste)
-  styleUrls: ['../productos-admin/productos-admin.component.css']
+  // ... (metadata) ...
 })
 export class ProveedoresAdminComponent implements OnInit {
 
@@ -22,84 +19,40 @@ export class ProveedoresAdminComponent implements OnInit {
 
   constructor(
     private proveedorService: ProveedorService,
-    private dialog: MatDialog // <<< CAMBIO 2: Inyectar el servicio de Diálogos
+    private dialog: MatDialog // Asegúrate de que MatDialog esté inyectado
   ) { }
 
-  ngOnInit(): void {
-    this.cargarProveedores();
-  }
-
-  cargarProveedores(): void {
-    this.isLoading = true;
-    this.proveedorService.getProveedores().subscribe({
-      next: (data) => {
-        this.proveedores = data;
-        this.isLoading = false;
-        console.log('Proveedores cargados:', data);
-      },
-      error: (err) => {
-        console.error('Error cargando proveedores:', err);
-        this.isLoading = false;
-      }
-    });
-  }
+  // ... (ngOnInit, cargarProveedores, abrirDialogCrear, abrirDialogEditar) ...
 
   /**
-   * 3. Abre el diálogo para crear un nuevo proveedor
+   * Llama al servicio para eliminar un proveedor usando el diálogo de confirmación
    */
-  abrirDialogCrear(): void {
-    console.log("Abriendo diálogo para crear proveedor...");
+  eliminarProveedor(proveedor: Proveedor): void {
 
-    // <<< CAMBIO 3: Descomentar y usar 'this.dialog.open'
-    const dialogRef = this.dialog.open(CrearProveedorDialogComponent, {
-      width: '550px' // Un poco más ancho para 6 campos
+    // <<< CAMBIO: Usar MatDialog en lugar de 'confirm()'
+    const dialogRef = this.dialog.open(EliminarDialogComponent, {
+      width: '350px',
+      // Pasamos el nombre del proveedor
+      data: { nombreItem: proveedor.nombreComercial }
     });
 
-    // Escuchamos el resultado del diálogo
+    // Escuchamos el resultado
     dialogRef.afterClosed().subscribe(result => {
-      // Si el diálogo nos devolvió 'true' (porque se guardó)
+      // Si el usuario confirma la eliminación (result es true)
       if (result) {
-        this.cargarProveedores(); // Recargamos la lista
+        this.proveedorService.eliminarProveedor(proveedor.id).subscribe({
+          next: () => {
+            console.log('Proveedor eliminado:', proveedor.nombreComercial);
+            // Filtramos la lista para quitar el eliminado
+            this.proveedores = this.proveedores.filter(p => p.id !== proveedor.id);
+          },
+          error: (err) => {
+            console.error('Error eliminando proveedor:', err);
+            // Cambiamos el alert simple por un mensaje en consola
+            alert('No se pudo eliminar el proveedor.');
+          }
+        });
       }
     });
-  }
-
-  /**
-   * 4. Abre el diálogo para editar un proveedor existente
-   */
-  abrirDialogEditar(proveedor: Proveedor): void {
-    console.log("Abriendo diálogo para editar proveedor:", proveedor);
-
-    // <<< CAMBIO 4: Descomentar y usar 'this.dialog.open'
-    const dialogRef = this.dialog.open(CrearProveedorDialogComponent, {
-      width: '550px',
-      data: proveedor // <<< Pasamos el proveedor al diálogo
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.cargarProveedores(); // Recargamos la lista
-      }
-    });
-  }
-
-
-  /**
-   * 5. Llama al servicio para eliminar un proveedor
-   */
-  eliminarProveedor(id: number): void {
-    // (Esta función no cambia)
-    if (confirm('¿Estás seguro de que deseas eliminar este proveedor?')) {
-      this.proveedorService.eliminarProveedor(id).subscribe({
-        next: () => {
-          console.log('Proveedor eliminado');
-          this.proveedores = this.proveedores.filter(p => p.id !== id);
-        },
-        error: (err) => {
-          console.error('Error eliminando proveedor:', err);
-          alert('No se pudo eliminar el proveedor.');
-        }
-      });
-    }
   }
 }
