@@ -1,10 +1,13 @@
 package com.puppyhugs.controller;
 
+import com.puppyhugs.dto.ClienteRequestDTO;
 import com.puppyhugs.model.Cliente;
 import com.puppyhugs.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+import com.puppyhugs.dto.ClienteLoginDTO;
 
 import java.util.List;
 
@@ -21,18 +24,9 @@ public class ClienteController {
     @Autowired
     private ClienteService clienteService;
 
-    /**
-     * Endpoint para registrar un nuevo Cliente (Usuario).
-     * Escucha peticiones POST en "/api/clientes".
-     *
-     * @param cliente El JSON enviado por Angular (del formulario de registro),
-     * convertido a un objeto Cliente.
-     * @return Un ResponseEntity:
-     * - 200 OK (éxito) con el cliente creado (JSON).
-     * - 400 Bad Request (error) con un mensaje (JSON).
-     */
-    @PostMapping
-    public ResponseEntity<?> registrarCliente(@RequestBody Cliente cliente) {
+    @PostMapping("/registro")
+    public ResponseEntity<?> registrarCliente(@Valid @RequestBody ClienteRequestDTO clienteDTO) {
+        Cliente cliente = convertDtoToModel(clienteDTO);
         try {
             // 2. Le pasamos el trabajo al servicio
             // Aquí se valida que el correo no esté duplicado
@@ -62,5 +56,34 @@ public class ClienteController {
     public ResponseEntity<List<Cliente>> getClientes() {
         List<Cliente> clientes = clienteService.getClientes();
         return ResponseEntity.ok(clientes);
+    }
+
+    /**
+     * Endpoint para el Login/Autenticación.
+     * Escucha peticiones POST en "/api/clientes/login".
+     */
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@Valid @RequestBody ClienteLoginDTO loginDTO) {
+        try {
+            // Llama al servicio para validar las credenciales
+            Cliente clienteAutenticado = clienteService.login(loginDTO.getCorreo(), loginDTO.getPassword());
+            return ResponseEntity.ok(clienteAutenticado);
+
+        } catch (IllegalArgumentException e) {
+            // Error de negocio: Usuario no encontrado o contraseña incorrecta
+            // Devolvemos 401 Unauthorized (No autorizado) para el login fallido
+            return ResponseEntity.status(401).body(e.getMessage());
+        }
+    }
+
+    private Cliente convertDtoToModel(ClienteRequestDTO dto) {
+        Cliente cliente = new Cliente();
+        cliente.setNombreCompleto(dto.getNombreCompleto());
+        cliente.setCorreoElectronico(dto.getCorreoElectronico());
+        cliente.setPassword(dto.getPassword());
+        cliente.setDireccion(dto.getDireccion());
+        cliente.setTelefono(dto.getTelefono());
+        // El rol (ROL_CLIENTE) se asigna por defecto en el constructor de la clase Cliente.
+        return cliente;
     }
 }

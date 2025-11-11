@@ -1,1 +1,9 @@
-[ ]
+[ {
+  "id" : 1,
+  "nombre" : "Juguete Cuerda Torsión",
+  "codigoInterno" : "JUG-001",
+  "categoria" : "JUGUETE",
+  "cantidadDisponible" : 100,
+  "precio" : 9.99,
+  "estado" : "ACTIVO"
+} ]

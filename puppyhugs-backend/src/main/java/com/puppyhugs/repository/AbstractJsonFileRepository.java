@@ -249,8 +249,7 @@ public abstract class AbstractJsonFileRepository<T> {
         try {
             objectMapper.writeValue(getDbFile(), new ArrayList<>(inMemoryDb.values()));
         } catch (IOException e) {
-            // En la vida real (producción), se usaría un Logger (Log4J, SLF4J, Logback)
-            e.printStackTrace();
+            throw new RuntimeException("Error fatal al escribir en el archivo JSON: " + getDatabaseFileName(), e);
         }
     }
 }
