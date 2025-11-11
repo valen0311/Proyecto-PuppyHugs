@@ -1,6 +1,7 @@
 import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+// ¡¡AÑADIMOS Router y RouterLink!!
+import { Router, RouterLink } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -12,7 +13,8 @@ import { Cliente } from '../../../models/cliente.model';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  // ¡¡AÑADIMOS RouterLink A LOS IMPORTS!!
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -64,6 +66,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/admin']);
         } else if (cliente.rol === 'ROL_CLIENTE') {
           console.log('👤 Cliente detectado');
+          // ¡Cambié el alert por un mensaje temporal en la UI si prefieres!
           alert('Login de Cliente Exitoso (Ruta /tienda no creada aún)');
         } else {
           this.errorMessage = 'Rol de usuario no reconocido.';

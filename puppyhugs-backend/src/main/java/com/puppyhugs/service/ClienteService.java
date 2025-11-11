@@ -1,28 +1,27 @@
 package com.puppyhugs.service;
 
+import com.puppyhugs.dto.ClienteRequestDTO;
 import com.puppyhugs.model.Cliente;
 import com.puppyhugs.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+// ¡¡AÑADE ESTA IMPORTACIÓN!! (Ahora sí la encontrará)
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.PostConstruct;
 
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Servicio para la lógica de negocio de Clientes.
- * INCLUYE LÓGICA DE LOGIN CON LOGS DE DEPURACIÓN.
- */
 @Service
 public class ClienteService {
 
     @Autowired
     private ClienteRepository clienteRepository;
 
-    /**
-     * Se ejecuta una vez al arrancar.
-     * Verifica si el admin existe en "clientes.json" y, si no, lo crea.
-     */
+    // ¡¡INDISPENSABLE PARA LA SEGURIDAD!!
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostConstruct
     public void initAdmin() {
         Optional<Cliente> adminOpt = clienteRepository.findByCorreoElectronico("admin@puppyhugs.com");
@@ -32,7 +31,10 @@ public class ClienteService {
             Cliente admin = new Cliente();
             admin.setNombreCompleto("Admin Principal");
             admin.setCorreoElectronico("admin@puppyhugs.com");
-            admin.setPassword("admin123");
+
+            // ¡¡CORREGIDO: Encriptamos la contraseña!!
+            admin.setPassword(passwordEncoder.encode("admin123"));
+
             admin.setRol("ROL_ADMIN");
             admin.setDireccion("Oficina Central");
             admin.setTelefono("000-0000");
@@ -40,29 +42,37 @@ public class ClienteService {
             clienteRepository.save(admin);
             System.out.println("✅ Admin 'admin@puppyhugs.com' creado exitosamente.");
         } else {
-            System.out.println("✅ Admin 'admin@puppyhugs.com' ya existe.");
+            Cliente admin = adminOpt.get();
+            if (!passwordEncoder.matches("admin123", admin.getPassword()) && admin.getPassword().equals("admin123")) {
+                System.out.println("⚠️ ¡ADMIN TIENE CONTRASEÑA EN TEXTO PLANO! Actualizando a encriptada...");
+                admin.setPassword(passwordEncoder.encode("admin123"));
+                clienteRepository.save(admin);
+                System.out.println("✅ Contraseña de admin actualizada a BCrypt.");
+            } else {
+                System.out.println("✅ Admin 'admin@puppyhugs.com' ya existe y tiene contraseña encriptada.");
+            }
         }
     }
 
     /**
-     * Registra un nuevo cliente.
+     * Registra un nuevo cliente (¡AHORA USANDO EL DTO!)
      */
-    public Cliente registrarCliente(Cliente cliente) {
-        if (cliente.getCorreoElectronico() == null || cliente.getCorreoElectronico().isBlank() ||
-                cliente.getPassword() == null || cliente.getPassword().isBlank()) {
-            throw new IllegalArgumentException("El correo y la contraseña son obligatorios.");
+    public Cliente register(ClienteRequestDTO datosRegistro) {
+        if (clienteRepository.findByCorreoElectronico(datosRegistro.getCorreoElectronico()).isPresent()) {
+            throw new IllegalArgumentException("El correo electrónico '" + datosRegistro.getCorreoElectronico() + "' ya está registrado.");
         }
 
-        if (clienteRepository.findByCorreoElectronico(cliente.getCorreoElectronico()).isPresent()) {
-            throw new IllegalArgumentException("El correo electrónico '" + cliente.getCorreoElectronico() + "' ya está registrado.");
-        }
+        String passwordCifrado = passwordEncoder.encode(datosRegistro.getPassword());
 
-        // Si no tiene rol asignado, por defecto es ROL_CLIENTE
-        if (cliente.getRol() == null || cliente.getRol().isBlank()) {
-            cliente.setRol("ROL_CLIENTE");
-        }
+        Cliente nuevoCliente = new Cliente();
+        nuevoCliente.setNombreCompleto(datosRegistro.getNombreCompleto());
+        nuevoCliente.setCorreoElectronico(datosRegistro.getCorreoElectronico());
+        nuevoCliente.setPassword(passwordCifrado); // ¡Guardar la cifrada!
+        nuevoCliente.setDireccion(datosRegistro.getDireccion());
+        nuevoCliente.setTelefono(datosRegistro.getTelefono());
+        nuevoCliente.setRol("ROL_CLIENTE");
 
-        return clienteRepository.save(cliente);
+        return clienteRepository.save(nuevoCliente);
     }
 
     public List<Cliente> getClientes() {
@@ -71,57 +81,31 @@ public class ClienteService {
 
     /**
      * Autentica a un usuario (Cliente o Admin).
-     *
-     * @param correo El correo electrónico del usuario.
-     * @param password La contraseña (en texto plano, por ahora).
-     * @return El objeto Cliente si la autenticación es exitosa.
-     * @throws IllegalArgumentException Si el correo no existe o la contraseña es incorrecta.
+     * ¡¡AHORA USANDO PASSWORD ENCRIPTADO!!
      */
     public Cliente login(String correo, String password) {
-        System.out.println("🔎 INICIANDO PROCESO DE LOGIN");
+        System.out.println("🔎 INICIANDO PROCESO DE LOGIN (SEGURO)");
         System.out.println("   Correo recibido: '" + correo + "'");
-        System.out.println("   Password recibido: '" + password + "'");
 
-        // 1. Buscamos al cliente por su correo
         Optional<Cliente> clienteOpt = clienteRepository.findByCorreoElectronico(correo);
 
         if (clienteOpt.isEmpty()) {
-            // Usuario no encontrado
             System.err.println("❌ Usuario NO encontrado en la base de datos");
-            System.err.println("📋 Listado de usuarios disponibles:");
-            List<Cliente> todosLosClientes = clienteRepository.findAll();
-            if (todosLosClientes.isEmpty()) {
-                System.err.println("   ⚠️ NO HAY USUARIOS EN LA BASE DE DATOS");
-            } else {
-                for (Cliente c : todosLosClientes) {
-                    System.err.println("   - ID: " + c.getId() + " | Correo: '" + c.getCorreoElectronico() + "' | Rol: " + c.getRol());
-                }
-            }
             throw new IllegalArgumentException("Usuario o contraseña incorrectos.");
         }
 
         Cliente cliente = clienteOpt.get();
-        System.out.println("✅ Usuario ENCONTRADO:");
-        System.out.println("   ID: " + cliente.getId());
-        System.out.println("   Nombre: " + cliente.getNombreCompleto());
-        System.out.println("   Correo: '" + cliente.getCorreoElectronico() + "'");
-        System.out.println("   Rol: " + cliente.getRol());
+        System.out.println("✅ Usuario ENCONTRADO: " + cliente.getCorreoElectronico());
 
-        // 2. Comparamos la contraseña
-        System.out.println("🔐 COMPARANDO CONTRASEÑAS:");
-        System.out.println("   Password en BD: '" + cliente.getPassword() + "' (longitud: " + cliente.getPassword().length() + ")");
-        System.out.println("   Password recibido: '" + password + "' (longitud: " + password.length() + ")");
-        System.out.println("   ¿Son iguales? " + cliente.getPassword().equals(password));
+        System.out.println("🔐 COMPARANDO CONTRASEÑAS (BCRYPT):");
+        System.out.println("   Password en BD (hash): '" + cliente.getPassword() + "'");
 
-        if (!cliente.getPassword().equals(password)) {
-            // Contraseña incorrecta
+        if (!passwordEncoder.matches(password, cliente.getPassword())) {
             System.err.println("❌ CONTRASEÑA INCORRECTA");
             throw new IllegalArgumentException("Usuario o contraseña incorrectos.");
         }
 
-        // 3. ¡Login exitoso! Devolvemos el cliente (con su rol)
         System.out.println("✅✅✅ LOGIN EXITOSO ✅✅✅");
-        System.out.println("   Usuario: " + cliente.getCorreoElectronico());
         System.out.println("   Rol: " + cliente.getRol());
         System.out.println("=================================================");
 

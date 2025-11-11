@@ -32,7 +32,4 @@ public class ClienteRequestDTO {
 
     @NotBlank(message = "El número de teléfono es obligatorio.")
     private String telefono;
-
-    // NOTA: El campo 'rol' no se incluye aquí porque es asignado automáticamente
-    // a ROL_CLIENTE en el Model o en el Service, NO debe venir del usuario.
 }
