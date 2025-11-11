@@ -1,11 +1,8 @@
-[
-  {
-    "id": 1,
-    "titulo": "Black Friday Pets",
-    "descripcion": "20% de descuento en todos los productos",
-    "descuento": 20,
-    "fechaInicio": "2024-11-15",
-    "fechaFin": "2024-11-30",
-    "activa": true
-  }
-]
+[ {
+  "id" : 1,
+  "nombre" : "Oferta Especial Día del Padre",
+  "descuento" : 0.25,
+  "fechaInicio" : "2025-11-15",
+  "fechaFin" : "2025-11-30",
+  "productoIds" : [ 1 ]
+} ]

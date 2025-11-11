@@ -1,16 +1,21 @@
-[
-  {
-    "id": 1,
-    "clienteId": 2,
-    "fecha": "2024-11-10",
-    "productos": [
-      {
-        "productoId": 1,
-        "cantidad": 2,
-        "precioUnitario": 25.99
-      }
-    ],
-    "total": 51.98,
-    "estado": "completada"
-  }
-]
+[ {
+  "id" : 1,
+  "clienteId" : 2,
+  "productos" : {
+    "1" : 2
+  },
+  "totalVenta" : 19.98,
+  "fecha" : "2025-11-10T21:53:58.4191537",
+  "estado" : "PENDIENTE_DE_PAGO",
+  "pagoId" : null
+}, {
+  "id" : 2,
+  "clienteId" : 2,
+  "productos" : {
+    "1" : 1
+  },
+  "totalVenta" : 9.99,
+  "fecha" : "2025-11-10T22:05:51.4322095",
+  "estado" : "PAGADA",
+  "pagoId" : 2
+} ]

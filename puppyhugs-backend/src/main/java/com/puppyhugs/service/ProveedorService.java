@@ -6,12 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
-/**
- * Servicio para la lógica de negocio de Proveedores.
- * Implementa las reglas definidas en la HU-5.
- */
 @Service
 public class ProveedorService {
 
@@ -19,42 +14,29 @@ public class ProveedorService {
     private ProveedorRepository proveedorRepository;
 
     /**
-     * Registra un nuevo proveedor (Implementa HU-5).
-     *
+     * Registra un nuevo proveedor, validando unicidad de campos clave.
      * @param proveedor El proveedor a registrar.
-     * @return El proveedor guardado con su ID.
-     * @throws IllegalArgumentException Si el proveedor viola las reglas de negocio.
+     * @return El proveedor guardado.
+     * @throws IllegalArgumentException Si la identificación fiscal o el correo ya existen.
      */
     public Proveedor registrarProveedor(Proveedor proveedor) {
 
-        // Criterio HU-5: "Todos los campos requeridos deben completarse"
-        // Validamos los campos clave
-        if (proveedor.getRazonSocial() == null || proveedor.getRazonSocial().isBlank() ||
-                proveedor.getIdentificacionFiscal() == null || proveedor.getIdentificacionFiscal().isBlank() ||
-                proveedor.getCorreoElectronico() == null || proveedor.getCorreoElectronico().isBlank()) {
-
-            throw new IllegalArgumentException("Error HU-5: Razón Social, ID Fiscal y Correo son obligatorios.");
+        // 1. Validar Identificación Fiscal (debe ser único)
+        if (proveedorRepository.findByIdentificacionFiscal(proveedor.getIdentificacionFiscal()).isPresent()) {
+            throw new IllegalArgumentException("Ya existe un proveedor con la identificación fiscal: " + proveedor.getIdentificacionFiscal());
         }
 
-        // Criterio HU-5: "El sistema no debe permitir el registro de proveedores
-        // con la misma identificación fiscal o correo electrónico."
-        Optional<Proveedor> duplicado = proveedorRepository.findByIdentificacionFiscalOrCorreoElectronico(
-                proveedor.getIdentificacionFiscal(),
-                proveedor.getCorreoElectronico()
-        );
-
-        if (duplicado.isPresent()) {
-            throw new IllegalArgumentException("Error HU-5: Ya existe un proveedor con esa identificación fiscal o correo electrónico.");
+        // 2. Validar Correo Electrónico (debe ser único)
+        if (proveedorRepository.findByCorreoElectronico(proveedor.getCorreoElectronico()).isPresent()) {
+            throw new IllegalArgumentException("Ya existe un proveedor con el correo electrónico: " + proveedor.getCorreoElectronico());
         }
 
-        // Criterio HU-5: "El proveedor debe ser almacenado en un JSON."
-        // (El repositorio en memoria simula esto)
+        // 3. Guardar
         return proveedorRepository.save(proveedor);
     }
 
     /**
-     * Obtiene la lista de todos los proveedores.
-     * (Útil para futuras HU del Sprint 2).
+     * Obtiene la lista completa de proveedores.
      */
     public List<Proveedor> getProveedores() {
         return proveedorRepository.findAll();

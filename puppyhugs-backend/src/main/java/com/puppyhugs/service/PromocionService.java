@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Servicio para la lógica de negocio de Promociones.
@@ -73,14 +75,38 @@ public class PromocionService {
   }
 
   /**
-   * Obtiene la lista de todas las promociones (Implementa HU-3).
+   * Obtiene la lista de todas las promociones y aplica filtros (Implementa HU-3).
    *
-   * @return Lista de promociones.
+   * @param nombre Filtro opcional por nombre.
+   * @param fechaStr Filtro opcional por fecha de actividad (YYYY-MM-DD).
+   * @return Lista de promociones filtradas.
    */
-  public List<Promocion> getPromociones() {
-    // Criterio HU-3: "Debe mostrar la lista de promociones"
-    // (La lógica de filtrado y búsqueda de HU-3 se implementaría aquí,
-    // modificando este método para aceptar parámetros)
-    return promocionRepository.findAll();
+  public List<Promocion> getPromociones(String nombre, String fechaStr) {
+    // Obtenemos todas las promociones de la base de datos en memoria
+    List<Promocion> todasLasPromociones = promocionRepository.findAll();
+
+    // Iniciamos el stream para aplicar los filtros
+    return todasLasPromociones.stream()
+            // 1. Filtro por Nombre
+            .filter(p -> nombre == null || p.getNombre().toLowerCase().contains(nombre.toLowerCase()))
+            // 2. Filtro por Fecha (si se proporciona)
+            .filter(p -> {
+              if (fechaStr == null) {
+                return true;
+              }
+              try {
+                // Convertimos la cadena de texto a un objeto LocalDate
+                LocalDate fechaFiltro = LocalDate.parse(fechaStr);
+
+                // La promoción es válida si la fecha del filtro está
+                // entre (o es igual a) la fecha de inicio y la de fin.
+                return !fechaFiltro.isBefore(p.getFechaInicio()) && !fechaFiltro.isAfter(p.getFechaFin());
+              } catch (Exception e) {
+                // Ignoramos el filtro si la fecha es inválida, o podrías lanzar una excepción.
+                return true;
+              }
+            })
+            // 3. Recolectamos la lista final
+            .collect(Collectors.toList());
   }
 }

@@ -1,10 +1,15 @@
-[
-  {
-    "id": 1,
-    "ventaId": 1,
-    "metodo": "tarjeta",
-    "monto": 51.98,
-    "fecha": "2024-11-10",
-    "estado": "aprobado"
-  }
-]
+[ {
+  "id" : 1,
+  "pedidoId" : 1,
+  "montoTotal" : 99.99,
+  "fecha" : "2025-11-10T21:36:32.8961138",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
+}, {
+  "id" : 2,
+  "pedidoId" : 2,
+  "montoTotal" : 50.00,
+  "fecha" : "2025-11-10T22:07:28.2267942",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
+} ]

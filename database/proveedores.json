@@ -1,10 +1,9 @@
-[
-  {
-    "id": 1,
-    "nombre": "Distribuidora Pet Supplies",
-    "contacto": "Carlos Rodríguez",
-    "telefono": "0212-5551234",
-    "email": "ventas@petsupplies.com",
-    "productos": ["Alimentos", "Accesorios"]
-  }
-]
+[ {
+  "id" : 1,
+  "razonSocial" : "Distribuidora Canina S.A.",
+  "identificacionFiscal" : "J-40123456-7",
+  "direccion" : "Calle Falsa 123",
+  "telefono" : "02125550001",
+  "correoElectronico" : "contacto@districanina.com",
+  "tipoProveedor" : "Alimentos"
+} ]
