@@ -2,12 +2,11 @@ package com.puppyhugs.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
 
 /**
  * DTO para la solicitud de registro de Proveedor.
+ * NOTA: Se incluyen Getters y Setters explícitos para evitar problemas con la configuración de Lombok.
  */
-@Data
 public class ProveedorRequestDTO {
 
     @NotBlank(message = "La razón social es obligatoria.")
@@ -28,4 +27,56 @@ public class ProveedorRequestDTO {
 
     @NotBlank(message = "El tipo de proveedor es obligatorio.")
     private String tipoProveedor;
+
+    // --- Getters ---
+
+    public String getRazonSocial() {
+        return razonSocial;
+    }
+
+    public String getIdentificacionFiscal() {
+        return identificacionFiscal;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public String getCorreoElectronico() {
+        return correoElectronico;
+    }
+
+    public String getTipoProveedor() {
+        return tipoProveedor;
+    }
+
+    // --- Setters ---
+
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
+    }
+
+    public void setIdentificacionFiscal(String identificacionFiscal) {
+        this.identificacionFiscal = identificacionFiscal;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public void setCorreoElectronico(String correoElectronico) {
+        this.correoElectronico = correoElectronico;
+    }
+
+    public void setTipoProveedor(String tipoProveedor) {
+        this.tipoProveedor = tipoProveedor;
+    }
 }
