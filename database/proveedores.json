@@ -1,9 +1,92 @@
-[ {
-  "id" : 1,
-  "razonSocial" : "Distribuidora Canina S.A.",
-  "identificacionFiscal" : "J-40123456-7",
-  "direccion" : "Calle Falsa 123",
-  "telefono" : "02125550001",
-  "correoElectronico" : "contacto@districanina.com",
-  "tipoProveedor" : "Alimentos"
-} ]
+[
+  {
+    "id": 1,
+    "razonSocial": "Distribuidora Canina S.A.",
+    "identificacionFiscal": "J-40123456-7",
+    "direccion": "Calle Falsa 123",
+    "telefono": "02125550001",
+    "correoElectronico": "contacto@districanina.com",
+    "tipoProveedor": "Alimentos"
+  },
+  {
+    "id": 2,
+    "razonSocial": "PetCare Import C.A.",
+    "identificacionFiscal": "J-40256789-1",
+    "direccion": "Av. Principal de Los Ruices, Caracas",
+    "telefono": "02125551234",
+    "correoElectronico": "ventas@petcareimport.com",
+    "tipoProveedor": "Medicamentos"
+  },
+  {
+    "id": 3,
+    "razonSocial": "EcoMascotas Venezuela",
+    "identificacionFiscal": "J-40311223-4",
+    "direccion": "Calle La Soledad, Maracay",
+    "telefono": "02431234567",
+    "correoElectronico": "info@ecomascotas.com",
+    "tipoProveedor": "Accesorios"
+  },
+  {
+    "id": 4,
+    "razonSocial": "Huellitas Limpias C.A.",
+    "identificacionFiscal": "J-40499887-2",
+    "direccion": "Sector La Limpia, Valencia",
+    "telefono": "02418223344",
+    "correoElectronico": "servicio@huellitaslimpias.com",
+    "tipoProveedor": "Higiene"
+  },
+  {
+    "id": 5,
+    "razonSocial": "Veterinaria Global S.R.L.",
+    "identificacionFiscal": "J-40533445-9",
+    "direccion": "Av. Libertador, Caracas",
+    "telefono": "02127654321",
+    "correoElectronico": "contacto@vglobal.com",
+    "tipoProveedor": "Equipos Médicos"
+  },
+  {
+    "id": 6,
+    "razonSocial": "NutriPet Solutions",
+    "identificacionFiscal": "J-40655678-3",
+    "direccion": "Zona Industrial Norte, Barquisimeto",
+    "telefono": "02515223344",
+    "correoElectronico": "ventas@nutripetsol.com",
+    "tipoProveedor": "Alimentos"
+  },
+  {
+    "id": 7,
+    "razonSocial": "Mascotienda Mayorista C.A.",
+    "identificacionFiscal": "J-40788899-5",
+    "direccion": "Av. Bolívar Norte, Maracay",
+    "telefono": "02432457890",
+    "correoElectronico": "mayoristas@mascotienda.com",
+    "tipoProveedor": "Accesorios"
+  },
+  {
+    "id": 8,
+    "razonSocial": "CleanPet Hygiene",
+    "identificacionFiscal": "J-40822113-7",
+    "direccion": "Calle El Parque, Mérida",
+    "telefono": "02742556677",
+    "correoElectronico": "contacto@cleanpet.com",
+    "tipoProveedor": "Higiene"
+  },
+  {
+    "id": 9,
+    "razonSocial": "VetPro Laboratorios",
+    "identificacionFiscal": "J-40933445-6",
+    "direccion": "Av. 5 de Julio, Maracaibo",
+    "telefono": "02617889900",
+    "correoElectronico": "ventas@vetprolab.com",
+    "tipoProveedor": "Medicamentos"
+  },
+  {
+    "id": 10,
+    "razonSocial": "PetTech Equipos Veterinarios",
+    "identificacionFiscal": "J-41055678-8",
+    "direccion": "Zona Industrial II, Puerto Ordaz",
+    "telefono": "02869223344",
+    "correoElectronico": "info@pettech.com",
+    "tipoProveedor": "Equipos Médicos"
+  }
+]
