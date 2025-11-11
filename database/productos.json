@@ -3,7 +3,7 @@
   "nombre" : "Juguete Cuerda Torsión",
   "codigoInterno" : "JUG-001",
   "categoria" : "JUGUETE",
-  "cantidadDisponible" : 100,
+  "cantidadDisponible" : 98,
   "precio" : 9.99,
   "estado" : "ACTIVO"
 } ]

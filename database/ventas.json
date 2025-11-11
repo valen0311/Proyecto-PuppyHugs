@@ -1,1 +1,11 @@
-[ ]
+[ {
+  "id" : 1,
+  "clienteId" : 2,
+  "productos" : {
+    "1" : 2
+  },
+  "totalVenta" : 19.98,
+  "fecha" : "2025-11-10T21:53:58.4191537",
+  "estado" : "PENDIENTE_DE_PAGO",
+  "pagoId" : null
+} ]
