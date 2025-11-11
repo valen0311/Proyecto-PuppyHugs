@@ -3,19 +3,27 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+// ¡¡IMPORTANTE!! Añadir los módulos del Router
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+
 @Component({
   selector: 'app-dashboard-admin',
   standalone: true,
-  imports: [CommonModule],
+
+  // 1. AÑADIR ESTO a los imports:
+  imports: [
+    CommonModule,
+    RouterOutlet,     // Para <router-outlet>
+    RouterLink,         // Para [routerLink]
+    RouterLinkActive    // Para [routerLinkActive]
+  ],
+
   templateUrl: './dashboard-admin.component.html',
   styleUrl: './dashboard-admin.component.css'
 })
 export class DashboardAdminComponent {
 
-  // En el futuro, aquí podrías inyectar servicios
-  // (VentaService, ClienteService) para obtener
-  // estadísticas y mostrarlas en el dashboard.
-
+  // Tus propiedades de estadísticas están perfectas
   public totalVentas: number = 0;
   public totalClientes: number = 0;
   public totalProductos: number = 0;
@@ -25,6 +33,12 @@ export class DashboardAdminComponent {
     this.totalVentas = 1250.50;
     this.totalClientes = 42;
     this.totalProductos = 89;
-  }
 
+    // NOTA: Si estas estadísticas SÓLO deben verse en una
+    // página de "Resumen", entonces este componente NO es el layout.
+    // Pero si quieres que estas tarjetas siempre estén visibles
+    // *encima* de la tabla de usuarios, etc., entonces este SÍ es el layout.
+    //
+    // Asumiré que quieres un layout limpio (Sidebar + Contenido).
+  }
 }

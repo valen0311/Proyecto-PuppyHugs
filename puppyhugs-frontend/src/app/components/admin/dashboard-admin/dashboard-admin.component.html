@@ -1,34 +1,24 @@
-<div class="dashboard-container">
+<!-- src/app/components/admin/dashboard-admin/dashboard-admin.component.html -->
 
-  <h1 class="dashboard-title">Dashboard de Administración</h1>
-  <p class="dashboard-subtitle">
-    Bienvenido al panel de control de PuppyHugs.
-  </p>
+<div class="dashboard-layout">
 
-  <div class="stats-grid">
 
-    <div class="stat-card">
-      <h2>Ventas Totales</h2>
-      <p class="stat-value">${{ totalVentas }}</p>
+
+  <!-- 2. Contenido Principal -->
+  <main class="main-content">
+    <header class="main-header">
+      <!-- (Aquí puedes poner un saludo, botón de logout, etc.) -->
+      <h3>Panel de Administración</h3>
+    </header>
+
+    <!--
+      ¡ESTA ES LA ETIQUETA MÁGICA!
+      Aquí es donde Angular cargará los componentes
+      (UsuariosAdminComponent, ProveedoresAdminComponent, etc.)
+    -->
+    <div class="content-area">
+      <router-outlet></router-outlet>
     </div>
 
-    <div class="stat-card">
-      <h2>Clientes Registrados</h2>
-      <p class="stat-value">{{ totalClientes }}</p>
-    </div>
-
-    <div class="stat-card">
-      <h2>Productos Activos</h2>
-      <p class="stat-value">{{ totalProductos }}</p>
-    </div>
-
-  </div>
-
-  <div class="welcome-message">
-    <p>
-      Utiliza el menú de la izquierda para navegar y gestionar
-      los productos, promociones, proveedores y más.
-    </p>
-  </div>
-
+  </main>
 </div>
