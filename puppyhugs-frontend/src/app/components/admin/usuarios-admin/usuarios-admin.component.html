@@ -1,1 +1,132 @@
-<p>usuarios-admin works!</p>
+<div class="header">
+  <h1>Gestión de Usuarios</h1>
+  <button (click)="toggleForm()" class="toggle-form-btn">
+    {{ isFormVisible ? 'Cancelar Registro' : 'Registrar Nuevo Usuario' }}
+  </button>
+</div>
+
+<div class="container">
+
+  <div *ngIf="errorMessage" class="error-backend">
+    <strong>Error:</strong> {{ errorMessage }}
+  </div>
+
+  <section *ngIf="isFormVisible" class="form-container">
+    <h2>Formulario de Registro de Usuario</h2>
+
+    <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-group">
+        <label for="nombreCompleto">Nombre Completo:</label>
+        <input id="nombreCompleto" type="text" formControlName="nombreCompleto">
+        <div *ngIf="usuarioForm.controls['nombreCompleto'].invalid && (usuarioForm.controls['nombreCompleto'].dirty || usuarioForm.controls['nombreCompleto'].touched)" class="error-message">
+          <span *ngIf="usuarioForm.controls['nombreCompleto'].errors?.['required']">
+            El nombre es obligatorio.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="correoElectronico">Correo Electrónico:</label>
+        <input id="correoElectronico" type="email" formControlName="correoElectronico" placeholder="ejemplo@correo.com">
+        <div *ngIf="usuarioForm.controls['correoElectronico'].invalid && (usuarioForm.controls['correoElectronico'].dirty || usuarioForm.controls['correoElectronico'].touched)" class="error-message">
+          <span *ngIf="usuarioForm.controls['correoElectronico'].errors?.['required']">
+            El correo es obligatorio.
+          </span>
+          <span *ngIf="usuarioForm.controls['correoElectronico'].errors?.['email']">
+            El formato del correo no es válido.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña:</label>
+        <input id="password" type="password" formControlName="password">
+        <div *ngIf="usuarioForm.controls['password'].invalid && (usuarioForm.controls['password'].dirty || usuarioForm.controls['password'].touched)" class="error-message">
+          <span *ngIf="usuarioForm.controls['password'].errors?.['required']">
+            La contraseña es obligatoria.
+          </span>
+          <span *ngIf="usuarioForm.controls['password'].errors?.['minlength']">
+            Debe tener al menos 6 caracteres.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="telefono">Teléfono:</label>
+        <input id="telefono" type="tel" formControlName="telefono">
+        <div *ngIf="usuarioForm.controls['telefono'].invalid && (usuarioForm.controls['telefono'].dirty || usuarioForm.controls['telefono'].touched)" class="error-message">
+          <span *ngIf="usuarioForm.controls['telefono'].errors?.['required']">
+            El teléfono es obligatorio.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="direccion">Dirección:</label>
+        <input id="direccion" type="text" formControlName="direccion">
+        <div *ngIf="usuarioForm.controls['direccion'].invalid && (usuarioForm.controls['direccion'].dirty || usuarioForm.controls['direccion'].touched)" class="error-message">
+          <span *ngIf="usuarioForm.controls['direccion'].errors?.['required']">
+            La dirección es obligatoria.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="rol">Rol de Usuario:</label>
+        <select id="rol" formControlName="rol">
+          <option *ngFor="let rol of roles" [value]="rol">
+            {{ rol }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="usuarioForm.invalid" class="submit-btn">
+          Guardar Usuario
+        </button>
+      </div>
+
+    </form>
+  </section>
+
+  <section class="lista-container">
+    <h2>Lista de Usuarios Registrados</h2>
+
+    <div *ngIf="!usuarios || usuarios.length === 0" class="no-data">
+      <p>No hay usuarios registrados actualmente.</p>
+    </div>
+
+    <table *ngIf="usuarios.length > 0">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre Completo</th>
+        <th>Correo</th>
+        <th>Teléfono</th>
+        <th>Dirección</th>
+        <th>Rol</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let usuario of usuarios">
+        <td>{{ usuario.id }}</td>
+        <td>{{ usuario.nombreCompleto }}</td>
+        <td>{{ usuario.correoElectronico }}</td>
+        <td>{{ usuario.telefono }}</td>
+        <td>{{ usuario.direccion }}</td>
+
+        <td>
+            <span class="rol"
+                  [class.rol-admin]="usuario.rol === 'ROL_ADMIN'"
+                  [class.rol-cliente]="usuario.rol === 'ROL_CLIENTE'">
+              {{ usuario.rol }}
+            </span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </section>
+
+</div>

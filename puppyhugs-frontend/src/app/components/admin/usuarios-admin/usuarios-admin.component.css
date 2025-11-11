@@ -1,0 +1,176 @@
+/* src/app/components/admin/usuarios-admin/usuarios-admin.component.css */
+
+.container {
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.toggle-form-btn, .submit-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.toggle-form-btn {
+  background-color: #1abc9c; /* Verde */
+  color: white;
+}
+
+.toggle-form-btn:hover {
+  background-color: #16a085;
+}
+
+/* --- Formulario --- */
+.form-container {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+.form-container h2 {
+  margin-top: 0;
+  color: #34495e;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #555;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #1abc9c;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+.form-actions {
+  margin-top: 10px;
+  text-align: right;
+}
+
+.submit-btn {
+  background-color: #2980b9; /* Azul */
+  color: white;
+}
+.submit-btn:hover {
+  background-color: #2471a3;
+}
+.submit-btn:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+/* Error de backend (coincide con el HTML) */
+.error-backend {
+  color: #e74c3c;
+  background-color: #fbeaea;
+  padding: 12px;
+  border-radius: 4px;
+  margin: 15px 0;
+  text-align: center;
+  border: 1px solid #e74c3c;
+}
+
+
+/* --- Tabla de Usuarios --- */
+.lista-container {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.lista-container h2 {
+  margin-top: 0;
+  color: #34495e;
+}
+
+.no-data {
+  text-align: center;
+  padding: 30px;
+  font-style: italic;
+  color: #7f8c8d;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #f4f7f6;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+th {
+  font-weight: 600;
+  color: #34495e;
+}
+
+tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+
+/* Estilos para los 'badges' de Rol */
+.rol {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+.rol-admin {
+  background-color: #f3e5f5; /* Morado claro */
+  color: #8e44ad; /* Morado oscuro */
+}
+.rol-cliente {
+  background-color: #e8f5e9; /* Verde claro */
+  color: #2e7d32; /* Verde oscuro */
+}
