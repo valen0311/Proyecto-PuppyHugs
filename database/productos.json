@@ -1,9 +1,218 @@
-[ {
-  "id" : 1,
-  "nombre" : "Juguete Cuerda Torsión",
-  "codigoInterno" : "JUG-001",
-  "categoria" : "JUGUETE",
-  "cantidadDisponible" : 97,
-  "precio" : 9.99,
-  "estado" : "ACTIVO"
-} ]
+[
+  {
+    "id" : 1,
+    "nombre" : "Juguete Cuerda Torsión",
+    "codigoInterno" : "JUG-001",
+    "categoria" : "JUGUETE",
+    "cantidadDisponible" : 97,
+    "precio" : 9.99,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 2,
+    "nombre" : "Alimento Premium Cachorros (3kg)",
+    "codigoInterno" : "ALM-005",
+    "categoria" : "ALIMENTO",
+    "cantidadDisponible" : 50,
+    "precio" : 35.50,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 3,
+    "nombre" : "Cama Ortopédica Grande",
+    "codigoInterno" : "ACC-010",
+    "categoria" : "ACCESORIO",
+    "cantidadDisponible" : 15,
+    "precio" : 120.00,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 4,
+    "nombre" : "Shampoo Dermatológico 250ml",
+    "codigoInterno" : "HIG-003",
+    "categoria" : "HIGIENE",
+    "cantidadDisponible" : 85,
+    "precio" : 18.75,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 5,
+    "nombre" : "Paseador Extensible 5 metros",
+    "codigoInterno" : "PASEO-002",
+    "categoria" : "ACCESORIO",
+    "cantidadDisponible" : 40,
+    "precio" : 25.99,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 6,
+    "nombre" : "Snacks Huesitos de Pollo",
+    "codigoInterno" : "ALM-012",
+    "categoria" : "ALIMENTO",
+    "cantidadDisponible" : 150,
+    "precio" : 7.25,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 7,
+    "nombre" : "Correa de Cuero Reforzada",
+    "codigoInterno" : "PASEO-003",
+    "categoria" : "ACCESORIO",
+    "cantidadDisponible" : 30,
+    "precio" : 45.00,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 8,
+    "nombre" : "Kit de Limpieza Dental",
+    "codigoInterno" : "HIG-005",
+    "categoria" : "HIGIENE",
+    "cantidadDisponible" : 60,
+    "precio" : 12.50,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 9,
+    "nombre" : "Pelota Resistente de Goma",
+    "codigoInterno" : "JUG-008",
+    "categoria" : "JUGUETE",
+    "cantidadDisponible" : 120,
+    "precio" : 5.99,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 10,
+    "nombre" : "Recipiente Doble de Acero Inox",
+    "codigoInterno" : "ACC-015",
+    "categoria" : "ACCESORIO",
+    "cantidadDisponible" : 25,
+    "precio" : 29.95,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 11,
+    "nombre" : "Vitaminas para Pelo y Piel",
+    "codigoInterno" : "MED-001",
+    "categoria" : "MEDICINA",
+    "cantidadDisponible" : 45,
+    "precio" : 22.00,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 12,
+    "nombre" : "Manta Térmica para Invierno",
+    "codigoInterno" : "ACC-016",
+    "categoria" : "ACCESORIO",
+    "cantidadDisponible" : 18,
+    "precio" : 65.50,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 13,
+    "nombre" : "Rascador para Gatos de Tres Niveles",
+    "codigoInterno" : "GAT-001",
+    "categoria" : "GATO_ACCESORIO",
+    "cantidadDisponible" : 10,
+    "precio" : 85.00,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 14,
+    "nombre" : "Comida Húmeda Paté Gourmet",
+    "codigoInterno" : "ALM-020",
+    "categoria" : "ALIMENTO",
+    "cantidadDisponible" : 200,
+    "precio" : 4.50,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 15,
+    "nombre" : "Cepillo Deslanador Profesional",
+    "codigoInterno" : "HIG-009",
+    "categoria" : "HIGIENE",
+    "cantidadDisponible" : 55,
+    "precio" : 32.90,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 16,
+    "nombre" : "Juguete Dispensador de Premios",
+    "codigoInterno" : "JUG-015",
+    "categoria" : "JUGUETE",
+    "cantidadDisponible" : 70,
+    "precio" : 15.75,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 17,
+    "nombre" : "Filtro de Agua de Carbón Activo (Repuesto)",
+    "codigoInterno" : "ACC-030",
+    "categoria" : "ACCESORIO",
+    "cantidadDisponible" : 100,
+    "precio" : 8.00,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 18,
+    "nombre" : "Chaleco Reflectante de Seguridad",
+    "codigoInterno" : "PASEO-007",
+    "categoria" : "ACCESORIO",
+    "cantidadDisponible" : 35,
+    "precio" : 19.99,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 19,
+    "nombre" : "Comedero Lento Antiglotones",
+    "codigoInterno" : "ACC-040",
+    "categoria" : "ACCESORIO",
+    "cantidadDisponible" : 40,
+    "precio" : 14.50,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 20,
+    "nombre" : "Transportadora Rígida Grande",
+    "codigoInterno" : "VIAJE-001",
+    "categoria" : "TRANSPORTE",
+    "cantidadDisponible" : 12,
+    "precio" : 75.00,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 21,
+    "nombre" : "Arena Sanitaria Premium (10kg)",
+    "codigoInterno" : "GAT-005",
+    "categoria" : "GATO_HIGIENE",
+    "cantidadDisponible" : 90,
+    "precio" : 16.25,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 22,
+    "nombre" : "Arnés Antitirones Acolchado",
+    "codigoInterno" : "PASEO-010",
+    "categoria" : "ACCESORIO",
+    "cantidadDisponible" : 50,
+    "precio" : 28.99,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 23,
+    "nombre" : "Tijeras para Uñas con Sensor",
+    "codigoInterno" : "HIG-012",
+    "categoria" : "HIGIENE",
+    "cantidadDisponible" : 30,
+    "precio" : 19.50,
+    "estado" : "ACTIVO"
+  },
+  {
+    "id" : 24,
+    "nombre" : "Juego Interactivo de Escondite",
+    "codigoInterno" : "JUG-020",
+    "categoria" : "JUGUETE",
+    "cantidadDisponible" : 65,
+    "precio" : 11.90,
+    "estado" : "ACTIVO"
+  }
+]
