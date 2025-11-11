@@ -60,4 +60,26 @@ public class VentaController {
         // El total, estado y fecha se configuran en el Service
         return venta;
     }
+
+    /**
+     * Endpoint para finalizar una Venta y marcarla como PAGADA (Implementa HU-6).
+     * Escucha peticiones PUT en "/api/ventas/{ventaId}/finalizar".
+     * @param ventaId ID de la venta a actualizar.
+     * @param pagoId ID del pago asociado (enviado como RequestParam).
+     * @return 200 OK con la venta actualizada.
+     */
+    @PutMapping("/{ventaId}/finalizar")
+    public ResponseEntity<?> finalizarVenta(
+            @PathVariable Long ventaId,
+            @RequestParam Long pagoId) {
+
+        try {
+            Venta ventaFinalizada = ventaService.finalizarVenta(ventaId, pagoId);
+            return ResponseEntity.ok(ventaFinalizada);
+
+        } catch (IllegalArgumentException e) {
+            // Manejo de errores: venta no existe, pago no existe o pago falló.
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

@@ -5,4 +5,11 @@
   "fecha" : "2025-11-10T21:36:32.8961138",
   "metodoPago" : "MASTERCARD",
   "estado" : "EXITOSO"
+}, {
+  "id" : 2,
+  "pedidoId" : 2,
+  "montoTotal" : 50.00,
+  "fecha" : "2025-11-10T22:07:28.2267942",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
 } ]

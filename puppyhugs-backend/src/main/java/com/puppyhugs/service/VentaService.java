@@ -1,9 +1,11 @@
 package com.puppyhugs.service;
 
 import com.puppyhugs.model.Cliente;
+import com.puppyhugs.model.Pago;
 import com.puppyhugs.model.Producto;
 import com.puppyhugs.model.Venta;
 import com.puppyhugs.repository.ClienteRepository;
+import com.puppyhugs.repository.PagoRepository;
 import com.puppyhugs.repository.ProductoRepository;
 import com.puppyhugs.repository.VentaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,5 +81,41 @@ public class VentaService {
 
     public List<Venta> getVentas() {
         return ventaRepository.findAll();
+    }
+
+    @Autowired
+    private PagoRepository pagoRepository; // ¡Necesitamos inyectar el PagoRepository!
+
+    /**
+     * Finaliza la venta (Implementa HU-6).
+     * Vincula el pago a la venta y actualiza su estado.
+     * @param ventaId ID de la venta a finalizar.
+     * @param pagoId ID del pago exitoso asociado a la venta.
+     * @return La venta actualizada.
+     * @throws IllegalArgumentException Si la venta no existe, el pago no existe o el pago no fue exitoso.
+     */
+    public Venta finalizarVenta(Long ventaId, Long pagoId) {
+        // 1. Validar que la venta exista y que no esté ya pagada
+        Venta venta = ventaRepository.findById(ventaId)
+                .orElseThrow(() -> new IllegalArgumentException("Venta con ID " + ventaId + " no encontrada."));
+
+        if (venta.getEstado() == Venta.EstadoVenta.PAGADA) {
+            throw new IllegalArgumentException("La venta con ID " + ventaId + " ya se encuentra PAGADA.");
+        }
+
+        // 2. Validar que el pago exista y sea exitoso
+        Pago pago = pagoRepository.findById(pagoId)
+                .orElseThrow(() -> new IllegalArgumentException("Pago con ID " + pagoId + " no encontrado."));
+
+        if (pago.getEstado() != Pago.EstadoPago.EXITOSO) {
+            throw new IllegalArgumentException("El pago con ID " + pagoId + " no fue exitoso. Estado: " + pago.getEstado());
+        }
+
+        // 3. Actualizar la venta
+        venta.setPagoId(pagoId);
+        venta.setEstado(Venta.EstadoVenta.PAGADA);
+
+        // 4. Guardar y retornar
+        return ventaRepository.save(venta);
     }
 }
