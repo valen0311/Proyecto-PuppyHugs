@@ -1,75 +1,69 @@
 package com.puppyhugs.controller;
 
+import com.puppyhugs.dto.PromocionRequestDTO;
 import com.puppyhugs.model.Promocion;
 import com.puppyhugs.service.PromocionService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
-/**
- * Controlador REST para gestionar la entidad Promocion.
- * Expone los endpoints para HU-2 y HU-3.
- */
 @RestController
-// Angular llamará a "http://localhost:8080/api/promociones"
 @RequestMapping("/api/promociones")
 public class PromocionController {
 
-    // 1. Inyectamos el Servicio de Promoción
     @Autowired
     private PromocionService promocionService;
 
     /**
-     * Endpoint para la HU-2: Crear una nueva Promoción.
+     * Endpoint para crear una nueva Promoción (Implementa HU-2).
      * Escucha peticiones POST en "/api/promociones".
      *
-     * @param promocion El JSON enviado por Angular, convertido automáticamente
-     * a un objeto Promocion por Spring (@RequestBody).
-     * @return Un ResponseEntity:
-     * - 200 OK (éxito) con la promoción creada (JSON).
-     * - 400 Bad Request (error) con un mensaje (JSON).
+     * @param promocionDTO DTO con los datos de la promoción y los IDs de producto.
+     * @return 200 OK con la promoción creada o 400 Bad Request si falla alguna regla.
      */
     @PostMapping
-    public ResponseEntity<?> crearPromocion(@RequestBody Promocion promocion) {
+    public ResponseEntity<?> crearPromocion(@Valid @RequestBody PromocionRequestDTO promocionDTO) {
+
+        Promocion promocion = convertDtoToModel(promocionDTO);
+
         try {
-            // 2. Le pasamos el trabajo al servicio
-            // Aquí se ejecutan las validaciones (HU-2):
-            // - Nombre único
-            // - Descuento <= 50%
-            // - Fechas válidas
-            // - Al menos 1 producto
             Promocion nuevaPromocion = promocionService.crearPromocion(promocion);
 
-            // 3. Devolvemos la respuesta
-            // Spring convierte "nuevaPromocion" a JSON automáticamente
             return ResponseEntity.ok(nuevaPromocion);
 
         } catch (IllegalArgumentException e) {
-
-            // 4. Manejo de errores
-            // Si el servicio lanza una excepción (ej: nombre duplicado)
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
+    // --- Método de Conversión ---
+    private Promocion convertDtoToModel(PromocionRequestDTO dto) {
+        Promocion promocion = new Promocion();
+        promocion.setNombre(dto.getNombre());
+        promocion.setDescuento(dto.getDescuento());
+        promocion.setFechaInicio(dto.getFechaInicio());
+        promocion.setFechaFin(dto.getFechaFin());
+        promocion.setProductoIds(dto.getProductoIds());
+        return promocion;
+    }
+
     /**
-     * Endpoint para la HU-3: Ver lista de promociones.
+     * Endpoint para obtener la lista de promociones (Implementa HU-3).
+     * Permite filtrar por nombre o por rango de fechas.
      * Escucha peticiones GET en "/api/promociones".
      *
-     * @return Una lista de todas las promociones en formato JSON.
+     * @param nombre Opcional. Filtra por parte del nombre de la promoción.
+     * @param fecha Opcional. Devuelve promociones activas en esta fecha (Formato YYYY-MM-DD).
+     * @return Lista de promociones filtradas o todas si no hay parámetros.
      */
     @GetMapping
-    public ResponseEntity<List<Promocion>> getPromociones() {
-        // 2. El servicio nos da la lista
-        List<Promocion> promociones = promocionService.getPromociones();
+    public ResponseEntity<List<Promocion>> getPromociones(
+            @RequestParam(required = false) String nombre,
+            @RequestParam(required = false) String fecha) {
 
-        // 3. Devolvemos la lista (Spring la convierte a JSON)
+        List<Promocion> promociones = promocionService.getPromociones(nombre, fecha);
         return ResponseEntity.ok(promociones);
-
-        // (Nota: Para cumplir 100% la HU-3, que habla de filtros,
-        // este método @GetMapping podría recibir @RequestParams,
-        // pero para el Sprint 1, devolver la lista completa es lo esencial).
     }
 }
