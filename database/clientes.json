@@ -16,5 +16,41 @@
     "direccion": "Av. Principal, Casa #15",
     "telefono": "04121234567",
     "rol": "ROL_CLIENTE"
+  },
+  {
+    "id": 3,
+    "nombreCompleto": "Maria Rodriguez",
+    "correoElectronico": "maria.r@test.com",
+    "password": "passmaria456",
+    "direccion": "Calle 5, Apt 2B",
+    "telefono": "04247654321",
+    "rol": "ROL_CLIENTE"
+  },
+  {
+    "id": 4,
+    "nombreCompleto": "Carlos Gómez",
+    "correoElectronico": "carlos.g@test.com",
+    "password": "carlos789",
+    "direccion": "Urbanización El Sol, Lote 8",
+    "telefono": "04169876543",
+    "rol": "ROL_CLIENTE"
+  },
+  {
+    "id": 5,
+    "nombreCompleto": "Ana Torres",
+    "correoElectronico": "ana.t@test.com",
+    "password": "anapass101",
+    "direccion": "Av. Libertador, Edif. Blanco",
+    "telefono": "04141122334",
+    "rol": "ROL_CLIENTE"
+  },
+  {
+    "id": 6,
+    "nombreCompleto": "Roberto Flores",
+    "correoElectronico": "roberto.f@test.com",
+    "password": "roberto111",
+    "direccion": "Sector La Pradera, Casa 4",
+    "telefono": "04265559900",
+    "rol": "ROL_CLIENTE"
   }
 ]
