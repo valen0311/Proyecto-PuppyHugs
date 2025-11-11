@@ -1,9 +1,11 @@
 package com.puppyhugs.service;
 
 import com.puppyhugs.model.Cliente;
+import com.puppyhugs.model.Pago;
 import com.puppyhugs.model.Producto;
 import com.puppyhugs.model.Venta;
 import com.puppyhugs.repository.ClienteRepository;
+import com.puppyhugs.repository.PagoRepository;
 import com.puppyhugs.repository.ProductoRepository;
 import com.puppyhugs.repository.VentaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +28,15 @@ public class VentaService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private PagoRepository pagoRepository;
+
     public Venta crearVenta(Venta venta) {
         // Validar que el cliente exista
         Cliente cliente = clienteRepository.findById(venta.getClienteId())
                 .orElseThrow(() -> new IllegalArgumentException("El cliente con ID " + venta.getClienteId() + " no existe."));
 
-        // ✅ CORREGIDO: Validar el rol del cliente (ahora usa String)
+        // Validar el rol del cliente
         if ("ROL_ADMIN".equals(cliente.getRol())) {
             throw new IllegalArgumentException("Los administradores no pueden realizar compras.");
         }
@@ -79,5 +84,41 @@ public class VentaService {
 
     public List<Venta> getVentas() {
         return ventaRepository.findAll();
+    }
+
+    /**
+     * Finaliza una venta y la marca como PAGADA (Implementa HU-6).
+     *
+     * @param ventaId ID de la venta a finalizar
+     * @param pagoId ID del pago asociado
+     * @return La venta actualizada con estado PAGADA
+     * @throws IllegalArgumentException si la venta o el pago no existen, o si el pago falló
+     */
+    public Venta finalizarVenta(Long ventaId, Long pagoId) {
+        // 1. Validar que la venta exista
+        Venta venta = ventaRepository.findById(ventaId)
+                .orElseThrow(() -> new IllegalArgumentException("La venta con ID " + ventaId + " no existe."));
+
+        // 2. Validar que el pago exista
+        Pago pago = pagoRepository.findById(pagoId)
+                .orElseThrow(() -> new IllegalArgumentException("El pago con ID " + pagoId + " no existe."));
+
+        // 3. Validar que el pago esté exitoso
+        if (pago.getEstado() != Pago.EstadoPago.EXITOSO) {
+            throw new IllegalArgumentException("El pago debe estar EXITOSO para finalizar la venta. Estado actual: " + pago.getEstado());
+        }
+
+        // 4. Validar que el monto del pago coincida con el total de la venta
+        if (pago.getMontoTotal().compareTo(venta.getTotalVenta()) != 0) {
+            throw new IllegalArgumentException("El monto del pago (" + pago.getMontoTotal() +
+                    ") no coincide con el total de la venta (" + venta.getTotalVenta() + ").");
+        }
+
+        // 5. Actualizar el estado de la venta
+        venta.setEstado(Venta.EstadoVenta.PAGADA);
+        venta.setPagoId(pagoId);
+
+        // 6. Guardar y retornar
+        return ventaRepository.save(venta);
     }
 }
