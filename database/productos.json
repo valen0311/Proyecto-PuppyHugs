@@ -12,7 +12,7 @@
     "id" : 2,
     "nombre" : "Alimento Premium Cachorros (3kg)",
     "codigoInterno" : "ALM-005",
-    "categoria" : "ALIMENTO",
+    "categoria" : "ARTICULO",
     "cantidadDisponible" : 50,
     "precio" : 35.50,
     "estado" : "ACTIVO"
@@ -30,7 +30,7 @@
     "id" : 4,
     "nombre" : "Shampoo Dermatológico 250ml",
     "codigoInterno" : "HIG-003",
-    "categoria" : "HIGIENE",
+    "categoria" : "ARTICULO",
     "cantidadDisponible" : 85,
     "precio" : 18.75,
     "estado" : "ACTIVO"
@@ -48,7 +48,7 @@
     "id" : 6,
     "nombre" : "Snacks Huesitos de Pollo",
     "codigoInterno" : "ALM-012",
-    "categoria" : "ALIMENTO",
+    "categoria" : "ARTICULO",
     "cantidadDisponible" : 150,
     "precio" : 7.25,
     "estado" : "ACTIVO"
@@ -66,7 +66,7 @@
     "id" : 8,
     "nombre" : "Kit de Limpieza Dental",
     "codigoInterno" : "HIG-005",
-    "categoria" : "HIGIENE",
+    "categoria" : "ARTICULO",
     "cantidadDisponible" : 60,
     "precio" : 12.50,
     "estado" : "ACTIVO"
@@ -109,9 +109,9 @@
   },
   {
     "id" : 13,
-    "nombre" : "Rascador para Gatos de Tres Niveles",
-    "codigoInterno" : "GAT-001",
-    "categoria" : "GATO_ACCESORIO",
+    "nombre" : "Rascador para Perro de Tres Niveles",
+    "codigoInterno" : "PET-001",
+    "categoria" : "ACCESORIO",
     "cantidadDisponible" : 10,
     "precio" : 85.00,
     "estado" : "ACTIVO"
@@ -120,7 +120,7 @@
     "id" : 14,
     "nombre" : "Comida Húmeda Paté Gourmet",
     "codigoInterno" : "ALM-020",
-    "categoria" : "ALIMENTO",
+    "categoria" : "ARTICULO",
     "cantidadDisponible" : 200,
     "precio" : 4.50,
     "estado" : "ACTIVO"
@@ -129,7 +129,7 @@
     "id" : 15,
     "nombre" : "Cepillo Deslanador Profesional",
     "codigoInterno" : "HIG-009",
-    "categoria" : "HIGIENE",
+    "categoria" : "ARTICULO",
     "cantidadDisponible" : 55,
     "precio" : 32.90,
     "estado" : "ACTIVO"
@@ -174,7 +174,7 @@
     "id" : 20,
     "nombre" : "Transportadora Rígida Grande",
     "codigoInterno" : "VIAJE-001",
-    "categoria" : "TRANSPORTE",
+    "categoria" : "ARTICULO",
     "cantidadDisponible" : 12,
     "precio" : 75.00,
     "estado" : "ACTIVO"
@@ -182,8 +182,8 @@
   {
     "id" : 21,
     "nombre" : "Arena Sanitaria Premium (10kg)",
-    "codigoInterno" : "GAT-005",
-    "categoria" : "GATO_HIGIENE",
+    "codigoInterno" : "HIG-005",
+    "categoria" : "ARTICULO",
     "cantidadDisponible" : 90,
     "precio" : 16.25,
     "estado" : "ACTIVO"
@@ -201,7 +201,7 @@
     "id" : 23,
     "nombre" : "Tijeras para Uñas con Sensor",
     "codigoInterno" : "HIG-012",
-    "categoria" : "HIGIENE",
+    "categoria" : "ARTICULO",
     "cantidadDisponible" : 30,
     "precio" : 19.50,
     "estado" : "ACTIVO"
