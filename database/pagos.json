@@ -1,1 +1,8 @@
-[ ]
+[ {
+  "id" : 1,
+  "pedidoId" : 1,
+  "montoTotal" : 99.99,
+  "fecha" : "2025-11-10T21:36:32.8961138",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
+} ]
