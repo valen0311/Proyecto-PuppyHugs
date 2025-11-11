@@ -1,1 +1,55 @@
-<p>ventas-admin works!</p>
+<div class="header">
+  <h1>Historial de Ventas</h1>
+</div>
+
+<div class="container">
+
+  <div *ngIf="errorMessage" class="error-backend">
+    <strong>Error:</strong> {{ errorMessage }}
+  </div>
+
+  <section class="lista-container">
+    <h2>Ventas Registradas</h2>
+
+    <div *ngIf="!ventas || ventas.length === 0" class="no-data">
+      <p>No hay ventas registradas actualmente.</p>
+    </div>
+
+    <table *ngIf="ventas.length > 0">
+      <thead>
+      <tr>
+        <th>ID Venta</th>
+        <th>Fecha</th>
+        <th>ID Cliente</th>
+        <th>Estado</th>
+        <th>ID Pago</th>
+        <th>Total</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let venta of ventas">
+        <td>#{{ venta.id }}</td>
+
+        <td>{{ venta.fecha | date:'medium' }}</td>
+
+        <td>{{ venta.clienteId }}</td>
+
+        <td>
+            <span class="estado"
+                  [class.estado-pagada]="venta.estado === 'PAGADA'"
+                  [class.estado-pendiente]="venta.estado === 'PENDIENTE_DE_PAGO'"
+                  [class.estado-cancelada]="venta.estado === 'CANCELADA'">
+              {{ venta.estado }}
+            </span>
+        </td>
+
+        <td>{{ venta.pagoId || 'N/A' }}</td>
+
+        <td>{{ venta.totalVenta | currency:'USD':'symbol':'1.2-2' }}</td>
+      </tr>
+      </tbody>
+    </table>
+
+  </section>
+
+</div>
