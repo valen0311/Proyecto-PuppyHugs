@@ -37,13 +37,9 @@ public class Producto {
     AGOTADO
   }
 
-  // --- Constructores (opcional pero recomendado) ---
 
   public Producto() {
-    // Constructor vacío necesario para la deserialización JSON
   }
-
-  // --- Getters y Setters (¡Necesarios!) ---
 
   public Long getId() {
     return id;

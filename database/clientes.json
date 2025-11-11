@@ -1,1 +1,17 @@
-[ ]
+[ {
+  "id" : 1,
+  "nombreCompleto" : "Admin Principal",
+  "correoElectronico" : "admin@puppyhugs.com",
+  "password" : "admin123",
+  "direccion" : "Oficina Central",
+  "telefono" : "000-0000",
+  "rol" : "ROL_ADMIN"
+}, {
+  "id" : 2,
+  "nombreCompleto" : "Juan Pérez",
+  "correoElectronico" : "juan.perez@test.com",
+  "password" : "password123",
+  "direccion" : "Av. Principal, Casa #15",
+  "telefono" : "04121234567",
+  "rol" : "ROL_CLIENTE"
+}]

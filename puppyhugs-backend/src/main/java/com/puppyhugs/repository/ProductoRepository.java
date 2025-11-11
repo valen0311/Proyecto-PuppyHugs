@@ -1,12 +1,10 @@
 package com.puppyhugs.repository;
 
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.puppyhugs.model.Producto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
-
 
 import java.util.List;
 import java.util.Optional;
