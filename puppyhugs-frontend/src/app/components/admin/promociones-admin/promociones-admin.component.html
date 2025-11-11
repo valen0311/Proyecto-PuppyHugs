@@ -1,1 +1,78 @@
-<p>promociones-admin works!</p>
+<div class="admin-container">
+  <h2>Gestión de Promociones</h2>
+
+  <button (click)="toggleForm()">
+    {{ isFormVisible ? 'Cancelar' : 'Nueva Promoción' }}
+  </button>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <form *ngIf="isFormVisible" [formGroup]="promocionForm" (ngSubmit)="onSubmit()">
+    <h3>Registrar Nueva Promoción</h3>
+
+    <div>
+      <label for="nombre">Nombre:</label>
+      <input id="nombre" formControlName="nombre">
+    </div>
+
+    <div>
+      <label for="descuento">Descuento (ej: 0.25 para 25%):</label>
+      <input id="descuento" type="number" step="0.01" min="0.01" max="1.0" formControlName="descuento">
+    </div>
+
+    <div>
+      <label for="fechaInicio">Fecha de Inicio:</label>
+      <input id="fechaInicio" type="date" formControlName="fechaInicio">
+    </div>
+
+    <div>
+      <label for="fechaFin">Fecha de Fin:</label>
+      <input id="fechaFin" type="date" formControlName="fechaFin">
+    </div>
+
+    <div>
+      <label for="productoIds">Productos Aplicables (Ctrl+Click para varios):</label>
+      <select id="productoIds" formControlName="productoIds" multiple size="8">
+        <option *ngFor="let producto of todosLosProductos" [value]="producto.id">
+          {{ producto.nombre }} (ID: {{ producto.id }})
+        </option>
+      </select>
+    </div>
+
+    <button type="submit" [disabled]="promocionForm.invalid">
+      Guardar Promoción
+    </button>
+  </form>
+
+  <hr>
+
+  <h3>Lista de Promociones</h3>
+  <table *ngIf="promociones.length > 0; else noPromos">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Descuento</th> <th>Inicio</th>
+      <th>Fin</th>
+      <th>IDs Productos</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let promo of promociones">
+      <td>{{ promo.id }}</td>
+      <td>{{ promo.nombre }}</td>
+      <td>{{ promo.descuento | percent }}</td>
+      <td>{{ promo.fechaInicio }}</td>
+      <td>{{ promo.fechaFin }}</td>
+      <td>{{ promo.productoIds.join(', ') }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <ng-template #noPromos>
+    <p>No hay promociones registradas.</p>
+  </ng-template>
+
+</div>
