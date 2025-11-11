@@ -31,8 +31,8 @@ public class VentaService {
         Cliente cliente = clienteRepository.findById(venta.getClienteId())
                 .orElseThrow(() -> new IllegalArgumentException("El cliente con ID " + venta.getClienteId() + " no existe."));
 
-        // Validar el rol del cliente
-        if (cliente.getRol() == Cliente.Role.ROL_ADMIN) {
+        // ✅ CORREGIDO: Validar el rol del cliente (ahora usa String)
+        if ("ROL_ADMIN".equals(cliente.getRol())) {
             throw new IllegalArgumentException("Los administradores no pueden realizar compras.");
         }
 

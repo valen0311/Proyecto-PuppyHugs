@@ -1,20 +1,8 @@
 package com.puppyhugs.model;
 
-/**
- * Clase POJO que representa la entidad Cliente.
- * AHORA INCLUYE LÓGICA DE ROLES.
- */
-public class Cliente {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    /**
-     * Enumeración para los roles de usuario.
-     * ROL_CLIENTE: Un comprador normal.
-     * ROL_ADMIN: Un administrador con permisos elevados.
-     */
-    public enum Role {
-        ROL_CLIENTE,
-        ROL_ADMIN
-    }
+public class Cliente {
 
     private Long id;
     private String nombreCompleto;
@@ -23,17 +11,27 @@ public class Cliente {
     private String direccion;
     private String telefono;
 
-    // --- CAMPO NUEVO ---
-    private Role rol; // Aquí definimos si es Admin o Cliente
+    @JsonProperty("rol") // ⭐ Asegura que Jackson lea "rol" del JSON
+    private String rol; // ⭐ String para compatibilidad con JSON
 
-    // --- CONSTRUCTOR MODIFICADO ---
+    // Constructor vacío (por defecto es CLIENTE)
     public Cliente() {
-        // Por defecto, cualquier cliente nuevo se registra como CLIENTE.
-        this.rol = Role.ROL_CLIENTE;
+        this.rol = "ROL_CLIENTE";
     }
 
-    // --- Getters y Setters (Existentes) ---
+    // Constructor completo
+    public Cliente(Long id, String nombreCompleto, String correoElectronico,
+                   String password, String direccion, String telefono, String rol) {
+        this.id = id;
+        this.nombreCompleto = nombreCompleto;
+        this.correoElectronico = correoElectronico;
+        this.password = password;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.rol = rol != null ? rol : "ROL_CLIENTE";
+    }
 
+    // GETTERS Y SETTERS
     public Long getId() {
         return id;
     }
@@ -82,13 +80,21 @@ public class Cliente {
         this.telefono = telefono;
     }
 
-    // --- GETTER Y SETTER NUEVOS (Para Rol) ---
-
-    public Role getRol() {
+    public String getRol() {
         return rol;
     }
 
-    public void setRol(Role rol) {
+    public void setRol(String rol) {
         this.rol = rol;
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "id=" + id +
+                ", nombreCompleto='" + nombreCompleto + '\'' +
+                ", correoElectronico='" + correoElectronico + '\'' +
+                ", rol='" + rol + '\'' +
+                '}';
     }
 }

@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 import jakarta.annotation.PostConstruct;
 
 import java.util.List;
-import java.util.Optional; // Necesitamos importar Optional
+import java.util.Optional;
 
 /**
  * Servicio para la lógica de negocio de Clientes.
- * AHORA INCLUYE LÓGICA DE LOGIN.
+ * INCLUYE LÓGICA DE LOGIN CON LOGS DE DEPURACIÓN.
  */
 @Service
 public class ClienteService {
@@ -19,40 +19,33 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-
     /**
-     * ¡NUEVO!
      * Se ejecuta una vez al arrancar.
      * Verifica si el admin existe en "clientes.json" y, si no, lo crea.
      */
     @PostConstruct
     public void initAdmin() {
-        // Usamos el método del repo para buscar al admin por correo
         Optional<Cliente> adminOpt = clienteRepository.findByCorreoElectronico("admin@puppyhugs.com");
 
-        // Si el admin NO existe, lo creamos
         if (adminOpt.isEmpty()) {
             System.out.println("--- No se encontró admin. Creando admin por defecto... ---");
             Cliente admin = new Cliente();
             admin.setNombreCompleto("Admin Principal");
             admin.setCorreoElectronico("admin@puppyhugs.com");
             admin.setPassword("admin123");
-            admin.setRol(Cliente.Role.ROL_ADMIN);
+            admin.setRol("ROL_ADMIN");
             admin.setDireccion("Oficina Central");
             admin.setTelefono("000-0000");
 
-            clienteRepository.save(admin); // Esto lo guarda en clientes.json
-            System.out.println("Admin 'admin@puppyhugs.com' creado.");
+            clienteRepository.save(admin);
+            System.out.println("✅ Admin 'admin@puppyhugs.com' creado exitosamente.");
         } else {
-            System.out.println("Admin 'admin@puppyhugs.com' ya existe. No se necesita crear.");
+            System.out.println("✅ Admin 'admin@puppyhugs.com' ya existe.");
         }
     }
 
-
-
     /**
      * Registra un nuevo cliente.
-     * (No necesita cambios, el rol por defecto se asigna en el constructor)
      */
     public Cliente registrarCliente(Cliente cliente) {
         if (cliente.getCorreoElectronico() == null || cliente.getCorreoElectronico().isBlank() ||
@@ -64,14 +57,17 @@ public class ClienteService {
             throw new IllegalArgumentException("El correo electrónico '" + cliente.getCorreoElectronico() + "' ya está registrado.");
         }
 
+        // Si no tiene rol asignado, por defecto es ROL_CLIENTE
+        if (cliente.getRol() == null || cliente.getRol().isBlank()) {
+            cliente.setRol("ROL_CLIENTE");
+        }
+
         return clienteRepository.save(cliente);
     }
 
     public List<Cliente> getClientes() {
         return clienteRepository.findAll();
     }
-
-    // --- MÉTODO NUEVO PARA LOGIN ---
 
     /**
      * Autentica a un usuario (Cliente o Admin).
@@ -82,24 +78,53 @@ public class ClienteService {
      * @throws IllegalArgumentException Si el correo no existe o la contraseña es incorrecta.
      */
     public Cliente login(String correo, String password) {
+        System.out.println("🔎 INICIANDO PROCESO DE LOGIN");
+        System.out.println("   Correo recibido: '" + correo + "'");
+        System.out.println("   Password recibido: '" + password + "'");
+
         // 1. Buscamos al cliente por su correo
         Optional<Cliente> clienteOpt = clienteRepository.findByCorreoElectronico(correo);
 
         if (clienteOpt.isEmpty()) {
             // Usuario no encontrado
+            System.err.println("❌ Usuario NO encontrado en la base de datos");
+            System.err.println("📋 Listado de usuarios disponibles:");
+            List<Cliente> todosLosClientes = clienteRepository.findAll();
+            if (todosLosClientes.isEmpty()) {
+                System.err.println("   ⚠️ NO HAY USUARIOS EN LA BASE DE DATOS");
+            } else {
+                for (Cliente c : todosLosClientes) {
+                    System.err.println("   - ID: " + c.getId() + " | Correo: '" + c.getCorreoElectronico() + "' | Rol: " + c.getRol());
+                }
+            }
             throw new IllegalArgumentException("Usuario o contraseña incorrectos.");
         }
 
         Cliente cliente = clienteOpt.get();
+        System.out.println("✅ Usuario ENCONTRADO:");
+        System.out.println("   ID: " + cliente.getId());
+        System.out.println("   Nombre: " + cliente.getNombreCompleto());
+        System.out.println("   Correo: '" + cliente.getCorreoElectronico() + "'");
+        System.out.println("   Rol: " + cliente.getRol());
 
         // 2. Comparamos la contraseña
-        // (En un sistema real, usaríamos un 'passwordEncoder' para comparar hashes)
-        if (cliente.getPassword().equals(password)) {
-            // ¡Éxito! Devolvemos el cliente (que incluye su rol)
-            return cliente;
-        } else {
+        System.out.println("🔐 COMPARANDO CONTRASEÑAS:");
+        System.out.println("   Password en BD: '" + cliente.getPassword() + "' (longitud: " + cliente.getPassword().length() + ")");
+        System.out.println("   Password recibido: '" + password + "' (longitud: " + password.length() + ")");
+        System.out.println("   ¿Son iguales? " + cliente.getPassword().equals(password));
+
+        if (!cliente.getPassword().equals(password)) {
             // Contraseña incorrecta
+            System.err.println("❌ CONTRASEÑA INCORRECTA");
             throw new IllegalArgumentException("Usuario o contraseña incorrectos.");
         }
+
+        // 3. ¡Login exitoso! Devolvemos el cliente (con su rol)
+        System.out.println("✅✅✅ LOGIN EXITOSO ✅✅✅");
+        System.out.println("   Usuario: " + cliente.getCorreoElectronico());
+        System.out.println("   Rol: " + cliente.getRol());
+        System.out.println("=================================================");
+
+        return cliente;
     }
 }

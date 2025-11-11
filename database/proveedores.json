@@ -1,1 +1,10 @@
-[ ]
+[
+  {
+    "id": 1,
+    "nombre": "Distribuidora Pet Supplies",
+    "contacto": "Carlos Rodríguez",
+    "telefono": "0212-5551234",
+    "email": "ventas@petsupplies.com",
+    "productos": ["Alimentos", "Accesorios"]
+  }
+]

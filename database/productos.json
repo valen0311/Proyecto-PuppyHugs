@@ -1,9 +1,20 @@
-[ {
-  "id" : 1,
-  "nombre" : "Juguete Cuerda Torsión",
-  "codigoInterno" : "JUG-001",
-  "categoria" : "JUGUETE",
-  "cantidadDisponible" : 100,
-  "precio" : 9.99,
-  "estado" : "ACTIVO"
-} ]
+[
+  {
+    "id": 1,
+    "nombre": "Collar Antipulgas",
+    "descripcion": "Collar antipulgas de larga duración",
+    "precio": 25.99,
+    "stock": 50,
+    "categoria": "Accesorios",
+    "imagen": "collar.jpg"
+  },
+  {
+    "id": 2,
+    "nombre": "Alimento Premium",
+    "descripcion": "Alimento balanceado para perros adultos",
+    "precio": 45.00,
+    "stock": 100,
+    "categoria": "Alimentos",
+    "imagen": "alimento.jpg"
+  }
+]

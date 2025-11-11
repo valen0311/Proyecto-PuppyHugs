@@ -1,1 +1,16 @@
-[ ]
+[
+  {
+    "id": 1,
+    "clienteId": 2,
+    "fecha": "2024-11-10",
+    "productos": [
+      {
+        "productoId": 1,
+        "cantidad": 2,
+        "precioUnitario": 25.99
+      }
+    ],
+    "total": 51.98,
+    "estado": "completada"
+  }
+]
