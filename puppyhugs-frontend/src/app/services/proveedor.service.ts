@@ -1,29 +1,57 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Venta } from '../models/venta.model';
+import { Proveedor } from '../models/proveedor.model';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class VentaService {
+export class ProveedorService {
 
   private http = inject(HttpClient);
-  // URL del VentaController
-  private apiUrl = 'http://localhost:8080/api/ventas';
+
+  // ==========================================================
+  //      CORRECCIÓN: Se elimina el "/v1" de la URL
+  // ==========================================================
+  private apiUrl = 'http://localhost:8080/api/proveedores';
+  // ==========================================================
 
   /**
-   * Llama al endpoint: GET /api/ventas
+   * Conecta con: @GetMapping (en ProveedorController)
+   * Recibe: ResponseEntity<List<Proveedor>>
+   * Devuelve: Observable<Proveedor[]>
    */
-  public getVentas(): Observable<Venta[]> {
-    return this.http.get<Venta[]>(this.apiUrl);
+  public obtenerTodosLosProveedores(): Observable<Proveedor[]> {
+    return this.http.get<Proveedor[]>(this.apiUrl);
   }
 
   /**
-   * Llama al endpoint: POST /api/ventas
-   * @param venta El objeto Venta a crear (sin ID)
+   * Conecta con: @PostMapping (en ProveedorController)
+   * Envía: Un objeto JSON que coincide con ProveedorRequestDTO
+   * Recibe: ResponseEntity<Proveedor> (el proveedor guardado)
+   * Devuelve: Observable<Proveedor>
    */
-  public crearVenta(venta: Venta): Observable<Venta> {
-    return this.http.post<Venta>(this.apiUrl, venta);
+  public registrarProveedor(proveedor: Proveedor): Observable<Proveedor> {
+    // El objeto 'proveedor' de Angular (sin ID) coincide
+    // con el 'ProveedorRequestDTO' que espera Spring.
+    return this.http.post<Proveedor>(this.apiUrl, proveedor);
+  }
+
+  // --- Métodos Opcionales (para el futuro) ---
+
+  /**
+   * Conecta con: @PutMapping("/{id}") (No implementado aún en tu controller)
+   */
+  public actualizarProveedor(id: number, proveedor: Proveedor): Observable<Proveedor> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.put<Proveedor>(url, proveedor);
+  }
+
+  /**
+   * Conecta con: @DeleteMapping("/{id}") (No implementado aún en tu controller)
+   */
+  public eliminarProveedor(id: number): Observable<void> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete<void>(url);
   }
 }

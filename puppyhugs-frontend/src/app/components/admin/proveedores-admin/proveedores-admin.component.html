@@ -1,1 +1,135 @@
-<p>proveedores-admin works!</p>
+<div class="header">
+  <h1>Gestión de Proveedores</h1>
+  <button (click)="toggleForm()" class="toggle-form-btn">
+    {{ isFormVisible ? 'Cancelar Registro' : 'Registrar Nuevo Proveedor' }}
+  </button>
+</div>
+
+<div class="container">
+
+  <div *ngIf="errorMessage" class="error-backend">
+    <strong>Error:</strong> {{ errorMessage }}
+  </div>
+
+
+  <section *ngIf="isFormVisible" class="form-container">
+    <h2>Formulario de Registro de Proveedor</h2>
+
+    <form [formGroup]="proveedorForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-group">
+        <label for="razonSocial">Razón Social:</label>
+        <input id="razonSocial" type="text" formControlName="razonSocial">
+        <div *ngIf="proveedorForm.controls['razonSocial'].invalid && (proveedorForm.controls['razonSocial'].dirty || proveedorForm.controls['razonSocial'].touched)" class="error-message">
+          <span *ngIf="proveedorForm.controls['razonSocial'].errors?.['required']">
+            La razón social es obligatoria.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="identificacionFiscal">Identificación Fiscal (RUC):</label>
+        <input id="identificacionFiscal" type="text" formControlName="identificacionFiscal">
+        <div *ngIf="proveedorForm.controls['identificacionFiscal'].invalid && (proveedorForm.controls['identificacionFiscal'].dirty || proveedorForm.controls['identificacionFiscal'].touched)" class="error-message">
+          <span *ngIf="proveedorForm.controls['identificacionFiscal'].errors?.['required']">
+            La identificación es obligatoria.
+          </span>
+          <span *ngIf="proveedorForm.controls['identificacionFiscal'].errors?.['minlength']">
+            Debe tener al menos 8 caracteres.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="correoElectronico">Correo Electrónico:</label>
+        <input id="correoElectronico" type="email" formControlName="correoElectronico" placeholder="ejemplo@proveedor.com">
+        <div *ngIf="proveedorForm.controls['correoElectronico'].invalid && (proveedorForm.controls['correoElectronico'].dirty || proveedorForm.controls['correoElectronico'].touched)" class="error-message">
+          <span *ngIf="proveedorForm.controls['correoElectronico'].errors?.['required']">
+            El correo es obligatorio.
+          </span>
+          <span *ngIf="proveedorForm.controls['correoElectronico'].errors?.['email']">
+            El formato del correo no es válido.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="telefono">Teléfono:</label>
+        <input id="telefono" type="tel" formControlName="telefono">
+        <div *ngIf="proveedorForm.controls['telefono'].invalid && (proveedorForm.controls['telefono'].dirty || proveedorForm.controls['telefono'].touched)" class="error-message">
+          <span *ngIf="proveedorForm.controls['telefono'].errors?.['required']">
+            El teléfono es obligatorio.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="direccion">Dirección:</label>
+        <input id="direccion" type="text" formControlName="direccion">
+        <div *ngIf="proveedorForm.controls['direccion'].invalid && (proveedorForm.controls['direccion'].dirty || proveedorForm.controls['direccion'].touched)" class="error-message">
+          <span *ngIf="proveedorForm.controls['direccion'].errors?.['required']">
+            La dirección es obligatoria.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="tipoProveedor">Tipo de Proveedor:</label>
+        <select id="tipoProveedor" formControlName="tipoProveedor">
+          <option *ngFor="let tipo of tiposProveedor" [value]="tipo">
+            {{ tipo }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="proveedorForm.invalid" class="submit-btn">
+          Guardar Proveedor
+        </button>
+      </div>
+
+    </form>
+  </section>
+
+  <section class="lista-container">
+    <h2>Lista de Proveedores Registrados</h2>
+
+    <div *ngIf="!proveedores || proveedores.length === 0" class="no-data">
+      <p>No hay proveedores registrados actualmente.</p>
+    </div>
+
+    <table *ngIf="proveedores.length > 0">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Razón Social</th>
+        <th>Identificación (RUC)</th>
+        <th>Correo</th>
+        <th>Teléfono</th>
+        <th>Dirección</th>
+        <th>Tipo</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let prov of proveedores">
+        <td>{{ prov.id }}</td>
+        <td>{{ prov.razonSocial }}</td>
+        <td>{{ prov.identificacionFiscal }}</td>
+        <td>{{ prov.correoElectronico }}</td>
+        <td>{{ prov.telefono }}</td>
+        <td>{{ prov.direccion }}</td>
+
+        <td>
+            <span class="tipo"
+                  [class.tipo-nacional]="prov.tipoProveedor === 'NACIONAL'"
+                  [class.tipo-internacional]="prov.tipoProveedor === 'INTERNACIONAL'">
+              {{ prov.tipoProveedor }}
+            </span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </section>
+
+</div>

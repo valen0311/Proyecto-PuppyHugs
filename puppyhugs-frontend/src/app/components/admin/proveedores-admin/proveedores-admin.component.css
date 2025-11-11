@@ -1,9 +1,4 @@
-/*
-  --- CSS ADAPTADO PARA PROVEEDORES ---
-  La mayoría de las clases son genéricas y se mantienen.
-  El único cambio está al final:
-  Se reemplazaron .status-activo/agotado por .tipo-nacional/internacional
-*/
+/* src/app/components/admin/proveedores-admin/proveedores-admin.component.css */
 
 .container {
   padding: 20px;
@@ -57,10 +52,6 @@ h1 {
   color: #34495e;
 }
 
-/* NOTA: Tu HTML no usa 'form-row' sino 'form-group'
-  directamente. Puedes usar 'form-row' si quieres
-  poner (ej) Razón Social y RUC en la misma fila.
-*/
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -71,8 +62,7 @@ h1 {
 .form-group {
   display: flex;
   flex-direction: column;
-  /* Añadido para que los campos no estén pegados */
-  margin-bottom: 15px;
+  margin-bottom: 15px; /* Añadido para espaciar los campos */
 }
 
 .form-group label {
@@ -95,6 +85,19 @@ h1 {
   border-color: #1abc9c;
 }
 
+/* Estilo para los errores de validación (ej: "Campo requerido") */
+.error-message {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+/* Contenedor del botón de submit (opcional, para alinear) */
+.form-actions {
+  margin-top: 10px;
+  text-align: right;
+}
+
 .submit-btn {
   background-color: #2980b9; /* Azul */
   color: white;
@@ -107,8 +110,8 @@ h1 {
   cursor: not-allowed;
 }
 
-/* NOTA: Tu HTML usa la clase 'error-backend'.
-  Renombré 'server-error' a 'error-backend' para que coincida.
+/* CAMBIO: Renombrado de .server-error a .error-backend
+  para coincidir con el HTML
 */
 .error-backend {
   color: #e74c3c;
@@ -122,8 +125,8 @@ h1 {
 
 
 /* --- Tabla de Proveedores --- */
-/* NOTA: Tu HTML usa 'lista-container'.
-  Renombré 'table-container' a 'lista-container' para que coincida.
+/* CAMBIO: Renombrado de .table-container a .lista-container
+  para coincidir con el HTML
 */
 .lista-container {
   background-color: #ffffff;
@@ -137,9 +140,6 @@ h1 {
   color: #34495e;
 }
 
-/* NOTA: Tu HTML no usa 'no-data', pero es buena idea
-  tenerlo para el *ngIf de lista vacía.
-*/
 .no-data {
   text-align: center;
   padding: 30px;
@@ -171,16 +171,16 @@ tbody tr:hover {
   background-color: #f9f9f9;
 }
 
-/* *** CAMBIO PRINCIPAL ***
-  Se reemplazan las clases de "status" por clases de "tipo"
-  para que coincidan con el modelo Proveedor.
+
+/* CAMBIO: Reemplazo de .status- por .tipo-
+  para coincidir con Proveedores
 */
 .tipo {
   padding: 4px 8px;
   border-radius: 4px;
   font-weight: 600;
   font-size: 0.85rem;
-  text-transform: uppercase; /* Queda bien para NACIONAL/INTERNACIONAL */
+  text-transform: uppercase;
 }
 .tipo-nacional {
   background-color: #eaf4fb; /* Azul claro */
