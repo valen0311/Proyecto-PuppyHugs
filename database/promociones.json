@@ -5,4 +5,28 @@
   "fechaInicio" : "2025-11-15",
   "fechaFin" : "2025-11-30",
   "productoIds" : [ 1 ]
-} ]
+},
+  {
+    "id" : 2,
+    "nombre" : "Descuento por Volumen en Alimentos",
+    "descuento" : 0.15,
+    "fechaInicio" : "2025-11-01",
+    "fechaFin" : "2025-11-14",
+    "productoIds" : [ 2, 6, 14 ]
+  },
+  {
+    "id" : 3,
+    "nombre" : "Liquidación de Juguetes Fin de Semana",
+    "descuento" : 0.40,
+    "fechaInicio" : "2025-11-20",
+    "fechaFin" : "2025-11-23",
+    "productoIds" : [ 9, 16, 24 ]
+  },
+  {
+    "id" : 4,
+    "nombre" : "Oferta Black Friday - Todo Higiene",
+    "descuento" : 0.50,
+    "fechaInicio" : "2025-11-29",
+    "fechaFin" : "2025-12-01",
+    "productoIds" : [ 4, 8, 15, 23 ]
+  } ]
