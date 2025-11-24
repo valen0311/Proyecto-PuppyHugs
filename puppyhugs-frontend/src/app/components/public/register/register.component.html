@@ -1,1 +1,123 @@
-<p>register works!</p>
+<div class="register-container">
+  <div class="register-box">
+    <div class="register-header">
+      <h1>PuppyHugs</h1>
+      <p class="subtitle">Crear Cuenta</p>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-alert">
+      <strong>❌ Error:</strong> {{ errorMessage }}
+    </div>
+
+    <div *ngIf="successMessage" class="success-alert">
+      <strong>✅ Éxito:</strong> {{ successMessage }}
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-group">
+        <label for="nombreCompleto">Nombre Completo *</label>
+        <input
+          id="nombreCompleto"
+          type="text"
+          formControlName="nombreCompleto"
+          placeholder="Juan Pérez García"
+          [class.input-error]="isFieldInvalid('nombreCompleto')"
+        >
+        <div *ngIf="isFieldInvalid('nombreCompleto')" class="field-error">
+          {{ getFieldError('nombreCompleto') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="correoElectronico">Email *</label>
+        <input
+          id="correoElectronico"
+          type="email"
+          formControlName="correoElectronico"
+          placeholder="tu@email.com"
+          [class.input-error]="isFieldInvalid('correoElectronico')"
+        >
+        <div *ngIf="isFieldInvalid('correoElectronico')" class="field-error">
+          {{ getFieldError('correoElectronico') }}
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="password">Contraseña *</label>
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            placeholder="Mínimo 6 caracteres"
+            [class.input-error]="isFieldInvalid('password')"
+          >
+          <div *ngIf="isFieldInvalid('password')" class="field-error">
+            {{ getFieldError('password') }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirmar Contraseña *</label>
+          <input
+            id="confirmPassword"
+            type="password"
+            formControlName="confirmPassword"
+            placeholder="Repite tu contraseña"
+            [class.input-error]="isFieldInvalid('confirmPassword') || (!passwordsMatch() && registerForm.get('confirmPassword')?.touched)"
+          >
+          <div *ngIf="isFieldInvalid('confirmPassword')" class="field-error">
+            {{ getFieldError('confirmPassword') }}
+          </div>
+          <div *ngIf="!passwordsMatch() && registerForm.get('confirmPassword')?.touched" class="field-error">
+            Las contraseñas no coinciden
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="direccion">Dirección *</label>
+        <input
+          id="direccion"
+          type="text"
+          formControlName="direccion"
+          placeholder="Calle Principal 123, Apto 5"
+          [class.input-error]="isFieldInvalid('direccion')"
+        >
+        <div *ngIf="isFieldInvalid('direccion')" class="field-error">
+          {{ getFieldError('direccion') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="telefono">Teléfono *</label>
+        <input
+          id="telefono"
+          type="tel"
+          formControlName="telefono"
+          placeholder="1234567890"
+          [class.input-error]="isFieldInvalid('telefono')"
+        >
+        <div *ngIf="isFieldInvalid('telefono')" class="field-error">
+          {{ getFieldError('telefono') }}
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="registerForm.invalid || isSubmitting"
+        class="submit-btn"
+      >
+        <span *ngIf="!isSubmitting">Registrarse</span>
+        <span *ngIf="isSubmitting">Registrando...</span>
+      </button>
+
+    </form>
+
+    <div class="login-link">
+      <p>¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión aquí</a></p>
+    </div>
+
+  </div>
+</div>

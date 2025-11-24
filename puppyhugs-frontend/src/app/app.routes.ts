@@ -72,5 +72,10 @@
    },
 
    // --- RUTAS POR DEFECTO ---
+   {
+     path: '',
+     redirectTo: 'login',
+     pathMatch: 'full'
+   },
 
  ];

@@ -27,10 +27,6 @@ h1 {
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   margin-bottom: 30px;
-
-  /* Opcional: Centrar el formulario si es lo único en la página */
-  /* max-width: 700px; */
-  /* margin: 0 auto 30px auto; */
 }
 
 .form-container h2 {
@@ -82,12 +78,14 @@ h1 {
   cursor: pointer;
   font-weight: 600;
   transition: all 0.2s;
-  background-color: #2980b9; /* Azul */
+  background-color: #2980b9;
   color: white;
 }
+
 .submit-btn:hover {
   background-color: #2471a3;
 }
+
 .submit-btn:disabled {
   background-color: #bdc3c7;
   cursor: not-allowed;
@@ -97,4 +95,22 @@ h1 {
 
 /* Mensaje de Error (Rojo) */
 .error-backend {
-  color
+  color: #e74c3c;
+  background-color: #fbeaea;
+  padding: 12px;
+  border-radius: 4px;
+  margin: 15px 0;
+  text-align: center;
+  border: 1px solid #e74c3c;
+}
+
+/* Mensaje de Éxito (Verde) */
+.success-backend {
+  color: #27ae60;
+  background-color: #eafaf1;
+  padding: 12px;
+  border-radius: 4px;
+  margin: 15px 0;
+  text-align: center;
+  border: 1px solid #27ae60;
+}

@@ -32,7 +32,7 @@
 
       <div class="form-group">
         <label for="montoTotal">Monto Total:</label>
-        <input id="montoTotal" type="number" step="0.01" formControlName="montoTotal">
+        <input id="montoTotal" type="number" step="0.01" formControlName="montoTotal" placeholder="Ej: 50.00">
         <div *ngIf="pagoForm.controls['montoTotal'].invalid && (pagoForm.controls['montoTotal'].dirty || pagoForm.controls['montoTotal'].touched)" class="error-message">
           <span *ngIf="pagoForm.controls['montoTotal'].errors?.['required']">
             El monto es obligatorio.

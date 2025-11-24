@@ -29,11 +29,11 @@ export class ClienteService {
   }
 
   /**
-   * Llama al endpoint: POST /api/clientes
+   * Llama al endpoint: POST /api/clientes/registro
    * @param clienteRequest El objeto con los datos del formulario de registro
    * @returns Un Observable con el cliente recién creado
    */
   public registrarCliente(clienteRequest: RegistroClienteRequest): Observable<Cliente> {
-    return this.http.post<Cliente>(this.apiUrl, clienteRequest);
+    return this.http.post<Cliente>(`${this.apiUrl}/registro`, clienteRequest);
   }
 }

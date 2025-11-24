@@ -26,4 +26,14 @@ export class VentaService {
   public crearVenta(venta: Venta): Observable<Venta> {
     return this.http.post<Venta>(this.apiUrl, venta);
   }
+
+  /**
+   * Llama al endpoint: PUT /api/ventas/{ventaId}/finalizar?pagoId={pagoId}
+   * Actualiza el estado de la venta a PAGADA después de registrar un pago
+   * @param ventaId El ID de la venta a finalizar
+   * @param pagoId El ID del pago registrado
+   */
+  public finalizarVenta(ventaId: number, pagoId: number): Observable<Venta> {
+    return this.http.put<Venta>(`${this.apiUrl}/${ventaId}/finalizar?pagoId=${pagoId}`, {});
+  }
 }
