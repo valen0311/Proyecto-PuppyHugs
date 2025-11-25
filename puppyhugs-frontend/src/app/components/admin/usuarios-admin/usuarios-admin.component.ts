@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { ClienteService } from '../../../services/cliente.service';
 import { Cliente, Rol } from '../../../models/cliente.model';
@@ -14,7 +14,8 @@ import { RegistroClienteRequest } from '../../../models/registro-cliente-request
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   templateUrl: './usuarios-admin.component.html',
   styleUrl: './usuarios-admin.component.css'
@@ -25,14 +26,18 @@ export class UsuariosAdminComponent implements OnInit {
   private fb = inject(FormBuilder);
 
   public usuarios: Cliente[] = [];
+  public usuariosFiltrados: Cliente[] = [];
   public usuarioForm!: FormGroup;
   public errorMessage: string | null = null;
   public isFormVisible: boolean = false;
   public roles: Rol[] = ['ROL_CLIENTE', 'ROL_ADMIN'];
+  public searchTerm: string = '';
+  public isSearchActive: boolean = false;
+  public noResultsMessage: string | null = null;
 
   ngOnInit(): void {
     this.usuarioForm = this.fb.group({
-      nombreCompleto: ['', Validators.required],
+      nombreCompleto: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^([A-Z][a-z]*( [A-Z][a-z]*)*)$/)]],
       correoElectronico: ['', [Validators.required, Validators.email]],
       direccion: ['', Validators.required],
       telefono: ['', Validators.required],
@@ -52,12 +57,48 @@ export class UsuariosAdminComponent implements OnInit {
     this.clienteService.getClientes().subscribe({
       next: (data: Cliente[]) => {
         this.usuarios = data;
+        this.usuariosFiltrados = data;
       },
       error: (err: HttpErrorResponse) => {
         console.error(err);
         this.errorMessage = 'Error al cargar los usuarios. Verifique la conexión con el backend.';
       }
     });
+  }
+
+  /**
+   * Busca usuarios por nombre
+   */
+  public buscarUsuarios(): void {
+    if (!this.searchTerm.trim()) {
+      this.noResultsMessage = null;
+      this.isSearchActive = false;
+      this.usuariosFiltrados = this.usuarios;
+      return;
+    }
+
+    const termino = this.searchTerm.toLowerCase();
+    this.usuariosFiltrados = this.usuarios.filter(usuario =>
+      usuario.nombreCompleto.toLowerCase().includes(termino)
+    );
+
+    this.isSearchActive = true;
+
+    if (this.usuariosFiltrados.length === 0) {
+      this.noResultsMessage = `❌ No se encontraron usuarios con el nombre "${this.searchTerm}".`;
+    } else {
+      this.noResultsMessage = null;
+    }
+  }
+
+  /**
+   * Limpia la búsqueda y muestra todos los usuarios
+   */
+  public limpiarBusqueda(): void {
+    this.searchTerm = '';
+    this.noResultsMessage = null;
+    this.isSearchActive = false;
+    this.usuariosFiltrados = this.usuarios;
   }
 
   /**

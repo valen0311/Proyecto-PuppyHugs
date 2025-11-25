@@ -1,8 +1,5 @@
 <div class="header">
   <h1>Gestión de Usuarios</h1>
-  <button class="toggle-form-btn" (click)="toggleForm()">
-    {{ isFormVisible ? 'Cancelar Registro' : 'Registrar Nuevo Usuario' }}
-  </button>
 </div>
 
 <div class="container">
@@ -22,6 +19,12 @@
         <div *ngIf="usuarioForm.controls['nombreCompleto'].invalid && (usuarioForm.controls['nombreCompleto'].dirty || usuarioForm.controls['nombreCompleto'].touched)" class="error-message">
           <span *ngIf="usuarioForm.controls['nombreCompleto'].errors?.['required']">
             El nombre es obligatorio.
+          </span>
+          <span *ngIf="usuarioForm.controls['nombreCompleto'].errors?.['minlength']">
+            Mínimo 3 caracteres.
+          </span>
+          <span *ngIf="usuarioForm.controls['nombreCompleto'].errors?.['pattern']">
+            Solo letras, sin números. Cada palabra debe iniciar con mayúscula (ej: Juan Pérez).
           </span>
         </div>
       </div>
@@ -93,11 +96,30 @@
   <section class="lista-container">
     <h2>Lista de Usuarios Registrados</h2>
 
-    <div *ngIf="!usuarios || usuarios.length === 0" class="no-data">
-      <p>No hay usuarios registrados actualmente.</p>
+    <div class="search-section">
+      <input
+        type="text"
+        placeholder="Buscar usuario por nombre..."
+        [(ngModel)]="searchTerm"
+        (keyup.enter)="buscarUsuarios()"
+        class="search-input">
+      <button (click)="buscarUsuarios()" class="search-btn">
+        Buscar
+      </button>
+      <button *ngIf="isSearchActive" (click)="limpiarBusqueda()" class="clear-btn">
+        Limpiar
+      </button>
     </div>
 
-    <table *ngIf="usuarios.length > 0">
+    <div *ngIf="noResultsMessage" class="no-results-message">
+      {{ noResultsMessage }}
+    </div>
+
+    <div *ngIf="!usuariosFiltrados || usuariosFiltrados.length === 0" class="no-data">
+      <p *ngIf="!isSearchActive">No hay usuarios registrados actualmente.</p>
+    </div>
+
+    <table *ngIf="usuariosFiltrados.length > 0">
       <thead>
       <tr>
         <th>ID</th>
@@ -109,7 +131,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let usuario of usuarios">
+      <tr *ngFor="let usuario of usuariosFiltrados">
         <td>{{ usuario.id }}</td>
         <td>{{ usuario.nombreCompleto }}</td>
         <td>{{ usuario.correoElectronico }}</td>

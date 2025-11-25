@@ -11,9 +11,9 @@
         id="correo"
         type="email"
         formControlName="correo"
-        [class.invalid]="isFieldInvalid('correo')">
+        [class.invalid]="isLoginFieldInvalid('correo')">
 
-      <div *ngIf="isFieldInvalid('correo')" class="error-message">
+      <div *ngIf="isLoginFieldInvalid('correo')" class="error-message">
         <span *ngIf="loginForm.get('correo')?.errors?.['required']">
           El correo es obligatorio.
         </span>
@@ -29,9 +29,9 @@
         id="password"
         type="password"
         formControlName="password"
-        [class.invalid]="isFieldInvalid('password')">
+        [class.invalid]="isLoginFieldInvalid('password')">
 
-      <div *ngIf="isFieldInvalid('password')" class="error-message">
+      <div *ngIf="isLoginFieldInvalid('password')" class="error-message">
         <span *ngIf="loginForm.get('password')?.errors?.['required']">
           La contraseña es obligatoria.
         </span>
@@ -47,7 +47,118 @@
     </button>
 
     <div class="register-link">
-      <p>¿No tienes cuenta? <a routerLink="/register">Regístrate aquí</a></p>
+      <p>¿No tienes cuenta? <button type="button" (click)="toggleRegisterForm()" class="toggle-btn">Regístrate aquí</button></p>
+    </div>
+  </form>
+
+  <form *ngIf="showRegisterForm" [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()" class="register-form">
+    <h2>Crear Cuenta</h2>
+
+    <div *ngIf="errorMessage" class="error-alert">
+      <strong>❌ Error:</strong> {{ errorMessage }}
+    </div>
+
+    <div *ngIf="successMessage" class="success-alert">
+      <strong>✅ Éxito:</strong> {{ successMessage }}
+    </div>
+
+    <div class="form-group">
+      <label for="nombreCompleto">Nombre Completo *</label>
+      <input
+        id="nombreCompleto"
+        type="text"
+        formControlName="nombreCompleto"
+        placeholder="Juan Pérez García"
+        [class.input-error]="isFieldInvalid('nombreCompleto', registerForm)">
+      <div *ngIf="isFieldInvalid('nombreCompleto', registerForm)" class="field-error">
+        {{ getFieldError('nombreCompleto') }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="correoElectronico">Email *</label>
+      <input
+        id="correoElectronico"
+        type="email"
+        formControlName="correoElectronico"
+        placeholder="tu@email.com"
+        [class.input-error]="isFieldInvalid('correoElectronico', registerForm)">
+      <div *ngIf="isFieldInvalid('correoElectronico', registerForm)" class="field-error">
+        {{ getFieldError('correoElectronico') }}
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="password">Contraseña *</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Mínimo 6 caracteres"
+          [class.input-error]="isFieldInvalid('password', registerForm)">
+        <div *ngIf="isFieldInvalid('password', registerForm)" class="field-error">
+          {{ getFieldError('password') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirmar Contraseña *</label>
+        <input
+          id="confirmPassword"
+          type="password"
+          formControlName="confirmPassword"
+          placeholder="Repite tu contraseña"
+          [class.input-error]="isFieldInvalid('confirmPassword', registerForm) || (!passwordsMatch() && registerForm.get('confirmPassword')?.touched)">
+        <div *ngIf="isFieldInvalid('confirmPassword', registerForm)" class="field-error">
+          {{ getFieldError('confirmPassword') }}
+        </div>
+        <div *ngIf="!passwordsMatch() && registerForm.get('confirmPassword')?.touched" class="field-error">
+          Las contraseñas no coinciden
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="direccion">Dirección *</label>
+      <input
+        id="direccion"
+        type="text"
+        formControlName="direccion"
+        placeholder="Calle Principal 123, Apto 5"
+        [class.input-error]="isFieldInvalid('direccion', registerForm)">
+      <div *ngIf="isFieldInvalid('direccion', registerForm)" class="field-error">
+        {{ getFieldError('direccion') }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="telefono">Teléfono *</label>
+      <input
+        id="telefono"
+        type="tel"
+        formControlName="telefono"
+        placeholder="1234567890"
+        [class.input-error]="isFieldInvalid('telefono', registerForm)">
+      <div *ngIf="isFieldInvalid('telefono', registerForm)" class="field-error">
+        {{ getFieldError('telefono') }}
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button
+        type="submit"
+        [disabled]="registerForm.invalid || isSubmitting"
+        class="submit-btn">
+        <span *ngIf="!isSubmitting">Registrarse</span>
+        <span *ngIf="isSubmitting">Registrando...</span>
+      </button>
+      <button
+        type="button"
+        (click)="toggleRegisterForm()"
+        class="cancel-btn">
+        Cancelar
+      </button>
     </div>
   </form>
 </div>

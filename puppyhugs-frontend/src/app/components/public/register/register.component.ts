@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
-      nombreCompleto: ['', [Validators.required, Validators.minLength(3)]],
+      nombreCompleto: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^([A-Z][a-z]*( [A-Z][a-z]*)*)$/)]],
       correoElectronico: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]],
@@ -94,7 +94,12 @@ export class RegisterComponent implements OnInit {
     if (control.errors['required']) return `${fieldName} es obligatorio`;
     if (control.errors['minlength']) return `Mínimo ${control.errors['minlength'].requiredLength} caracteres`;
     if (control.errors['email']) return 'Email inválido';
-    if (control.errors['pattern']) return 'Teléfono inválido (mínimo 7 dígitos)';
+    if (control.errors['pattern']) {
+      if (fieldName === 'nombreCompleto') {
+        return 'Solo letras, sin números. Cada palabra debe iniciar con mayúscula (ej: Juan Pérez)';
+      }
+      return 'Teléfono inválido (mínimo 7 dígitos)';
+    }
     return 'Campo inválido';
   }
 

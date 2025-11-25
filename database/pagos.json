@@ -89,4 +89,32 @@
   "fecha" : "2025-11-24T11:16:46.4644097",
   "metodoPago" : "MASTERCARD",
   "estado" : "EXITOSO"
+}, {
+  "id" : 14,
+  "pedidoId" : 2,
+  "montoTotal" : 90,
+  "fecha" : "2025-11-24T14:28:31.8683308",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
+}, {
+  "id" : 15,
+  "pedidoId" : 2,
+  "montoTotal" : 9.99,
+  "fecha" : "2025-11-24T14:28:44.1425707",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
+}, {
+  "id" : 16,
+  "pedidoId" : 2,
+  "montoTotal" : 8.88,
+  "fecha" : "2025-11-24T16:51:40.2850959",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
+}, {
+  "id" : 17,
+  "pedidoId" : 2,
+  "montoTotal" : 9.99,
+  "fecha" : "2025-11-24T16:51:52.7889737",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
 } ]
