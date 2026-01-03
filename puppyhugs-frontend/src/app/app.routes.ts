@@ -3,9 +3,9 @@
  import { Routes } from '@angular/router';
 
  // 1. IMPORTAMOS LOS COMPONENTES "ESTÁTICOS"
- import { LoginComponent } from './components/public/login/login.component';
- import { AdminLayoutComponent } from './components/admin/admin-layout/admin-layout.component';
- import { DashboardAdminComponent } from './components/admin/dashboard-admin/dashboard-admin.component';
+ import { LoginComponent } from './public/login/login.component';
+ import { AdminLayoutComponent } from './admin/admin-layout/admin-layout.component';
+ import { DashboardAdminComponent } from './admin/dashboard-admin/dashboard-admin.component';
  // Se eliminan los imports de las vistas que se cargan con loadComponent
 
  export const routes: Routes = [
@@ -19,7 +19,7 @@
    // --- RUTA PÚBLICA: REGISTRO ---
    { // ¡Descomentado!
      path: 'register',
-     loadComponent: () => import('./components/public/register/register.component')
+     loadComponent: () => import('./public/register/register.component')
                           .then(m => m.RegisterComponent)
    },
 
@@ -34,32 +34,32 @@
        },
        { // ¡Descomentado!
          path: 'productos', // Ruta: /admin/productos
-         loadComponent: () => import('./components/admin/productos-admin/productos-admin.component')
+         loadComponent: () => import('./admin/productos-admin/productos-admin.component')
                               .then(m => m.ProductosAdminComponent)
        },
        { // ¡Descomentado!
          path: 'promociones', // Ruta: /admin/promociones
-         loadComponent: () => import('./components/admin/promociones-admin/promociones-admin.component')
+         loadComponent: () => import('./admin/promociones-admin/promociones-admin.component')
                               .then(m => m.PromocionesAdminComponent)
        },
        { // ¡Añadido!
          path: 'proveedores', // Ruta: /admin/proveedores
-         loadComponent: () => import('./components/admin/proveedores-admin/proveedores-admin.component')
+         loadComponent: () => import('./admin/proveedores-admin/proveedores-admin.component')
                               .then(m => m.ProveedoresAdminComponent)
        },
        { // ¡Añadido!
          path: 'ventas', // Ruta: /admin/ventas
-         loadComponent: () => import('./components/admin/ventas-admin/ventas-admin.component')
+         loadComponent: () => import('./admin/ventas-admin/ventas-admin.component')
                               .then(m => m.VentasAdminComponent)
        },
        { // ¡Añadido!
          path: 'usuarios', // Ruta: /admin/usuarios (Clientes)
-         loadComponent: () => import('./components/admin/usuarios-admin/usuarios-admin.component')
+         loadComponent: () => import('./admin/usuarios-admin/usuarios-admin.component')
                               .then(m => m.UsuariosAdminComponent)
        },
        { // ¡Actualizado!
          path: 'pagos', // Ruta: /admin/pagos
-         loadComponent: () => import('./components/admin/pago/pago-admin.component')
+         loadComponent: () => import('./admin/pago/pago-admin.component')
                               .then(m => m.PagoAdminComponent)
        },
 
