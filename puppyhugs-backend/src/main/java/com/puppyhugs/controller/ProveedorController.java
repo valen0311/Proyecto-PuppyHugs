@@ -46,6 +46,47 @@ public class ProveedorController {
         return ResponseEntity.ok(proveedorService.getProveedores());
     }
 
+    /**
+     * Endpoint para obtener un proveedor por ID.
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getProveedorById(@PathVariable Long id) {
+        return proveedorService.getProveedorById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    /**
+     * Endpoint para actualizar un proveedor existente.
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<?> actualizarProveedor(@PathVariable Long id, @Valid @RequestBody ProveedorRequestDTO proveedorDTO) {
+        
+        Proveedor proveedorActualizado = convertDtoToModel(proveedorDTO);
+
+        try {
+            Proveedor proveedor = proveedorService.actualizarProveedor(id, proveedorActualizado);
+            return ResponseEntity.ok(proveedor);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    /**
+     * Endpoint para eliminar un proveedor por ID.
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarProveedor(@PathVariable Long id) {
+        try {
+            proveedorService.eliminarProveedor(id);
+            return ResponseEntity.ok("Proveedor eliminado correctamente.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
+
     // --- Método de Conversión ---
     private Proveedor convertDtoToModel(ProveedorRequestDTO dto) {
         Proveedor proveedor = new Proveedor();

@@ -172,21 +172,57 @@ tbody tr:hover {
 }
 
 
-/* CAMBIO: Reemplazo de .status- por .tipo-
-  para coincidir con Proveedores
-*/
 .tipo {
   padding: 4px 8px;
   border-radius: 4px;
   font-weight: 600;
   font-size: 0.85rem;
-  text-transform: uppercase;
+  text-transform: capitalize;
 }
-.tipo-nacional {
-  background-color: #eaf4fb; /* Azul claro */
-  color: #2980b9; /* Azul oscuro */
+.tipo-higiene {
+  background-color: #e8f5e9; /* Verde claro */
+  color: #2e7d32; /* Verde oscuro */
 }
-.tipo-internacional {
-  background-color: #fef5e7; /* Naranja claro */
-  color: #d35400; /* Naranja oscuro */
+.tipo-equipos {
+  background-color: #e3f2fd; /* Azul claro */
+  color: #1565c0; /* Azul oscuro */
+}
+.tipo-alimentos {
+  background-color: #fff3e0; /* Naranja claro */
+  color: #e65100; /* Naranja oscuro */
+}
+.tipo-accesorios {
+  background-color: #f3e5f5; /* Púrpura claro */
+  color: #6a1b9a; /* Púrpura oscuro */
+}
+.tipo-medicinas {
+  background-color: #fce4ec; /* Rosa claro */
+  color: #c2185b; /* Rosa oscuro */
+}
+
+/* Estilos para la columna de acciones */
+.acciones {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.btn-editar, .btn-eliminar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 4px 8px;
+  margin: 0 4px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.btn-editar:hover {
+  background-color: #eaf4fb;
+  transform: scale(1.15);
+}
+
+.btn-eliminar:hover {
+  background-color: #fbeaea;
+  transform: scale(1.15);
 }

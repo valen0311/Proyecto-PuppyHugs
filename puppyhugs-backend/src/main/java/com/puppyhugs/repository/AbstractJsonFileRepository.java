@@ -130,12 +130,14 @@ public abstract class AbstractJsonFileRepository<T> {
     public synchronized void init() {
         File dbFile = getDbFile();
         try {
-            // Lógica: Si el archivo NO existe, se crea vacío.
+            File parentDir = dbFile.getParentFile();
+            if (parentDir != null && !parentDir.exists()) {
+                parentDir.mkdirs();
+            }
+            
             if (!dbFile.exists()) {
-                dbFile.getParentFile().mkdirs(); // Crea la carpeta "./database"
                 objectMapper.writeValue(dbFile, new ArrayList<>());
             }
-
 
             // Lógica: Leer el archivo y cargarlo en el caché en memoria.
             List<T> entities = objectMapper.readValue(dbFile, getListTypeReference()); // (TAREA 4)
@@ -208,6 +210,15 @@ public abstract class AbstractJsonFileRepository<T> {
 
 
     /**
+     * Verifica si una entidad existe por su ID.
+     * ¡MUY RÁPIDO! Lee directamente del caché en memoria.
+     */
+    public boolean existsById(Long id) {
+        return inMemoryDb.containsKey(id);
+    }
+
+
+    /**
      * Devuelve todas las entidades.
      * ¡MUY RÁPIDO! Lee directamente del caché en memoria.
      */
@@ -242,14 +253,12 @@ public abstract class AbstractJsonFileRepository<T> {
 
     /**
      * Escribe el estado COMPLETO del caché 'inMemoryDb' al archivo JSON.
-     * Este método es llamado por save() y deleteById(), que ya son
-     * 'synchronized', así que “estamos protegidos”.
      */
     private void persistToFile() {
         try {
             objectMapper.writeValue(getDbFile(), new ArrayList<>(inMemoryDb.values()));
         } catch (IOException e) {
-            throw new RuntimeException("Error fatal al escribir en el archivo JSON: " + getDatabaseFileName(), e);
+            throw new RuntimeException("Error al guardar datos en " + getDatabaseFileName(), e);
         }
     }
 }

@@ -32,9 +32,10 @@ export class ProveedoresAdminComponent implements OnInit {
   public proveedorForm!: FormGroup;
   public errorMessage: string | null = null;
   public isFormVisible: boolean = false;
+  public editingProveedor: Proveedor | null = null;
 
   // 6. Arrays para los <select>
-  public tiposProveedor: string[] = ['NACIONAL', 'INTERNACIONAL'];
+  public tiposProveedor: string[] = ['Higiene', 'Equipos Médicos', 'Alimentos', 'Accesorios', 'Medicinas'];
 
 
   ngOnInit(): void {
@@ -45,7 +46,7 @@ export class ProveedoresAdminComponent implements OnInit {
       direccion: ['', Validators.required],
       telefono: ['', Validators.required],
       correoElectronico: ['', [Validators.required, Validators.email]],
-      tipoProveedor: ['NACIONAL', Validators.required]
+      tipoProveedor: ['Higiene', Validators.required]
     });
 
     // 8. Cargar la lista de proveedores al iniciar
@@ -71,20 +72,21 @@ export class ProveedoresAdminComponent implements OnInit {
   }
 
   /**
-   * Muestra u oculta el formulario de registro
+   * Muestra u oculta el formulario de registro/edición
    */
   public toggleForm(): void {
     this.isFormVisible = !this.isFormVisible;
     this.errorMessage = null;
     if (!this.isFormVisible) {
       this.proveedorForm.reset({
-        tipoProveedor: 'NACIONAL'
+        tipoProveedor: 'Higiene'
       });
+      this.editingProveedor = null;
     }
   }
 
   /**
-   * Se llama al enviar el formulario (Adaptado a Proveedor)
+   * Se llama al enviar el formulario (Crear o Actualizar)
    */
   public onSubmit(): void {
     this.proveedorForm.markAllAsTouched();
@@ -93,28 +95,77 @@ export class ProveedoresAdminComponent implements OnInit {
     }
 
     this.errorMessage = null;
-    const nuevoProveedor: Proveedor = this.proveedorForm.value;
+    const datosProveedor: Proveedor = this.proveedorForm.value;
 
-    this.proveedorService.registrarProveedor(nuevoProveedor).subscribe({
-      // Tipado estricto para 'proveedorGuardado'
-      next: (proveedorGuardado: Proveedor) => {
-        // Éxito:
-        this.proveedores.push(proveedorGuardado);
-        this.toggleForm();
-      },
-      // Tipado estricto y manejo de error mejorado
-      error: (err: HttpErrorResponse) => {
-        console.error(err);
-        if (typeof err.error === 'string') {
-          // 1. Error de Negocio (String)
-          // (Viene del 'IllegalArgumentException' en Spring, ej: "El RUC ya existe")
-          this.errorMessage = err.error;
-        } else {
-          // 2. Error de Validación (Objeto) o error genérico
-          // (Viene del @Valid o un 500)
-          this.errorMessage = 'Error al registrar el proveedor. Verifique los datos e intente de nuevo.';
+    if (this.editingProveedor) {
+      // Actualizar proveedor existente
+      this.proveedorService.actualizarProveedor(this.editingProveedor.id!, datosProveedor).subscribe({
+        next: (proveedorActualizado: Proveedor) => {
+          const index = this.proveedores.findIndex(p => p.id === proveedorActualizado.id);
+          if (index !== -1) {
+            this.proveedores[index] = proveedorActualizado;
+          }
+          this.toggleForm();
+        },
+        error: (err: HttpErrorResponse) => {
+          console.error(err);
+          if (typeof err.error === 'string') {
+            this.errorMessage = err.error;
+          } else {
+            this.errorMessage = 'Error al actualizar el proveedor. Verifique los datos e intente de nuevo.';
+          }
         }
-      }
+      });
+    } else {
+      // Registrar nuevo proveedor
+      this.proveedorService.registrarProveedor(datosProveedor).subscribe({
+        next: (proveedorGuardado: Proveedor) => {
+          this.proveedores.push(proveedorGuardado);
+          this.toggleForm();
+        },
+        error: (err: HttpErrorResponse) => {
+          console.error(err);
+          if (typeof err.error === 'string') {
+            this.errorMessage = err.error;
+          } else {
+            this.errorMessage = 'Error al registrar el proveedor. Verifique los datos e intente de nuevo.';
+          }
+        }
+      });
+    }
+  }
+
+  /**
+   * Carga los datos de un proveedor en el formulario para editar
+   */
+  public editarProveedor(proveedor: Proveedor): void {
+    this.editingProveedor = proveedor;
+    this.proveedorForm.patchValue({
+      razonSocial: proveedor.razonSocial,
+      identificacionFiscal: proveedor.identificacionFiscal,
+      correoElectronico: proveedor.correoElectronico,
+      telefono: proveedor.telefono,
+      direccion: proveedor.direccion,
+      tipoProveedor: proveedor.tipoProveedor
     });
+    this.isFormVisible = true;
+    this.errorMessage = null;
+  }
+
+  /**
+   * Elimina un proveedor después de pedir confirmación
+   */
+  public eliminarProveedor(id: number): void {
+    if (confirm('¿Está seguro de que desea eliminar este proveedor?')) {
+      this.proveedorService.eliminarProveedor(id).subscribe({
+        next: (response) => {
+          this.proveedores = this.proveedores.filter(p => p.id !== id);
+          this.errorMessage = null;
+        },
+        error: (err: HttpErrorResponse) => {
+          this.errorMessage = err.error || 'Error al eliminar el proveedor. Intente de nuevo.';
+        }
+      });
+    }
   }
 }

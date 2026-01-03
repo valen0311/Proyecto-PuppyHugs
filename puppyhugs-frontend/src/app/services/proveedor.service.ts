@@ -48,10 +48,11 @@ export class ProveedorService {
   }
 
   /**
-   * Conecta con: @DeleteMapping("/{id}") (No implementado aún en tu controller)
+   * Conecta con: @DeleteMapping("/{id}")
    */
-  public eliminarProveedor(id: number): Observable<void> {
+  public eliminarProveedor(id: number): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.delete<void>(url);
+    console.log('DELETE request a:', url);
+    return this.http.delete(url, { responseType: 'text' });
   }
 }
