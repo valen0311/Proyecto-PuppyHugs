@@ -13,7 +13,7 @@ public class Producto {
   private String nombre;
   private String codigoInterno;
   private CategoriaProducto categoria;
-  private int cantidadDisponible;
+  private Integer cantidadDisponible;
   private BigDecimal precio; // Restricción 3.2: en USD
   private EstadoProducto estado;
 
@@ -73,11 +73,11 @@ public class Producto {
     this.categoria = categoria;
   }
 
-  public int getCantidadDisponible() {
+  public Integer getCantidadDisponible() {
     return cantidadDisponible;
   }
 
-  public void setCantidadDisponible(int cantidadDisponible) {
+  public void setCantidadDisponible(Integer cantidadDisponible) {
     this.cantidadDisponible = cantidadDisponible;
   }
 

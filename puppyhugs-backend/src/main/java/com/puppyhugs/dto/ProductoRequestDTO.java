@@ -39,4 +39,53 @@ public class ProductoRequestDTO {
     // El estado es obligatorio.
     @NotNull(message = "El estado es obligatorio y debe ser: ACTIVO o AGOTADO.")
     private EstadoProducto estado;
+
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getCodigoInterno() {
+        return codigoInterno;
+    }
+
+    public void setCodigoInterno(String codigoInterno) {
+        this.codigoInterno = codigoInterno;
+    }
+
+    public CategoriaProducto getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(CategoriaProducto categoria) {
+        this.categoria = categoria;
+    }
+
+    public Integer getCantidadDisponible() {
+        return cantidadDisponible;
+    }
+
+    public void setCantidadDisponible(Integer cantidadDisponible) {
+        this.cantidadDisponible = cantidadDisponible;
+    }
+
+    public BigDecimal getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
+    }
+
+    public EstadoProducto getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoProducto estado) {
+        this.estado = estado;
+    }
 }

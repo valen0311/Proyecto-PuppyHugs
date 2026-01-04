@@ -27,5 +27,23 @@ export class ProductoService {
     return this.http.post<Producto>(this.apiUrl, producto);
   }
 
-  // (Aquí añadiremos 'actualizar' y 'eliminar' cuando los necesitemos)
+  /**
+   * Llama al endpoint: PUT /api/productos/{id}
+   * @param id El ID del producto a actualizar
+   * @param producto Los datos actualizados del producto
+   */
+  public actualizarProducto(id: number, producto: Producto): Observable<Producto> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.put<Producto>(url, producto);
+  }
+
+  /**
+   * Llama al endpoint: DELETE /api/productos/{id}
+   * @param id El ID del producto a eliminar
+   */
+  public eliminarProducto(id: number): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
+    console.log('DELETE request a:', url);
+    return this.http.delete(url, { responseType: 'text' });
+  }
 }

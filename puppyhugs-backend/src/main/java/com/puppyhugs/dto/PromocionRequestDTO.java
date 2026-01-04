@@ -38,6 +38,47 @@ public class PromocionRequestDTO {
     @Size(min = 1, message = "La promoción debe aplicar a al menos un producto.")
     private Set<Long> productoIds;
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public BigDecimal getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(BigDecimal descuento) {
+        this.descuento = descuento;
+    }
+
+    public LocalDate getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(LocalDate fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public LocalDate getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(LocalDate fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    public Set<Long> getProductoIds() {
+        return productoIds;
+    }
+
+    public void setProductoIds(Set<Long> productoIds) {
+        this.productoIds = productoIds;
+    }
+
+
     // NOTA: La validación de que fechaFin sea posterior a fechaInicio
     // es más compleja y se realizará en el SERVICE.
 }

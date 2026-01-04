@@ -1,0 +1,103 @@
+/* src/app/components/admin/ventas-admin/ventas-admin.component.css */
+
+.container {
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0;
+}
+
+/* --- Como no hay formulario, omitimos las clases .toggle-form-btn y .submit-btn --- */
+
+/* Error de backend (coincide con el HTML) */
+.error-backend {
+  color: #e74c3c;
+  background-color: #fbeaea;
+  padding: 12px;
+  border-radius: 4px;
+  margin: 15px 0;
+  text-align: center;
+  border: 1px solid #e74c3c;
+}
+
+
+/* --- Tabla de Ventas --- */
+.lista-container {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.lista-container h2 {
+  margin-top: 0;
+  color: #34495e;
+}
+
+.no-data {
+  text-align: center;
+  padding: 30px;
+  font-style: italic;
+  color: #7f8c8d;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #f4f7f6;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+th {
+  font-weight: 600;
+  color: #34495e;
+}
+
+tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+
+/* *** CAMBIO PRINCIPAL ***
+  Estilos para los 'badges' de Estado de Venta
+*/
+.estado {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+.estado-pagada {
+  background-color: #e8f5e9; /* Verde claro */
+  color: #2e7d32; /* Verde oscuro */
+}
+.estado-pendiente {
+  background-color: #fef5e7; /* Naranja claro */
+  color: #d35400; /* Naranja oscuro */
+}
+.estado-cancelada {
+  background-color: #ffebee; /* Rojo claro */
+  color: #c62828; /* Rojo oscuro */
+}

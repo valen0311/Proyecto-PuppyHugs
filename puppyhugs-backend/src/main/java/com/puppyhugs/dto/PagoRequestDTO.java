@@ -31,6 +31,31 @@ public class PagoRequestDTO {
             message = "Error HU-4: El único método de pago aceptado es MASTERCARD.")
     private String metodoPago;
 
+    public Long getPedidoId() {
+        return pedidoId;
+    }
+
+    public void setPedidoId(Long pedidoId) {
+        this.pedidoId = pedidoId;
+    }
+
+    public BigDecimal getMontoTotal() {
+        return montoTotal;
+    }
+
+    public void setMontoTotal(BigDecimal montoTotal) {
+        this.montoTotal = montoTotal;
+    }
+
+    public String getMetodoPago() {
+        return metodoPago;
+    }
+
+    public void setMetodoPago(String metodoPago) {
+        this.metodoPago = metodoPago;
+    }
+
+
     // El estado y la fecha se asignan automáticamente en el Service/Model,
     // por lo que no se incluyen en el DTO de Solicitud (Request).
 }

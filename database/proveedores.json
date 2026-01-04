@@ -1,6 +1,6 @@
 [ {
   "id" : 4,
-  "razonSocial" : "Huellitas Limpias C.A.",
+  "razonSocial" : "Huellas C.A.",
   "identificacionFiscal" : "J-40499887-2",
   "direccion" : "Sector La Limpia, Valencia",
   "telefono" : "02418223344",
@@ -14,12 +14,4 @@
   "telefono" : "02127654321",
   "correoElectronico" : "contacto@vglobal.com",
   "tipoProveedor" : "Equipos Médicos"
-}, {
-  "id" : 6,
-  "razonSocial" : "NutriPet Solutions",
-  "identificacionFiscal" : "J-40655678-3",
-  "direccion" : "Zona Industrial Norte, Barquisimeto",
-  "telefono" : "02515223344",
-  "correoElectronico" : "ventas@nutripetsol.com",
-  "tipoProveedor" : "Alimentos"
 } ]

@@ -4,7 +4,6 @@ import com.puppyhugs.dto.PagoRequestDTO;
 import com.puppyhugs.model.Pago;
 import com.puppyhugs.service.PagoService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,8 +11,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/pagos")
 public class PagoController {
 
-    @Autowired
-    private PagoService pagoService;
+    private final PagoService pagoService;
+
+    public PagoController(PagoService pagoService) {
+        this.pagoService = pagoService;
+    }
 
     /**
      * Endpoint para registrar un pago (Implementa HU-4).
@@ -45,7 +47,7 @@ public class PagoController {
     // --- Método de Conversión ---
     private Pago convertDtoToModel(PagoRequestDTO dto) {
         Pago pago = new Pago();
-        pago.setPedidoId(dto.getPedidoId());
+        pago.setPedidoId( dto.getPedidoId());
         pago.setMontoTotal(dto.getMontoTotal());
         // El DTO asegura que metodoPago sea "MASTERCARD" o la validación falle
         pago.setMetodoPago(dto.getMetodoPago());

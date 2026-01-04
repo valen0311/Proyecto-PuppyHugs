@@ -63,4 +63,45 @@ public class ProductoController {
     List<Producto> productos = productoService.obtenerTodosLosProductos();
     return ResponseEntity.ok(productos);
   }
+
+  /**
+   * Endpoint para obtener un producto por ID.
+   */
+  @GetMapping("/{id}")
+  public ResponseEntity<?> getProductoById(@PathVariable Long id) {
+    return productoService.getProductoById(id)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+  }
+
+  /**
+   * Endpoint para actualizar un producto existente.
+   */
+  @PutMapping("/{id}")
+  public ResponseEntity<?> actualizarProducto(@PathVariable Long id, @Valid @RequestBody ProductoRequestDTO productoDTO) {
+
+    Producto productoActualizado = convertDtoToModel(productoDTO);
+
+    try {
+      Producto producto = productoService.actualizarProducto(id, productoActualizado);
+      return ResponseEntity.ok(producto);
+    } catch (IllegalArgumentException e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
+
+  /**
+   * Endpoint para eliminar un producto por ID.
+   */
+  @DeleteMapping("/{id}")
+  public ResponseEntity<String> eliminarProducto(@PathVariable Long id) {
+    try {
+      productoService.eliminarProducto(id);
+      return ResponseEntity.ok("Producto eliminado correctamente.");
+    } catch (IllegalArgumentException e) {
+      return ResponseEntity.status(404).body(e.getMessage());
+    } catch (Exception e) {
+      return ResponseEntity.status(500).body(e.getMessage());
+    }
+  }
 }
