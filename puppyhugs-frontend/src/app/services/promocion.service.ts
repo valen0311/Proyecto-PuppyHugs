@@ -26,4 +26,23 @@ export class PromocionService {
   public crearPromocion(promocion: Promocion): Observable<Promocion> {
     return this.http.post<Promocion>(this.apiUrl, promocion);
   }
+
+  /**
+   * Llama al endpoint: PUT /api/promociones/{id}
+   * @param id El ID de la promoción a actualizar
+   * @param promocion Los datos actualizados de la promoción
+   */
+  public actualizarPromocion(id: number, promocion: Promocion): Observable<Promocion> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.put<Promocion>(url, promocion);
+  }
+
+  /**
+   * Llama al endpoint: DELETE /api/promociones/{id}
+   * @param id El ID de la promoción a eliminar
+   */
+  public eliminarPromocion(id: number): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete(url, { responseType: 'text' });
+  }
 }

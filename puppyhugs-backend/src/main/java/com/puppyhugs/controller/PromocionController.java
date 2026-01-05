@@ -66,4 +66,45 @@ public class PromocionController {
         List<Promocion> promociones = promocionService.getPromociones(nombre, fecha);
         return ResponseEntity.ok(promociones);
     }
+
+    /**
+     * Endpoint para obtener una promoción por ID.
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getPromocionById(@PathVariable Long id) {
+        return promocionService.getPromocionById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    /**
+     * Endpoint para actualizar una promoción existente.
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<?> actualizarPromocion(@PathVariable Long id, @Valid @RequestBody PromocionRequestDTO promocionDTO) {
+
+        Promocion promocionActualizada = convertDtoToModel(promocionDTO);
+
+        try {
+            Promocion promocion = promocionService.actualizarPromocion(id, promocionActualizada);
+            return ResponseEntity.ok(promocion);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    /**
+     * Endpoint para eliminar una promoción por ID.
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarPromocion(@PathVariable Long id) {
+        try {
+            promocionService.eliminarPromocion(id);
+            return ResponseEntity.ok("Promoción eliminada correctamente.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
 }

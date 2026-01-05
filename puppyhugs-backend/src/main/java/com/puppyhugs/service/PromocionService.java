@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -108,5 +110,77 @@ public class PromocionService {
             })
             // 3. Recolectamos la lista final
             .collect(Collectors.toList());
+  }
+
+  public Optional<Promocion> getPromocionById(Long id) {
+    return promocionRepository.findById(id);
+  }
+
+  public Promocion actualizarPromocion(Long id, Promocion promocionActualizada) {
+    Optional<Promocion> promocionOptional = promocionRepository.findById(id);
+
+    if (!promocionOptional.isPresent()) {
+      throw new IllegalArgumentException("La promoción con ID " + id + " no existe.");
+    }
+
+    Promocion promocionExistente = promocionOptional.get();
+
+    // Validar Nombre si cambió
+    if (!promocionExistente.getNombre().equals(promocionActualizada.getNombre())) {
+      if (promocionRepository.findByNombre(promocionActualizada.getNombre()).isPresent()) {
+        throw new IllegalArgumentException("Ya existe una promoción con el nombre: " + promocionActualizada.getNombre());
+      }
+    }
+
+    // Validar Descuento
+    if (promocionActualizada.getDescuento() == null ||
+        promocionActualizada.getDescuento().compareTo(new BigDecimal("0.50")) > 0) {
+      throw new IllegalArgumentException("El descuento no puede ser nulo o mayor al 50% (0.50).");
+    }
+
+    // Validar Fechas
+    if (promocionActualizada.getFechaInicio() == null || promocionActualizada.getFechaFin() == null) {
+      throw new IllegalArgumentException("Las fechas de inicio y fin son obligatorias.");
+    }
+    if (promocionActualizada.getFechaInicio().isAfter(promocionActualizada.getFechaFin())) {
+      throw new IllegalArgumentException("La fecha de inicio no puede ser posterior a la fecha de fin.");
+    }
+
+    // Validar Productos
+    if (promocionActualizada.getProductoIds() == null || promocionActualizada.getProductoIds().isEmpty()) {
+      throw new IllegalArgumentException("La promoción debe estar asociada al menos a un ID de producto.");
+    }
+
+    for (Long productoId : promocionActualizada.getProductoIds()) {
+      if (productoRepository.findById(productoId).isEmpty()) {
+        throw new IllegalArgumentException("El producto con ID " + productoId + " no existe.");
+      }
+    }
+
+    // Actualizar campos
+    promocionExistente.setNombre(promocionActualizada.getNombre());
+    promocionExistente.setDescuento(promocionActualizada.getDescuento());
+    promocionExistente.setFechaInicio(promocionActualizada.getFechaInicio());
+    promocionExistente.setFechaFin(promocionActualizada.getFechaFin());
+    promocionExistente.setProductoIds(promocionActualizada.getProductoIds());
+
+    return promocionRepository.save(promocionExistente);
+  }
+
+  public void eliminarPromocion(Long id) {
+    if (!promocionRepository.existsById(id)) {
+      throw new IllegalArgumentException("La promoción con ID " + id + " no existe.");
+    }
+    promocionRepository.deleteById(id);
+  }
+
+  public void eliminarPromocionesConProducto(Long productoId) {
+    List<Promocion> promocionesCon = promocionRepository.findAll().stream()
+            .filter(p -> p.getProductoIds().contains(productoId))
+            .collect(Collectors.toList());
+
+    for (Promocion promocion : promocionesCon) {
+      promocionRepository.deleteById(promocion.getId());
+    }
   }
 }

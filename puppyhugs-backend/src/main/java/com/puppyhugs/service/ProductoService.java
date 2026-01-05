@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import com.puppyhugs.service.PromocionService; 
 
 /**
  * Servicio para la lógica de negocio de Productos.
@@ -16,6 +17,9 @@ public class ProductoService {
 
   @Autowired
   private ProductoRepository productoRepository;
+
+  @Autowired
+  private PromocionService promocionService;
 
   /**
    * Registra un nuevo producto (Implementa HU-1).
@@ -94,11 +98,15 @@ public class ProductoService {
 
   /**
    * Elimina un producto por ID.
+   * También elimina automáticamente las promociones que contengan este producto.
    */
   public void eliminarProducto(Long id) {
     if (!productoRepository.existsById(id)) {
       throw new IllegalArgumentException("El producto con ID " + id + " no existe.");
     }
+    
+    promocionService.eliminarPromocionesConProducto(id);
+    
     productoRepository.deleteById(id);
   }
 }

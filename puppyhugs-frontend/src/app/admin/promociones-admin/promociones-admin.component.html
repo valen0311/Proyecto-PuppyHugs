@@ -2,7 +2,7 @@
   <h2>Gestión de Promociones</h2>
 
   <button class="toggle-form-btn" (click)="toggleForm()">
-    {{ isFormVisible ? 'Cancelar' : 'Nueva Promoción' }}
+    {{ isFormVisible ? 'Cancelar' : (editingPromocion ? 'Cancelar Edición' : 'Nueva Promoción') }}
   </button>
 
   <div *ngIf="errorMessage" class="server-error">
@@ -10,7 +10,7 @@
   </div>
 
   <form *ngIf="isFormVisible" [formGroup]="promocionForm" (ngSubmit)="onSubmit()" class="form-container">
-    <h3>Registrar Nueva Promoción</h3>
+    <h3>{{ editingPromocion ? 'Editar Promoción' : 'Registrar Nueva Promoción' }}</h3>
 
     <div class="form-group">
       <label for="nombre">Nombre:</label>
@@ -42,7 +42,7 @@
     </div>
 
     <button type="submit" [disabled]="promocionForm.invalid" class="submit-btn">
-      Guardar Promoción
+      {{ editingPromocion ? 'Guardar Cambios' : 'Guardar Promoción' }}
     </button>
   </form>
 
@@ -55,9 +55,11 @@
     <tr>
       <th>ID</th>
       <th>Nombre</th>
-      <th>Descuento</th> <th>Inicio</th>
+      <th>Descuento</th>
+      <th>Inicio</th>
       <th>Fin</th>
       <th>IDs Productos</th>
+      <th>Acciones</th>
     </tr>
     </thead>
     <tbody>
@@ -68,6 +70,14 @@
       <td>{{ promo.fechaInicio }}</td>
       <td>{{ promo.fechaFin }}</td>
       <td>{{ promo.productoIds.join(', ') }}</td>
+      <td class="acciones">
+        <button (click)="editarPromocion(promo)" class="btn-editar" title="Editar">
+          ✏️
+        </button>
+        <button (click)="eliminarPromocion(promo.id!)" class="btn-eliminar" title="Eliminar">
+          🗑️
+        </button>
+      </td>
     </tr>
     </tbody>
   </table>

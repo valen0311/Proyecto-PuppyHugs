@@ -8,11 +8,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 // 2. Importar el servicio y los modelos
 import { ProductoService } from '../../services/producto.service';
+import { PromocionService } from '../../services/promocion.service';
 import {
   Producto,
   CategoriaProducto,
   EstadoProducto
 } from '../../models/producto.model';
+import { Promocion } from '../../models/promocion.model';
 
 @Component({
   selector: 'app-productos-admin',
@@ -30,6 +32,7 @@ export class ProductosAdminComponent implements OnInit {
 
   // 4. Inyección de dependencias
   private productoService = inject(ProductoService);
+  private promocionService = inject(PromocionService);
   private fb = inject(FormBuilder);
 
   // 5. Propiedades
@@ -169,6 +172,26 @@ export class ProductosAdminComponent implements OnInit {
         next: (response) => {
           this.productos = this.productos.filter(p => p.id !== id);
           this.errorMessage = null;
+
+          this.promocionService.getPromociones().subscribe({
+            next: (promociones: Promocion[]) => {
+              const promocionesAEliminar = promociones.filter(p => p.productoIds.includes(id));
+              
+              promocionesAEliminar.forEach(promo => {
+                this.promocionService.eliminarPromocion(promo.id!).subscribe({
+                  next: () => {
+                    console.log(`Promoción ${promo.id} eliminada automáticamente`);
+                  },
+                  error: (err) => {
+                    console.error(`Error al eliminar promoción ${promo.id}:`, err);
+                  }
+                });
+              });
+            },
+            error: (err) => {
+              console.error('Error al obtener promociones:', err);
+            }
+          });
         },
         error: (err: HttpErrorResponse) => {
           this.errorMessage = err.error || 'Error al eliminar el producto. Intente de nuevo.';

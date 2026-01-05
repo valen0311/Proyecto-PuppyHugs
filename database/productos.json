@@ -1,28 +1,4 @@
 [ {
-  "id" : 3,
-  "nombre" : "Cama Ortopédica ",
-  "codigoInterno" : "ACC-010",
-  "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 15,
-  "precio" : 120,
-  "estado" : "ACTIVO"
-}, {
-  "id" : 4,
-  "nombre" : "Shampoo Dermatológico 250ml",
-  "codigoInterno" : "HIG-003",
-  "categoria" : "ARTICULO",
-  "cantidadDisponible" : 85,
-  "precio" : 18.75,
-  "estado" : "ACTIVO"
-}, {
-  "id" : 5,
-  "nombre" : "Paseador Extensible 5 metros",
-  "codigoInterno" : "PASEO-002",
-  "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 40,
-  "precio" : 25.99,
-  "estado" : "ACTIVO"
-}, {
   "id" : 6,
   "nombre" : "Snacks Huesitos de Pollo",
   "codigoInterno" : "ALM-012",
@@ -181,5 +157,13 @@
   "categoria" : "ACCESORIO",
   "cantidadDisponible" : 5,
   "precio" : 0.25,
+  "estado" : "ACTIVO"
+}, {
+  "id" : 26,
+  "nombre" : "Paseador Extensible 5 metros",
+  "codigoInterno" : "PASEO-002",
+  "categoria" : "ACCESORIO",
+  "cantidadDisponible" : 70,
+  "precio" : 0.45,
   "estado" : "ACTIVO"
 } ]

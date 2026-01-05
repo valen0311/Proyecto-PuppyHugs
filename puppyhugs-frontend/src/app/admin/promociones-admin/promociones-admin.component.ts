@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 
 // 1. Importaciones clave
 import { CommonModule, PercentPipe } from '@angular/common'; // PercentPipe es para el %
@@ -34,7 +35,8 @@ export class PromocionesAdminComponent implements OnInit {
   public promociones: Promocion[] = [];
   public promocionForm!: FormGroup;
   public errorMessage: string | null = null;
-  public isFormVisible: boolean = false; // Para mostrar/ocultar el form
+  public isFormVisible: boolean = false;
+  public editingPromocion: Promocion | null = null;
 
   // 6. Array para el <select> (se cargará desde el servicio)
   public todosLosProductos: Producto[] = [];
@@ -73,6 +75,7 @@ export class PromocionesAdminComponent implements OnInit {
       }
     });
   }
+  
 
   /**
    * (Función extra) Obtiene todos los productos para el <select>
@@ -90,21 +93,22 @@ export class PromocionesAdminComponent implements OnInit {
   }
 
   /**
-   * Muestra u oculta el formulario de registro
+   * Muestra u oculta el formulario de registro/edición
    */
   public toggleForm(): void {
     this.isFormVisible = !this.isFormVisible;
     this.errorMessage = null;
     if (!this.isFormVisible) {
-      this.promocionForm.reset({ // Resetea el form a los valores por defecto
+      this.promocionForm.reset({
         descuento: 0.01,
         productoIds: []
       });
+      this.editingPromocion = null;
     }
   }
 
   /**
-   * Se llama al enviar el formulario
+   * Se llama al enviar el formulario (Crear o Actualizar)
    */
   public onSubmit(): void {
     this.promocionForm.markAllAsTouched();
@@ -114,26 +118,78 @@ export class PromocionesAdminComponent implements OnInit {
 
     this.errorMessage = null;
 
-    // Convertimos los IDs de string[] a number[]
     const formValue = this.promocionForm.value;
-    const nuevaPromocion: Promocion = {
+    const datosPromocion: Promocion = {
       ...formValue,
       productoIds: formValue.productoIds.map((id: string) => Number(id))
     };
 
-    this.promocionService.crearPromocion(nuevaPromocion).subscribe({
-      next: (promocionGuardada) => {
-        // Éxito:
-        // 1. Añadimos la nueva promo a la lista (sin recargar)
-        this.promociones.push(promocionGuardada);
-        // 2. Ocultamos y reseteamos el formulario
-        this.toggleForm();
-      },
-      error: (err) => {
-        // 3. Mostramos el error
-        console.error(err);
-        this.errorMessage = typeof err === 'string' ? err : 'Error al registrar la promoción.';
-      }
+    if (this.editingPromocion) {
+      this.promocionService.actualizarPromocion(this.editingPromocion.id!, datosPromocion).subscribe({
+        next: (promocionActualizada: Promocion) => {
+          const index = this.promociones.findIndex(p => p.id === promocionActualizada.id);
+          if (index !== -1) {
+            this.promociones[index] = promocionActualizada;
+          }
+          this.toggleForm();
+        },
+        error: (err: HttpErrorResponse) => {
+          console.error(err);
+          if (typeof err.error === 'string') {
+            this.errorMessage = err.error;
+          } else {
+            this.errorMessage = 'Error al actualizar la promoción. Verifique los datos e intente de nuevo.';
+          }
+        }
+      });
+    } else {
+      this.promocionService.crearPromocion(datosPromocion).subscribe({
+        next: (promocionGuardada) => {
+          this.promociones.push(promocionGuardada);
+          this.toggleForm();
+        },
+        error: (err: HttpErrorResponse) => {
+          console.error(err);
+          if (typeof err.error === 'string') {
+            this.errorMessage = err.error;
+          } else {
+            this.errorMessage = 'Error al registrar la promoción. Verifique los datos e intente de nuevo.';
+          }
+        }
+      });
+    }
+  }
+
+  /**
+   * Carga los datos de una promoción en el formulario para editar
+   */
+  public editarPromocion(promocion: Promocion): void {
+    this.editingPromocion = promocion;
+    this.promocionForm.patchValue({
+      nombre: promocion.nombre,
+      descuento: promocion.descuento,
+      fechaInicio: promocion.fechaInicio,
+      fechaFin: promocion.fechaFin,
+      productoIds: promocion.productoIds
     });
+    this.isFormVisible = true;
+    this.errorMessage = null;
+  }
+
+  /**
+   * Elimina una promoción después de pedir confirmación
+   */
+  public eliminarPromocion(id: number): void {
+    if (confirm('¿Está seguro de que desea eliminar esta promoción?')) {
+      this.promocionService.eliminarPromocion(id).subscribe({
+        next: (response) => {
+          this.promociones = this.promociones.filter(p => p.id !== id);
+          this.errorMessage = null;
+        },
+        error: (err: HttpErrorResponse) => {
+          this.errorMessage = err.error || 'Error al eliminar la promoción. Intente de nuevo.';
+        }
+      });
+    }
   }
 }
