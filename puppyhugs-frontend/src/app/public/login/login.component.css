@@ -218,3 +218,21 @@ h2 {
 .cancel-btn:hover {
   background-color: #7f8c8d;
 }
+
+/* --- Estilos del Logo --- */
+.logo-container {
+  text-align: center;
+  margin-bottom: 15px; /* Espacio entre el logo y el título */
+}
+
+.app-logo {
+  width: 100px;           /* Tamaño ideal, ni muy grande ni muy chico */
+  height: auto;           /* Mantiene la proporción */
+  border-radius: 50%;     /* Lo hace redondito (opcional, si el logo es cuadrado) */
+  /* box-shadow: 0 4px 6px rgba(0,0,0,0.1);  <-- Descomenta si quieres una sombra suave */
+  transition: transform 0.3s ease;
+}
+
+.app-logo:hover {
+  transform: scale(1.05); /* Efecto pequeño de zoom al pasar el mouse */
+}

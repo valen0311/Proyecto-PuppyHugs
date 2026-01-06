@@ -2,6 +2,10 @@
 
   <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
+    <div class="logo-container">
+      <img src="assets/images/logo.png" alt="Logo PuppyHugs" class="app-logo">
+    </div>
+
     <h2>Iniciar Sesión</h2>
     <p class="subtitle">Bienvenido a PuppyHugs</p>
 
@@ -52,6 +56,11 @@
   </form>
 
   <form *ngIf="showRegisterForm" [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()" class="register-form">
+
+    <div class="logo-container">
+      <img src="assets/images/logo.png" alt="Logo PuppyHugs" class="app-logo">
+    </div>
+
     <h2>Crear Cuenta</h2>
 
     <div *ngIf="errorMessage" class="error-alert">
