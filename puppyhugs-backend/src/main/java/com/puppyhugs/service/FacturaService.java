@@ -1,4 +1,4 @@
-// service/FacturaService.java
+/* src/main/java/com/puppyhugs/service/FacturaService.java */
 package com.puppyhugs.service;
 
 import com.itextpdf.text.*;
@@ -76,8 +76,8 @@ public class FacturaService {
             document.add(new Paragraph("Datos del Cliente:", boldFont));
             document.add(new Paragraph("Nombre: " + cliente.getNombreCompleto(), normalFont));
             document.add(new Paragraph("Email: " + cliente.getCorreoElectronico(), normalFont));
-            document.add(new Paragraph("Teléfono: " + cliente.getTelefono(), normalFont));
-            document.add(new Paragraph("Dirección: " + cliente.getDireccion(), normalFont));
+            document.add(new Paragraph("Teléfono: " + (cliente.getTelefono() != null ? cliente.getTelefono() : "N/A"), normalFont));
+            document.add(new Paragraph("Dirección: " + (cliente.getDireccion() != null ? cliente.getDireccion() : "N/A"), normalFont));
 
             document.add(new Paragraph(" ")); // Espacio
 
@@ -103,51 +103,110 @@ public class FacturaService {
             }
 
             // Filas de productos
-            BigDecimal subtotalGeneral = BigDecimal.ZERO;
+            Font cellFont = FontFactory.getFont(FontFactory.HELVETICA, 9);
+
             for (Map.Entry<Long, Integer> entry : venta.getProductos().entrySet()) {
                 Long productoId = entry.getKey();
                 Integer cantidad = entry.getValue();
 
-                Producto producto = productoRepository.findById(productoId)
-                        .orElse(null);
+                try {
+                    Producto producto = productoRepository.findById(productoId)
+                            .orElseThrow(() -> new RuntimeException("Producto no encontrado: " + productoId));
 
-                if (producto != null) {
                     BigDecimal subtotal = producto.getPrecio().multiply(new BigDecimal(cantidad));
-                    subtotalGeneral = subtotalGeneral.add(subtotal);
 
-                    table.addCell(String.valueOf(productoId));
-                    table.addCell(producto.getNombre());
-                    table.addCell(String.valueOf(cantidad));
-                    table.addCell("$" + producto.getPrecio().toString());
-                    table.addCell("$" + subtotal.toString());
+                    // Agregar celdas con formato
+                    PdfPCell cell1 = new PdfPCell(new Phrase(String.valueOf(productoId), cellFont));
+                    cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cell1);
+
+                    PdfPCell cell2 = new PdfPCell(new Phrase(producto.getNombre(), cellFont));
+                    table.addCell(cell2);
+
+                    PdfPCell cell3 = new PdfPCell(new Phrase(String.valueOf(cantidad), cellFont));
+                    cell3.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(cell3);
+
+                    PdfPCell cell4 = new PdfPCell(new Phrase("$" + producto.getPrecio().setScale(2, BigDecimal.ROUND_HALF_UP), cellFont));
+                    cell4.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                    table.addCell(cell4);
+
+                    PdfPCell cell5 = new PdfPCell(new Phrase("$" + subtotal.setScale(2, BigDecimal.ROUND_HALF_UP), cellFont));
+                    cell5.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                    table.addCell(cell5);
+
+                } catch (Exception e) {
+                    System.out.println("Error al procesar producto " + productoId + ": " + e.getMessage());
                 }
             }
 
             document.add(table);
-
             document.add(new Paragraph(" ")); // Espacio
 
-            // --- TOTALES ---
-            BigDecimal impuesto = venta.getTotalVenta().multiply(new BigDecimal("0.16")); // 16% de impuesto
-            BigDecimal subtotal = venta.getTotalVenta().subtract(impuesto);
+            // --- CÁLCULO DE TOTALES (Lógica corregida) ---
+            BigDecimal subtotalCalculado = BigDecimal.ZERO;
 
+            for (Map.Entry<Long, Integer> entry : venta.getProductos().entrySet()) {
+                Long productoId = entry.getKey();
+                Integer cantidad = entry.getValue();
+
+                try {
+                    Producto producto = productoRepository.findById(productoId).orElse(null);
+                    if (producto != null) {
+                        BigDecimal subtotal = producto.getPrecio().multiply(new BigDecimal(cantidad));
+                        subtotalCalculado = subtotalCalculado.add(subtotal);
+                    }
+                } catch (Exception e) {
+                    System.out.println("Error calculando total: " + e.getMessage());
+                }
+            }
+
+            // Calcular impuesto (16% del subtotal)
+            BigDecimal impuestoCalculado = subtotalCalculado.multiply(new BigDecimal("0.16"));
+
+            // Calcular total (subtotal + impuesto)
+            BigDecimal totalCalculado = subtotalCalculado.add(impuestoCalculado);
+
+            // --- TABLA DE TOTALES (Actualizada) ---
             PdfPTable totalsTable = new PdfPTable(2);
             totalsTable.setWidthPercentage(40);
             totalsTable.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            totalsTable.setWidths(new float[]{3, 2});
 
-            totalsTable.addCell("Subtotal:");
-            totalsTable.addCell("$" + subtotal.setScale(2, BigDecimal.ROUND_HALF_UP));
+            Font totalFont = FontFactory.getFont(FontFactory.HELVETICA, 10);
 
-            totalsTable.addCell("Impuesto (16%):");
-            totalsTable.addCell("$" + impuesto.setScale(2, BigDecimal.ROUND_HALF_UP));
+            // Subtotal
+            PdfPCell labelCell1 = new PdfPCell(new Phrase("Subtotal:", totalFont));
+            labelCell1.setBorder(Rectangle.NO_BORDER);
+            labelCell1.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            totalsTable.addCell(labelCell1);
 
-            PdfPCell totalCell = new PdfPCell(new Phrase("TOTAL:", boldFont));
-            totalCell.setBorder(Rectangle.NO_BORDER);
-            totalsTable.addCell(totalCell);
+            PdfPCell valueCell1 = new PdfPCell(new Phrase("$" + subtotalCalculado.setScale(2, BigDecimal.ROUND_HALF_UP), totalFont));
+            valueCell1.setBorder(Rectangle.NO_BORDER);
+            valueCell1.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            totalsTable.addCell(valueCell1);
 
-            PdfPCell totalAmountCell = new PdfPCell(new Phrase("$" + venta.getTotalVenta().toString(), boldFont));
-            totalAmountCell.setBorder(Rectangle.NO_BORDER);
-            totalsTable.addCell(totalAmountCell);
+            // Impuesto
+            PdfPCell labelCell2 = new PdfPCell(new Phrase("Impuesto (16%):", totalFont));
+            labelCell2.setBorder(Rectangle.NO_BORDER);
+            labelCell2.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            totalsTable.addCell(labelCell2);
+
+            PdfPCell valueCell2 = new PdfPCell(new Phrase("$" + impuestoCalculado.setScale(2, BigDecimal.ROUND_HALF_UP), totalFont));
+            valueCell2.setBorder(Rectangle.NO_BORDER);
+            valueCell2.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            totalsTable.addCell(valueCell2);
+
+            // Total Final
+            PdfPCell totalLabelCell = new PdfPCell(new Phrase("TOTAL:", boldFont));
+            totalLabelCell.setBorder(Rectangle.NO_BORDER);
+            totalLabelCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            totalsTable.addCell(totalLabelCell);
+
+            PdfPCell totalValueCell = new PdfPCell(new Phrase("$" + totalCalculado.setScale(2, BigDecimal.ROUND_HALF_UP), boldFont));
+            totalValueCell.setBorder(Rectangle.NO_BORDER);
+            totalValueCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            totalsTable.addCell(totalValueCell);
 
             document.add(totalsTable);
 
