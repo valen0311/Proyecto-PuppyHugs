@@ -53,6 +53,22 @@ public class FacturaService {
             PdfWriter.getInstance(document, baos);
             document.open();
 
+            // --- LOGO (Insertado aquí) ---
+            try {
+                ClassLoader classLoader = getClass().getClassLoader();
+                java.net.URL logoUrl = classLoader.getResource("static/images/logo.png");
+
+                if (logoUrl != null) {
+                    Image logo = Image.getInstance(logoUrl);
+                    logo.scaleToFit(100, 100); // Tamaño: 100x100 píxeles
+                    logo.setAlignment(Element.ALIGN_CENTER);
+                    document.add(logo);
+                    document.add(new Paragraph(" ")); // Espacio después del logo
+                }
+            } catch (Exception e) {
+                System.out.println("Logo no encontrado: " + e.getMessage());
+            }
+
             // --- ENCABEZADO ---
             Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18, BaseColor.BLACK);
             Paragraph title = new Paragraph("FACTURA", titleFont);
@@ -143,7 +159,7 @@ public class FacturaService {
             document.add(table);
             document.add(new Paragraph(" ")); // Espacio
 
-            // --- CÁLCULO DE TOTALES (Lógica corregida) ---
+            // --- CÁLCULO DE TOTALES ---
             BigDecimal subtotalCalculado = BigDecimal.ZERO;
 
             for (Map.Entry<Long, Integer> entry : venta.getProductos().entrySet()) {
@@ -167,7 +183,7 @@ public class FacturaService {
             // Calcular total (subtotal + impuesto)
             BigDecimal totalCalculado = subtotalCalculado.add(impuestoCalculado);
 
-            // --- TABLA DE TOTALES (Actualizada) ---
+            // --- TABLA DE TOTALES ---
             PdfPTable totalsTable = new PdfPTable(2);
             totalsTable.setWidthPercentage(40);
             totalsTable.setHorizontalAlignment(Element.ALIGN_RIGHT);
