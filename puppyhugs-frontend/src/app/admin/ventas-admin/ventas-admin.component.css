@@ -101,3 +101,24 @@ tbody tr:hover {
   background-color: #ffebee; /* Rojo claro */
   color: #c62828; /* Rojo oscuro */
 }
+
+/* --- NUEVOS ESTILOS PARA EL BOTÓN DE FACTURA --- */
+
+.btn-factura {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.btn-factura:hover {
+  background-color: #45a049;
+}
+
+.btn-factura:active {
+  transform: scale(0.98);
+}

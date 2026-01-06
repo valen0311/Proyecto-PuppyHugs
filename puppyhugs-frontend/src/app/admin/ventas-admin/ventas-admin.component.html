@@ -24,7 +24,7 @@
         <th>Estado</th>
         <th>ID Pago</th>
         <th>Total</th>
-      </tr>
+        <th>Acciones</th> </tr>
       </thead>
       <tbody>
       <tr *ngFor="let venta of ventas">
@@ -46,6 +46,15 @@
         <td>{{ venta.pagoId || 'N/A' }}</td>
 
         <td>{{ venta.totalVenta | currency:'USD':'symbol':'1.2-2' }}</td>
+
+        <td>
+          <button
+            class="btn-factura"
+            (click)="generarFactura(venta.id)"
+            title="Generar Factura PDF">
+            📄 Factura
+          </button>
+        </td>
       </tr>
       </tbody>
     </table>

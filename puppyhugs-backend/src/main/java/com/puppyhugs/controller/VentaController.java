@@ -3,6 +3,11 @@ package com.puppyhugs.controller;
 import com.puppyhugs.dto.VentaRequestDTO;
 import com.puppyhugs.model.Venta;
 import com.puppyhugs.service.VentaService;
+// --- NUEVOS IMPORTS ---
+import com.puppyhugs.service.FacturaService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+// ----------------------
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +21,10 @@ public class VentaController {
 
     @Autowired
     private VentaService ventaService;
+
+    // Inyectamos el servicio de facturación
+    @Autowired
+    private FacturaService facturaService;
 
     /**
      * Endpoint para crear un nuevo Pedido/Venta con estado PENDIENTE_DE_PAGO (Implementa HU-5).
@@ -51,15 +60,6 @@ public class VentaController {
         return ResponseEntity.ok(ventaService.getVentas());
     }
 
-    // --- Método de Conversión ---
-    private Venta convertDtoToModel(VentaRequestDTO dto) {
-        Venta venta = new Venta();
-        venta.setClienteId(dto.getClienteId());
-        venta.setProductos(dto.getProductos());
-        // El total, estado y fecha se configuran en el Service
-        return venta;
-    }
-
     /**
      * Endpoint para finalizar una Venta y marcarla como PAGADA (Implementa HU-6).
      * Escucha peticiones PUT en "/api/ventas/{ventaId}/finalizar".
@@ -80,5 +80,45 @@ public class VentaController {
             // Manejo de errores: venta no existe, pago no existe o pago falló.
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    /**
+     * Endpoint para generar y descargar la factura en PDF.
+     * GET /api/ventas/{ventaId}/factura
+     */
+    @GetMapping("/{ventaId}/factura")
+    public ResponseEntity<byte[]> generarFactura(@PathVariable Long ventaId) {
+        try {
+            // Llamamos al servicio para crear los bytes del PDF
+            byte[] pdfBytes = facturaService.generarFacturaPDF(ventaId);
+
+            // Configuramos los encabezados para la descarga
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            // "attachment" fuerza la descarga, "filename" pone el nombre del archivo
+            headers.setContentDispositionFormData("attachment", "factura-" + ventaId + ".pdf");
+            headers.setContentLength(pdfBytes.length);
+
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(pdfBytes);
+
+        } catch (IllegalArgumentException e) {
+            // Si la venta no existe o hay un error de validación
+            return ResponseEntity.badRequest().body(null);
+        } catch (Exception e) {
+            // Error interno al generar el PDF (ej. error de iText)
+            e.printStackTrace(); // Es bueno loguear el error en consola
+            return ResponseEntity.internalServerError().body(null);
+        }
+    }
+
+    // --- Método de Conversión ---
+    private Venta convertDtoToModel(VentaRequestDTO dto) {
+        Venta venta = new Venta();
+        venta.setClienteId(dto.getClienteId());
+        venta.setProductos(dto.getProductos());
+        // El total, estado y fecha se configuran en el Service
+        return venta;
     }
 }

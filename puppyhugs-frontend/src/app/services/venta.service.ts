@@ -36,4 +36,15 @@ export class VentaService {
   public finalizarVenta(ventaId: number, pagoId: number): Observable<Venta> {
     return this.http.put<Venta>(`${this.apiUrl}/${ventaId}/finalizar?pagoId=${pagoId}`, {});
   }
+
+  /**
+   * Descarga la factura en PDF de una venta.
+   * Se usa 'blob' para manejar datos binarios (archivos).
+   * @param ventaId ID de la venta
+   */
+  public descargarFacturaPDF(ventaId: number): Observable<Blob> {
+    return this.http.get(`${this.apiUrl}/${ventaId}/factura`, {
+      responseType: 'blob'
+    });
+  }
 }

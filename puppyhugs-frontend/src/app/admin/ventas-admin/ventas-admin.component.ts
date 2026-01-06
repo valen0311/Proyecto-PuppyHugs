@@ -55,4 +55,33 @@ export class VentasAdminComponent implements OnInit {
       }
     });
   }
+
+  /**
+   * Genera y descarga la factura en PDF.
+   * Crea un enlace temporal en el navegador para descargar el Blob recibido.
+   */
+  public generarFactura(ventaId: number | undefined): void {
+    if (!ventaId) {
+      alert('ID de venta no válido');
+      return;
+    }
+
+    this.ventaService.descargarFacturaPDF(ventaId).subscribe({
+      next: (blob: Blob) => {
+        // Crear un enlace temporal para descargar el archivo
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `factura-${ventaId}.pdf`; // Nombre del archivo que se descargará
+        link.click();
+
+        // Limpiar memoria
+        window.URL.revokeObjectURL(url);
+      },
+      error: (err : any) => {
+        console.error('Error al generar factura:', err);
+        alert('Error al generar la factura. Verifica que la venta exista.');
+      }
+    });
+  }
 }
