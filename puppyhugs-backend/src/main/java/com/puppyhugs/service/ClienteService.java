@@ -34,6 +34,7 @@ public class ClienteService {
             admin.setCorreoElectronico("admin@puppyhugs.com");
             admin.setPassword("admin123");
             admin.setRol("ROL_ADMIN");
+            admin.setActivo(true);
             admin.setDireccion("Oficina Central");
             admin.setTelefono("000-0000");
 
@@ -113,6 +114,10 @@ public class ClienteService {
         System.out.println("   Password recibido: '" + password + "' (longitud: " + password.length() + ")");
         System.out.println("   ¿Son iguales? " + cliente.getPassword().equals(password));
 
+        if (!cliente.isActivo()) {
+            throw new IllegalArgumentException("Tu cuenta está suspendida. Contacta al administrador.");
+        }
+
         if (!cliente.getPassword().equals(password)) {
             // Contraseña incorrecta
             System.err.println("❌ CONTRASEÑA INCORRECTA");
@@ -126,5 +131,22 @@ public class ClienteService {
         System.out.println("=================================================");
 
         return cliente;
+    }
+
+    /**
+     * Cambia el estado (activo/suspendido) de un cliente por su ID.
+     * Al usar clienteRepository.save(), el AbstractJsonFileRepository
+     * actualiza automáticamente el archivo JSON.
+     */
+    public Cliente cambiarEstado(Long id, boolean nuevoEstado) {
+        // 1. Buscamos al cliente por ID
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("No se encontró el cliente con ID: " + id));
+
+        // 2. Modificamos el estado
+        cliente.setActivo(nuevoEstado);
+
+        // 3. Guardamos los cambios (esto actualiza el caché y el archivo físico)
+        return clienteRepository.save(cliente);
     }
 }

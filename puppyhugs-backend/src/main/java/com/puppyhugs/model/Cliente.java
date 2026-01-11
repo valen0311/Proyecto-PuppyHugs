@@ -13,10 +13,12 @@ public class Cliente {
 
     @JsonProperty("rol") // ⭐ Asegura que Jackson lea "rol" del JSON
     private String rol; // ⭐ String para compatibilidad con JSON
+    private boolean activo = true;
 
     // Constructor vacío (por defecto es CLIENTE)
     public Cliente() {
         this.rol = "ROL_CLIENTE";
+        this.activo = true;
     }
 
     // Constructor completo
@@ -29,6 +31,7 @@ public class Cliente {
         this.direccion = direccion;
         this.telefono = telefono;
         this.rol = rol != null ? rol : "ROL_CLIENTE";
+        this.activo = activo;
     }
 
     // GETTERS Y SETTERS
@@ -88,6 +91,9 @@ public class Cliente {
         this.rol = rol;
     }
 
+    public boolean isActivo() { return activo; }
+
+    public void setActivo(boolean activo) { this.activo = activo; }
     @Override
     public String toString() {
         return "Cliente{" +

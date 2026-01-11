@@ -18,6 +18,7 @@ import java.util.List;
 @RestController
 // Angular llamará a "http://localhost:8080/api/clientes"
 @RequestMapping("/api/clientes")
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH, RequestMethod.DELETE})
 public class ClienteController {
 
     // 1. Inyectamos el Servicio de Cliente
@@ -85,5 +86,25 @@ public class ClienteController {
         cliente.setTelefono(dto.getTelefono());
         // El rol (ROL_CLIENTE) se asigna por defecto en el constructor de la clase Cliente.
         return cliente;
+    }
+
+    /**
+     * Endpoint para cambiar el estado (Activar/Suspender) de un cliente.
+     * Escucha peticiones PATCH en "/api/clientes/{id}/estado".
+     */
+    @PutMapping("/{id}/estado")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<?> cambiarEstado(@PathVariable Long id, @RequestBody boolean activo) {
+        try {
+            // Llamamos al servicio que acabamos de modificar
+            Cliente actualizado = clienteService.cambiarEstado(id, activo);
+            return ResponseEntity.ok(actualizado);
+        } catch (IllegalArgumentException e) {
+            // Si el ID no existe o hay un error de lógica
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            // Error genérico del servidor
+            return ResponseEntity.status(500).body("Error interno al cambiar el estado");
+        }
     }
 }

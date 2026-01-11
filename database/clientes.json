@@ -5,6 +5,7 @@
   "password" : "admin123",
   "direccion" : "Oficina Central",
   "telefono" : "000-0000",
+  "activo" : true,
   "rol" : "ROL_ADMIN"
 }, {
   "id" : 2,
@@ -13,6 +14,7 @@
   "password" : "password123",
   "direccion" : "Av. Principal, Casa #15",
   "telefono" : "04121234567",
+  "activo" : true,
   "rol" : "ROL_CLIENTE"
 }, {
   "id" : 3,
@@ -21,6 +23,7 @@
   "password" : "passmaria456",
   "direccion" : "Calle 5, Apt 2B",
   "telefono" : "04247654321",
+  "activo" : true,
   "rol" : "ROL_CLIENTE"
 }, {
   "id" : 4,
@@ -29,6 +32,7 @@
   "password" : "carlos789",
   "direccion" : "Urbanización El Sol, Lote 8",
   "telefono" : "04169876543",
+  "activo" : true,
   "rol" : "ROL_CLIENTE"
 }, {
   "id" : 5,
@@ -37,6 +41,7 @@
   "password" : "anapass101",
   "direccion" : "Av. Libertador, Edif. Blanco",
   "telefono" : "04141122334",
+  "activo" : true,
   "rol" : "ROL_CLIENTE"
 }, {
   "id" : 6,
@@ -45,6 +50,7 @@
   "password" : "roberto111",
   "direccion" : "Sector La Pradera, Casa 4",
   "telefono" : "04265559900",
+  "activo" : true,
   "rol" : "ROL_CLIENTE"
 }, {
   "id" : 7,
@@ -53,6 +59,7 @@
   "password" : "holamaria",
   "direccion" : "Caracas",
   "telefono" : "04123084712",
+  "activo" : true,
   "rol" : "ROL_CLIENTE"
 }, {
   "id" : 8,
@@ -61,5 +68,6 @@
   "password" : "sofiaestrada123",
   "direccion" : "Calle Madrid, Apto 23",
   "telefono" : "04123456780",
+  "activo" : false,
   "rol" : "ROL_CLIENTE"
 } ]
