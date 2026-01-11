@@ -36,4 +36,8 @@ export class ClienteService {
   public registrarCliente(clienteRequest: RegistroClienteRequest): Observable<Cliente> {
     return this.http.post<Cliente>(`${this.apiUrl}/registro`, clienteRequest);
   }
+
+  public cambiarEstado(id: number, activo: boolean): Observable<Cliente> {
+      return this.http.put<Cliente>(`${this.apiUrl}/${id}/estado`, activo);
+    }
 }

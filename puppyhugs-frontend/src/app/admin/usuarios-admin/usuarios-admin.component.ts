@@ -142,4 +142,19 @@ export class UsuariosAdminComponent implements OnInit {
       }
     });
   }
+
+  public toggleEstado(usuario: Cliente): void {
+       const nuevoEstado = !usuario.activo;
+
+       // Añadimos tipos (Cliente) y (any) para que TypeScript no se queje
+       this.clienteService.cambiarEstado(usuario.id, nuevoEstado).subscribe({
+         next: (usuarioActualizado: Cliente) => {
+           usuario.activo = usuarioActualizado.activo;
+         },
+         error: (err: any) => {
+           console.error(err);
+           this.errorMessage = 'No se pudo cambiar el estado del usuario.';
+         }
+       });
+     }
 }

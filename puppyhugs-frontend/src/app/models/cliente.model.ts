@@ -18,4 +18,5 @@ export interface Cliente {
   direccion: string;
   telefono: string;
   rol: Rol;
+  activo: boolean;
 }
