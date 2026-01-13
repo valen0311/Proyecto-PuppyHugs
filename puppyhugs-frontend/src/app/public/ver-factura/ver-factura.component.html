@@ -1,0 +1,103 @@
+<div class="factura-container">
+  
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="loading-card">
+      <div class="spinner"></div>
+      <p>Cargando información de la factura...</p>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="errorMessage && !isLoading" class="error-container">
+    <div class="error-card">
+      <div class="error-icon">⚠️</div>
+      <h2>Error</h2>
+      <p>{{ errorMessage }}</p>
+      <button (click)="volver()" class="btn-secondary">Volver</button>
+    </div>
+  </div>
+
+  <!-- Factura Content -->
+  <div *ngIf="venta && !isLoading && !errorMessage" class="factura-card">
+    
+    <!-- Header -->
+    <div class="factura-header">
+      <div class="logo-section">
+        <img src="assets/images/logo.png" alt="Logo PuppyHugs" class="logo-img">
+        <h1 class="logo-title">PuppyHugs</h1>
+      </div>
+      <h2 class="factura-title">FACTURA</h2>
+    </div>
+
+    <!-- Información de la Factura -->
+    <div class="factura-info">
+      <div class="info-row">
+        <span class="info-label">Número de Factura:</span>
+        <span class="info-value">FAC-{{ venta.id }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Fecha:</span>
+        <span class="info-value">{{ formatearFecha(venta.fecha) }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Estado:</span>
+        <span class="info-value" [class.estado-pagada]="venta.estado === 'PAGADA'">
+          {{ venta.estado }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Información del Cliente -->
+    <div *ngIf="cliente" class="cliente-info">
+      <h3>Datos del Cliente</h3>
+      <div class="cliente-details">
+        <p><strong>Nombre:</strong> {{ cliente.nombreCompleto }}</p>
+        <p><strong>Email:</strong> {{ cliente.correoElectronico }}</p>
+        <p><strong>Dirección:</strong> {{ cliente.direccion }}</p>
+        <p><strong>Teléfono:</strong> {{ cliente.telefono }}</p>
+      </div>
+    </div>
+
+    <!-- Detalles de Productos -->
+    <div class="productos-section">
+      <h3>Productos</h3>
+      <div class="productos-table">
+        <div class="table-header">
+          <div class="col-id">ID Producto</div>
+          <div class="col-cantidad">Cantidad</div>
+        </div>
+        <div *ngFor="let productoId of getProductosKeys()" class="table-row">
+          <div class="col-id">{{ productoId }}</div>
+          <div class="col-cantidad">{{ venta.productos[productoId] }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total -->
+    <div class="total-section">
+      <div class="total-row">
+        <span class="total-label">Total:</span>
+        <span class="total-value">{{ venta.totalVenta | currency:'USD':'symbol':'1.2-2' }}</span>
+      </div>
+    </div>
+
+    <!-- Botones de Acción -->
+    <div class="action-buttons">
+      <button
+        (click)="descargarFactura()"
+        [disabled]="isDownloading"
+        class="btn-download">
+        <span *ngIf="!isDownloading">📥 Descargar Factura PDF</span>
+        <span *ngIf="isDownloading">⏳ Descargando...</span>
+      </button>
+      <button
+        (click)="volver()"
+        class="btn-secondary">
+        ← Volver al Pago
+      </button>
+    </div>
+
+  </div>
+
+</div>

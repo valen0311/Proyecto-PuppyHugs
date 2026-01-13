@@ -2,11 +2,12 @@
 
  import { Routes } from '@angular/router';
 
- // 1. IMPORTAMOS LOS COMPONENTES "ESTÁTICOS"
- import { LoginComponent } from './public/login/login.component';
- import { AdminLayoutComponent } from './admin/admin-layout/admin-layout.component';
- import { DashboardAdminComponent } from './admin/dashboard-admin/dashboard-admin.component';
- // Se eliminan los imports de las vistas que se cargan con loadComponent
+// 1. IMPORTAMOS LOS COMPONENTES "ESTÁTICOS"
+import { LoginComponent } from './public/login/login.component';
+import { AdminLayoutComponent } from './admin/admin-layout/admin-layout.component';
+import { DashboardAdminComponent } from './admin/dashboard-admin/dashboard-admin.component';
+import { ClienteLayoutComponent } from './public/cliente-layout/cliente-layout.component';
+// Se eliminan los imports de las vistas que se cargan con loadComponent
 
  export const routes: Routes = [
 
@@ -69,13 +70,36 @@
          pathMatch: 'full'
        }
      ]
-   },
+  },
 
-   // --- RUTAS POR DEFECTO ---
-   {
-     path: '',
-     redirectTo: 'login',
-     pathMatch: 'full'
-   },
+  // --- ÁREA DE CLIENTE ---
+  {
+    path: 'cliente',
+    component: ClienteLayoutComponent,
+    children: [
+      {
+        path: 'pago', // Ruta: /cliente/pago
+        loadComponent: () => import('./public/realizar-pago/realizar-pago.component')
+                             .then(m => m.RealizarPagoComponent)
+      },
+      {
+        path: 'factura', // Ruta: /cliente/factura
+        loadComponent: () => import('./public/ver-factura/ver-factura.component')
+                             .then(m => m.VerFacturaComponent)
+      },
+      {
+        path: '',
+        redirectTo: 'pago',
+        pathMatch: 'full'
+      }
+    ]
+  },
 
- ];
+  // --- RUTAS POR DEFECTO ---
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
+
+];

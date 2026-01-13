@@ -3,7 +3,7 @@
   "nombre" : "Collar Ajustable Reflectante",
   "codigoInterno" : "PASEO-001",
   "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 50,
+  "cantidadDisponible" : 49,
   "precio" : 12.99,
   "estado" : "ACTIVO"
 }, {
@@ -19,7 +19,7 @@
   "nombre" : "Cama Ortopédica Mediana",
   "codigoInterno" : "ACC-001",
   "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 25,
+  "cantidadDisponible" : 24,
   "precio" : 45.00,
   "estado" : "ACTIVO"
 }, {
@@ -51,7 +51,7 @@
   "nombre" : "Correa de Cuero Reforzada",
   "codigoInterno" : "PASEO-003",
   "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 30,
+  "cantidadDisponible" : 26,
   "precio" : 45.00,
   "estado" : "ACTIVO"
 }, {
@@ -59,7 +59,7 @@
   "nombre" : "Kit de Limpieza Dental",
   "codigoInterno" : "HIG-005",
   "categoria" : "ARTICULO",
-  "cantidadDisponible" : 60,
+  "cantidadDisponible" : 59,
   "precio" : 12.50,
   "estado" : "ACTIVO"
 }, {
@@ -75,7 +75,7 @@
   "nombre" : "Recipiente Doble de Acero Inox",
   "codigoInterno" : "ACC-015",
   "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 25,
+  "cantidadDisponible" : 24,
   "precio" : 29.95,
   "estado" : "ACTIVO"
 }, {
@@ -147,7 +147,7 @@
   "nombre" : "Comedero Lento Antiglotones",
   "codigoInterno" : "ACC-040",
   "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 40,
+  "cantidadDisponible" : 37,
   "precio" : 14.50,
   "estado" : "ACTIVO"
 }, {

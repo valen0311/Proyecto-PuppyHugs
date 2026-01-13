@@ -1,0 +1,20 @@
+<div *ngIf="clienteUser" class="layout-container">
+
+  <header class="cliente-header">
+    <div class="header-content">
+      <div class="logo-section">
+        <img src="assets/images/logo.png" alt="Logo PuppyHugs" class="logo-img">
+        <h1 class="logo-title">PuppyHugs</h1>
+      </div>
+      <div class="user-section">
+        <span class="welcome-text">¡Hola, {{ clienteUser.nombreCompleto }}! 🐾</span>
+        <button (click)="onLogout()" class="logout-btn">Cerrar Sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+</div>

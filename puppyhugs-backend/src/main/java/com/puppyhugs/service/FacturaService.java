@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
@@ -143,11 +144,11 @@ public class FacturaService {
                     cell3.setHorizontalAlignment(Element.ALIGN_CENTER);
                     table.addCell(cell3);
 
-                    PdfPCell cell4 = new PdfPCell(new Phrase("$" + producto.getPrecio().setScale(2, BigDecimal.ROUND_HALF_UP), cellFont));
+                    PdfPCell cell4 = new PdfPCell(new Phrase("$" + producto.getPrecio().setScale(2, RoundingMode.HALF_UP), cellFont));
                     cell4.setHorizontalAlignment(Element.ALIGN_RIGHT);
                     table.addCell(cell4);
 
-                    PdfPCell cell5 = new PdfPCell(new Phrase("$" + subtotal.setScale(2, BigDecimal.ROUND_HALF_UP), cellFont));
+                    PdfPCell cell5 = new PdfPCell(new Phrase("$" + subtotal.setScale(2, RoundingMode.HALF_UP), cellFont));
                     cell5.setHorizontalAlignment(Element.ALIGN_RIGHT);
                     table.addCell(cell5);
 
@@ -197,7 +198,7 @@ public class FacturaService {
             labelCell1.setHorizontalAlignment(Element.ALIGN_RIGHT);
             totalsTable.addCell(labelCell1);
 
-            PdfPCell valueCell1 = new PdfPCell(new Phrase("$" + subtotalCalculado.setScale(2, BigDecimal.ROUND_HALF_UP), totalFont));
+            PdfPCell valueCell1 = new PdfPCell(new Phrase("$" + subtotalCalculado.setScale(2, RoundingMode.HALF_UP), totalFont));
             valueCell1.setBorder(Rectangle.NO_BORDER);
             valueCell1.setHorizontalAlignment(Element.ALIGN_RIGHT);
             totalsTable.addCell(valueCell1);
@@ -208,7 +209,8 @@ public class FacturaService {
             labelCell2.setHorizontalAlignment(Element.ALIGN_RIGHT);
             totalsTable.addCell(labelCell2);
 
-            PdfPCell valueCell2 = new PdfPCell(new Phrase("$" + impuestoCalculado.setScale(2, BigDecimal.ROUND_HALF_UP), totalFont));
+            // ✅ LÍNEA 212 ARREGLADA: RoundingMode.HALF_UP
+            PdfPCell valueCell2 = new PdfPCell(new Phrase("$" + impuestoCalculado.setScale(2, RoundingMode.HALF_UP), totalFont));
             valueCell2.setBorder(Rectangle.NO_BORDER);
             valueCell2.setHorizontalAlignment(Element.ALIGN_RIGHT);
             totalsTable.addCell(valueCell2);
@@ -219,7 +221,8 @@ public class FacturaService {
             totalLabelCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
             totalsTable.addCell(totalLabelCell);
 
-            PdfPCell totalValueCell = new PdfPCell(new Phrase("$" + totalCalculado.setScale(2, BigDecimal.ROUND_HALF_UP), boldFont));
+            // ✅ LÍNEA 223 ARREGLADA: RoundingMode.HALF_UP
+            PdfPCell totalValueCell = new PdfPCell(new Phrase("$" + totalCalculado.setScale(2, RoundingMode.HALF_UP), boldFont));
             totalValueCell.setBorder(Rectangle.NO_BORDER);
             totalValueCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
             totalsTable.addCell(totalValueCell);

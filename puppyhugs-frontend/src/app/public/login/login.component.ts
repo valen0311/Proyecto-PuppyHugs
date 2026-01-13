@@ -172,8 +172,8 @@ export class LoginComponent implements OnInit {
           console.log('👨‍💼 Admin detectado, redirigiendo a /admin');
           this.router.navigate(['/admin']);
         } else if (cliente.rol === 'ROL_CLIENTE') {
-          console.log('👤 Cliente detectado');
-          alert('Login de Cliente Exitoso (Ruta /tienda no creada aún)');
+          console.log('👤 Cliente detectado, redirigiendo a /cliente');
+          this.router.navigate(['/cliente']);
         } else {
           this.errorMessage = 'Rol de usuario no reconocido.';
         }

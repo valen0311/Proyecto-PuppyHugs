@@ -1,0 +1,125 @@
+<div class="pago-container">
+  
+  <div *ngIf="!isProcessing && !isSuccess" class="pago-card">
+    <div class="card-header">
+      <h2>💳 Realizar Pago</h2>
+      <p class="subtitle">Selecciona un producto y completa tu compra</p>
+    </div>
+
+    <!-- Loading de productos -->
+    <div *ngIf="productosLoading" class="loading-productos">
+      <div class="spinner"></div>
+      <p>Cargando productos disponibles...</p>
+    </div>
+
+    <form *ngIf="!productosLoading" [formGroup]="pagoForm" (ngSubmit)="onSubmit()" class="pago-form">
+      
+      <!-- Selección de Producto -->
+      <div class="form-group">
+        <label for="productoId">🐕 Selecciona un Producto</label>
+        <select
+          id="productoId"
+          formControlName="productoId"
+          [class.invalid]="isFieldInvalid('productoId')">
+          <option [value]="null" disabled selected>-- Selecciona un producto --</option>
+          <option *ngFor="let producto of productos" [value]="producto.id">
+            {{ producto.nombre }} - ${{ producto.precio.toFixed(2) }} (Stock: {{ producto.cantidadDisponible }})
+          </option>
+        </select>
+        <div *ngIf="isFieldInvalid('productoId')" class="error-message">
+          Debes seleccionar un producto.
+        </div>
+      </div>
+
+      <!-- Cantidad -->
+      <div class="form-group">
+        <label for="cantidad">📦 Cantidad</label>
+        <input
+          id="cantidad"
+          type="number"
+          min="1"
+          formControlName="cantidad"
+          [class.invalid]="isFieldInvalid('cantidad')"
+          placeholder="Ingresa la cantidad">
+        <div *ngIf="isFieldInvalid('cantidad')" class="error-message">
+          La cantidad debe ser al menos 1.
+        </div>
+      </div>
+
+      <!-- Monto Total (calculado automáticamente) -->
+      <div class="form-group">
+        <label for="montoTotal">💰 Monto Total (USD)</label>
+        <div class="input-with-icon">
+          <span class="currency-icon">$</span>
+          <input
+            id="montoTotal"
+            type="text"
+            [value]="montoTotal.toFixed(2)"
+            readonly
+            class="readonly-input">
+        </div>
+      </div>
+
+      <!-- Método de Pago -->
+      <div class="form-group">
+        <label for="metodoPago">💳 Método de Pago</label>
+        <select
+          id="metodoPago"
+          formControlName="metodoPago"
+          [class.invalid]="isFieldInvalid('metodoPago')">
+          <option value="MASTERCARD">MASTERCARD</option>
+        </select>
+        <div *ngIf="isFieldInvalid('metodoPago')" class="error-message">
+          Debes seleccionar un método de pago.
+        </div>
+      </div>
+
+      <!-- Mensaje de error -->
+      <div *ngIf="errorMessage" class="error-alert">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Botón de pago -->
+      <button
+        type="submit"
+        [disabled]="pagoForm.invalid || montoTotal === 0"
+        class="submit-btn">
+        🐾 Pagar Ahora
+      </button>
+    </form>
+  </div>
+
+  <!-- Animación de procesamiento -->
+  <div *ngIf="isProcessing && !isSuccess" class="processing-container">
+    <div class="processing-card">
+      <div class="spinner"></div>
+      <h2>🐕 Procesando pago...</h2>
+      <p>Por favor espera mientras procesamos tu pago</p>
+      <div class="dots">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensaje de éxito -->
+  <div *ngIf="isSuccess" class="success-container">
+    <div class="success-card">
+      <div class="success-icon">✓</div>
+      <h2>¡Pago exitoso! 🎉</h2>
+      <p>Tu compra se ha procesado correctamente</p>
+      
+      <div class="success-details" *ngIf="pagoRegistrado && ventaRegistrada">
+        <h3>📋 Detalle de tu compra:</h3>
+        <p><strong>ID de Venta:</strong> {{ ventaRegistrada.id }}</p>
+        <p><strong>ID de Pago:</strong> {{ pagoRegistrado.id }}</p>
+        <p><strong>Monto:</strong> ${{ pagoRegistrado.montoTotal.toFixed(2) }}</p>
+        <p><strong>Estado:</strong> {{ pagoRegistrado.estado }}</p>
+      </div>
+      
+      <p class="redirect-message">Redirigiendo a tu factura...</p>
+    </div>
+  </div>
+
+</div>

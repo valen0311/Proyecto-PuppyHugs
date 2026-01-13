@@ -31,7 +31,7 @@ public class Cliente {
         this.direccion = direccion;
         this.telefono = telefono;
         this.rol = rol != null ? rol : "ROL_CLIENTE";
-        this.activo = activo;
+        this.activo = true;
     }
 
     // GETTERS Y SETTERS

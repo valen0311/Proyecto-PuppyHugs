@@ -102,4 +102,64 @@
   "fecha" : "2025-11-11T16:55:45.33222",
   "estado" : "PENDIENTE_DE_PAGO",
   "pagoId" : null
+}, {
+  "id" : 11,
+  "clienteId" : 2,
+  "productos" : {
+    "1" : 1
+  },
+  "totalVenta" : 12.99,
+  "fecha" : "2026-01-12T20:56:16.514379",
+  "estado" : "PENDIENTE_DE_PAGO",
+  "pagoId" : null
+}, {
+  "id" : 12,
+  "clienteId" : 2,
+  "productos" : {
+    "19" : 3
+  },
+  "totalVenta" : 43.50,
+  "fecha" : "2026-01-12T20:58:21.979266",
+  "estado" : "PENDIENTE_DE_PAGO",
+  "pagoId" : null
+}, {
+  "id" : 13,
+  "clienteId" : 2,
+  "productos" : {
+    "10" : 1
+  },
+  "totalVenta" : 29.95,
+  "fecha" : "2026-01-12T21:01:47.845888",
+  "estado" : "PENDIENTE_DE_PAGO",
+  "pagoId" : null
+}, {
+  "id" : 14,
+  "clienteId" : 2,
+  "productos" : {
+    "7" : 4
+  },
+  "totalVenta" : 180.00,
+  "fecha" : "2026-01-12T21:17:07.1051469",
+  "estado" : "PENDIENTE_DE_PAGO",
+  "pagoId" : null
+}, {
+  "id" : 15,
+  "clienteId" : 2,
+  "productos" : {
+    "8" : 1
+  },
+  "totalVenta" : 12.50,
+  "fecha" : "2026-01-12T21:24:43.5428765",
+  "estado" : "PENDIENTE_DE_PAGO",
+  "pagoId" : null
+}, {
+  "id" : 16,
+  "clienteId" : 2,
+  "productos" : {
+    "3" : 1
+  },
+  "totalVenta" : 45.00,
+  "fecha" : "2026-01-12T21:31:00.2853626",
+  "estado" : "PENDIENTE_DE_PAGO",
+  "pagoId" : null
 } ]

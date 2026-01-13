@@ -117,4 +117,60 @@
   "fecha" : "2025-11-24T16:51:52.7889737",
   "metodoPago" : "MASTERCARD",
   "estado" : "EXITOSO"
+}, {
+  "id" : 18,
+  "pedidoId" : 1,
+  "montoTotal" : 50,
+  "fecha" : "2026-01-12T20:29:59.855374",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
+}, {
+  "id" : 19,
+  "pedidoId" : 11,
+  "montoTotal" : 12.99,
+  "fecha" : "2026-01-12T20:56:16.5670218",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
+}, {
+  "id" : 20,
+  "pedidoId" : 12,
+  "montoTotal" : 43.5,
+  "fecha" : "2026-01-12T20:58:21.9984117",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
+}, {
+  "id" : 21,
+  "pedidoId" : 13,
+  "montoTotal" : 29.95,
+  "fecha" : "2026-01-12T21:01:47.9038084",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
+}, {
+  "id" : 22,
+  "pedidoId" : 14,
+  "montoTotal" : 180,
+  "fecha" : "2026-01-12T21:17:07.2336124",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
+}, {
+  "id" : 23,
+  "pedidoId" : 2,
+  "montoTotal" : 50,
+  "fecha" : "2026-01-12T21:22:22.1611408",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
+}, {
+  "id" : 24,
+  "pedidoId" : 15,
+  "montoTotal" : 12.5,
+  "fecha" : "2026-01-12T21:24:43.5890445",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
+}, {
+  "id" : 25,
+  "pedidoId" : 16,
+  "montoTotal" : 45,
+  "fecha" : "2026-01-12T21:31:00.3611835",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
 } ]
