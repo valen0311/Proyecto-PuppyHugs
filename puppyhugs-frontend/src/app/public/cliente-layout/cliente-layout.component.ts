@@ -1,7 +1,7 @@
 // src/app/public/cliente-layout/cliente-layout.component.ts
 
 import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 
 import { Cliente } from '../../models/cliente.model';
@@ -11,7 +11,9 @@ import { Cliente } from '../../models/cliente.model';
   standalone: true,
   imports: [
     CommonModule,
-    RouterOutlet
+    RouterOutlet,
+    RouterLink,        // 🆕 Para los links del menú
+    RouterLinkActive   // 🆕 Para marcar el link activo
   ],
   templateUrl: './cliente-layout.component.html',
   styleUrl: './cliente-layout.component.css'

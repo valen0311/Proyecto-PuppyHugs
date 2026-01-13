@@ -59,7 +59,7 @@
   "password" : "holamaria",
   "direccion" : "Caracas",
   "telefono" : "04123084712",
-  "activo" : true,
+  "activo" : false,
   "rol" : "ROL_CLIENTE"
 }, {
   "id" : 8,
@@ -69,5 +69,14 @@
   "direccion" : "Calle Madrid, Apto 23",
   "telefono" : "04123456780",
   "activo" : false,
+  "rol" : "ROL_CLIENTE"
+}, {
+  "id" : 9,
+  "nombreCompleto" : "Elizabeth Barco",
+  "correoElectronico" : "exma2017@gmail.com",
+  "password" : "Qwerty20*",
+  "direccion" : "El silencion",
+  "telefono" : "04123084712",
+  "activo" : true,
   "rol" : "ROL_CLIENTE"
 } ]

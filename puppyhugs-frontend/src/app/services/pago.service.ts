@@ -20,4 +20,28 @@ export class PagoService {
   public registrarPago(pagoRequest: RegistroPagoRequest): Observable<Pago> {
     return this.http.post<Pago>(this.apiUrl, pagoRequest);
   }
+
+  /**
+   * Obtiene todos los pagos
+   * @returns Observable con la lista de pagos
+   */
+  public obtenerTodosLosPagos(): Observable<Pago[]> {
+    return this.http.get<Pago[]>(this.apiUrl);
+  }
+
+  /**
+   * Obtiene un pago por su ID
+   * @param id El ID del pago
+   */
+  public obtenerPagoPorId(id: number): Observable<Pago> {
+    return this.http.get<Pago>(`${this.apiUrl}/${id}`);
+  }
+
+  /**
+   * Elimina un pago
+   * @param id El ID del pago a eliminar
+   */
+  public eliminarPago(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`, { responseType: 'text' });
+  }
 }

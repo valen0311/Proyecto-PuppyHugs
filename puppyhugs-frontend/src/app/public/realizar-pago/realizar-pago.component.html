@@ -3,7 +3,7 @@
   <div *ngIf="!isProcessing && !isSuccess" class="pago-card">
     <div class="card-header">
       <h2>💳 Realizar Pago</h2>
-      <p class="subtitle">Selecciona un producto y completa tu compra</p>
+      <p class="subtitle">Selecciona uno o varios productos y completa tu compra</p>
     </div>
 
     <!-- Loading de productos -->
@@ -14,49 +14,58 @@
 
     <form *ngIf="!productosLoading" [formGroup]="pagoForm" (ngSubmit)="onSubmit()" class="pago-form">
       
-      <!-- Selección de Producto -->
+      <!-- Lista de Productos con Checkboxes -->
       <div class="form-group">
-        <label for="productoId">🐕 Selecciona un Producto</label>
-        <select
-          id="productoId"
-          formControlName="productoId"
-          [class.invalid]="isFieldInvalid('productoId')">
-          <option [value]="null" disabled selected>-- Selecciona un producto --</option>
-          <option *ngFor="let producto of productos" [value]="producto.id">
-            {{ producto.nombre }} - ${{ producto.precio.toFixed(2) }} (Stock: {{ producto.cantidadDisponible }})
-          </option>
-        </select>
-        <div *ngIf="isFieldInvalid('productoId')" class="error-message">
-          Debes seleccionar un producto.
+        <label class="section-label">🐕 Selecciona Productos</label>
+        
+        <div class="productos-grid">
+          <div *ngFor="let ps of productosSeleccionados; let i = index" class="producto-item" [class.selected]="ps.seleccionado">
+            
+            <div class="producto-checkbox">
+              <input 
+                type="checkbox" 
+                [id]="'producto-' + i"
+                [checked]="ps.seleccionado"
+                (change)="toggleProducto(i)">
+              <label [for]="'producto-' + i" class="producto-info">
+                <div class="producto-nombre">{{ ps.producto.nombre }}</div>
+                <div class="producto-precio">${{ ps.producto.precio.toFixed(2) }}</div>
+                <div class="producto-stock">Stock: {{ ps.producto.cantidadDisponible }}</div>
+              </label>
+            </div>
+
+            <div *ngIf="ps.seleccionado" class="producto-cantidad">
+              <label [for]="'cantidad-' + i">Cantidad:</label>
+              <input 
+                type="number" 
+                [id]="'cantidad-' + i"
+                [value]="ps.cantidad"
+                [max]="ps.producto.cantidadDisponible"
+                min="1"
+                (input)="actualizarCantidad(i, $event)"
+                class="cantidad-input">
+            </div>
+
+          </div>
+        </div>
+
+        <div *ngIf="!hayProductosSeleccionados && errorMessage" class="error-message">
+          {{ errorMessage }}
         </div>
       </div>
 
-      <!-- Cantidad -->
-      <div class="form-group">
-        <label for="cantidad">📦 Cantidad</label>
-        <input
-          id="cantidad"
-          type="number"
-          min="1"
-          formControlName="cantidad"
-          [class.invalid]="isFieldInvalid('cantidad')"
-          placeholder="Ingresa la cantidad">
-        <div *ngIf="isFieldInvalid('cantidad')" class="error-message">
-          La cantidad debe ser al menos 1.
+      <!-- Resumen de Compra -->
+      <div *ngIf="hayProductosSeleccionados" class="resumen-compra">
+        <h3>📋 Resumen de tu compra</h3>
+        <div class="resumen-items">
+          <div *ngFor="let ps of productosParaComprar" class="resumen-item">
+            <span class="resumen-nombre">{{ ps.producto.nombre }} x{{ ps.cantidad }}</span>
+            <span class="resumen-subtotal">${{ (ps.producto.precio * ps.cantidad).toFixed(2) }}</span>
+          </div>
         </div>
-      </div>
-
-      <!-- Monto Total (calculado automáticamente) -->
-      <div class="form-group">
-        <label for="montoTotal">💰 Monto Total (USD)</label>
-        <div class="input-with-icon">
-          <span class="currency-icon">$</span>
-          <input
-            id="montoTotal"
-            type="text"
-            [value]="montoTotal.toFixed(2)"
-            readonly
-            class="readonly-input">
+        <div class="resumen-total">
+          <span>Total:</span>
+          <span class="total-amount">${{ montoTotal.toFixed(2) }}</span>
         </div>
       </div>
 
@@ -65,24 +74,20 @@
         <label for="metodoPago">💳 Método de Pago</label>
         <select
           id="metodoPago"
-          formControlName="metodoPago"
-          [class.invalid]="isFieldInvalid('metodoPago')">
+          formControlName="metodoPago">
           <option value="MASTERCARD">MASTERCARD</option>
         </select>
-        <div *ngIf="isFieldInvalid('metodoPago')" class="error-message">
-          Debes seleccionar un método de pago.
-        </div>
       </div>
 
       <!-- Mensaje de error -->
-      <div *ngIf="errorMessage" class="error-alert">
+      <div *ngIf="errorMessage && !hayProductosSeleccionados" class="error-alert">
         {{ errorMessage }}
       </div>
 
       <!-- Botón de pago -->
       <button
         type="submit"
-        [disabled]="pagoForm.invalid || montoTotal === 0"
+        [disabled]="!hayProductosSeleccionados"
         class="submit-btn">
         🐾 Pagar Ahora
       </button>

@@ -6,6 +6,20 @@
         <img src="assets/images/logo.png" alt="Logo PuppyHugs" class="logo-img">
         <h1 class="logo-title">PuppyHugs</h1>
       </div>
+      
+      <!-- 🆕 MENÚ DE NAVEGACIÓN -->
+      <nav class="cliente-nav">
+        <a routerLink="/cliente/pago" routerLinkActive="active" class="nav-link">
+          💳 Realizar Pago
+        </a>
+        <a routerLink="/cliente/mis-pagos" routerLinkActive="active" class="nav-link">
+          📋 Mis Pagos
+        </a>
+        <a routerLink="/cliente/factura" routerLinkActive="active" class="nav-link">
+          🧾 Facturas
+        </a>
+      </nav>
+
       <div class="user-section">
         <span class="welcome-text">¡Hola, {{ clienteUser.nombreCompleto }}! 🐾</span>
         <button (click)="onLogout()" class="logout-btn">Cerrar Sesión</button>

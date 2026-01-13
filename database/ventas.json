@@ -162,4 +162,47 @@
   "fecha" : "2026-01-12T21:31:00.2853626",
   "estado" : "PENDIENTE_DE_PAGO",
   "pagoId" : null
+}, {
+  "id" : 17,
+  "clienteId" : 3,
+  "productos" : {
+    "1" : 4,
+    "2" : 2
+  },
+  "totalVenta" : 122.96,
+  "fecha" : "2026-01-12T22:50:27.8890578",
+  "estado" : "PENDIENTE_DE_PAGO",
+  "pagoId" : null
+}, {
+  "id" : 18,
+  "clienteId" : 3,
+  "productos" : {
+    "4" : 1
+  },
+  "totalVenta" : 18.75,
+  "fecha" : "2026-01-12T22:51:06.2694105",
+  "estado" : "PENDIENTE_DE_PAGO",
+  "pagoId" : null
+}, {
+  "id" : 19,
+  "clienteId" : 3,
+  "productos" : {
+    "1" : 7,
+    "4" : 2
+  },
+  "totalVenta" : 128.43,
+  "fecha" : "2026-01-12T23:01:05.5516992",
+  "estado" : "PENDIENTE_DE_PAGO",
+  "pagoId" : null
+}, {
+  "id" : 20,
+  "clienteId" : 3,
+  "productos" : {
+    "3" : 5,
+    "6" : 5
+  },
+  "totalVenta" : 261.25,
+  "fecha" : "2026-01-12T23:02:06.5826012",
+  "estado" : "PENDIENTE_DE_PAGO",
+  "pagoId" : null
 } ]

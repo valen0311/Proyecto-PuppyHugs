@@ -1,7 +1,7 @@
 // src/app/public/realizar-pago/realizar-pago.component.ts
 
 import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -14,6 +14,12 @@ import { RegistroPagoRequest } from '../../models/registro-pago-request.model';
 import { Venta } from '../../models/venta.model';
 import { Cliente } from '../../models/cliente.model';
 import { Producto } from '../../models/producto.model';
+
+interface ProductoSeleccionado {
+  producto: Producto;
+  cantidad: number;
+  seleccionado: boolean;
+}
 
 @Component({
   selector: 'app-realizar-pago',
@@ -38,8 +44,8 @@ export class RealizarPagoComponent implements OnInit {
   public cliente: Cliente | null = null;
   public errorMessage: string | null = null;
   
-  // Lista de productos disponibles
-  public productos: Producto[] = [];
+  // Lista de productos disponibles con selección
+  public productosSeleccionados: ProductoSeleccionado[] = [];
   public productosLoading: boolean = true;
   
   // Estados de animación
@@ -59,8 +65,6 @@ export class RealizarPagoComponent implements OnInit {
 
     // Inicializar formulario
     this.pagoForm = this.fb.group({
-      productoId: [null, [Validators.required]],
-      cantidad: [1, [Validators.required, Validators.min(1)]],
       metodoPago: ['MASTERCARD', Validators.required]
     });
 
@@ -77,11 +81,19 @@ export class RealizarPagoComponent implements OnInit {
     this.productoService.obtenerTodosLosProductos().subscribe({
       next: (productos: Producto[]) => {
         // Filtrar productos activos con stock disponible
-        this.productos = productos.filter(p => 
+        const productosActivos = productos.filter(p => 
           p.estado === 'ACTIVO' && p.cantidadDisponible > 0
         );
+        
+        // Inicializar array de productos seleccionados
+        this.productosSeleccionados = productosActivos.map(p => ({
+          producto: p,
+          cantidad: 1,
+          seleccionado: false
+        }));
+        
         this.productosLoading = false;
-        console.log('✅ Productos cargados:', this.productos);
+        console.log('✅ Productos cargados:', this.productosSeleccionados);
       },
       error: (err: HttpErrorResponse) => {
         console.error('❌ Error al cargar productos:', err);
@@ -92,40 +104,57 @@ export class RealizarPagoComponent implements OnInit {
   }
 
   /**
-   * Calcula el monto total basado en producto y cantidad seleccionados
+   * Alterna la selección de un producto
    */
-  public get montoTotal(): number {
-    const productoId = this.pagoForm.get('productoId')?.value;
-    const cantidad = this.pagoForm.get('cantidad')?.value || 0;
-    
-    if (productoId && cantidad > 0) {
-      const producto = this.productos.find(p => p.id === Number(productoId));
-      if (producto && producto.precio) {
-        return Number(producto.precio) * Number(cantidad);
-      }
-    }
-    
-    return 0;
+  public toggleProducto(index: number): void {
+    this.productosSeleccionados[index].seleccionado = !this.productosSeleccionados[index].seleccionado;
   }
 
   /**
-   * Obtiene el producto seleccionado
+   * Actualiza la cantidad de un producto
    */
-  public get productoSeleccionado(): Producto | null {
-    const productoId = this.pagoForm.get('productoId')?.value;
-    if (productoId) {
-      return this.productos.find(p => p.id === Number(productoId)) || null;
+  public actualizarCantidad(index: number, event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const cantidad = Number(input.value);
+    const max = this.productosSeleccionados[index].producto.cantidadDisponible;
+    
+    if (cantidad > 0 && cantidad <= max) {
+      this.productosSeleccionados[index].cantidad = cantidad;
+    } else if (cantidad > max) {
+      this.productosSeleccionados[index].cantidad = max;
+      input.value = max.toString();
     }
-    return null;
+  }
+
+  /**
+   * Calcula el monto total de todos los productos seleccionados
+   */
+  public get montoTotal(): number {
+    return this.productosSeleccionados
+      .filter(ps => ps.seleccionado)
+      .reduce((total, ps) => total + (ps.producto.precio * ps.cantidad), 0);
+  }
+
+  /**
+   * Obtiene los productos seleccionados
+   */
+  public get productosParaComprar(): ProductoSeleccionado[] {
+    return this.productosSeleccionados.filter(ps => ps.seleccionado);
+  }
+
+  /**
+   * Verifica si hay al menos un producto seleccionado
+   */
+  public get hayProductosSeleccionados(): boolean {
+    return this.productosSeleccionados.some(ps => ps.seleccionado);
   }
 
   /**
    * Maneja el envío del formulario de pago
    */
   public onSubmit(): void {
-    this.pagoForm.markAllAsTouched();
-    if (this.pagoForm.invalid) {
-      this.errorMessage = 'Por favor completa todos los campos correctamente.';
+    if (!this.hayProductosSeleccionados) {
+      this.errorMessage = 'Debes seleccionar al menos un producto.';
       return;
     }
 
@@ -145,19 +174,21 @@ export class RealizarPagoComponent implements OnInit {
   }
 
   /**
-   * Procesa el pago y crea la venta
+   * Procesa el pago y crea la venta con múltiples productos
    */
   private procesarPago(): void {
-    const productoId = Number(this.pagoForm.get('productoId')?.value);
-    const cantidad = Number(this.pagoForm.get('cantidad')?.value);
     const metodoPago = this.pagoForm.get('metodoPago')?.value;
+
+    // Crear objeto de productos para la venta
+    const productosMap: { [key: number]: number } = {};
+    this.productosParaComprar.forEach(ps => {
+      productosMap[ps.producto.id!] = ps.cantidad;
+    });
 
     // Crear venta
     const ventaData: any = {
       clienteId: this.cliente!.id,
-      productos: {
-        [productoId]: cantidad
-      }
+      productos: productosMap
     };
 
     this.ventaService.crearVenta(ventaData).subscribe({
@@ -207,13 +238,5 @@ export class RealizarPagoComponent implements OnInit {
         }
       }
     });
-  }
-
-  /**
-   * Verifica si un campo del formulario es inválido
-   */
-  public isFieldInvalid(fieldName: string): boolean {
-    const control = this.pagoForm.get(fieldName);
-    return !!(control && control.invalid && (control.dirty || control.touched));
   }
 }

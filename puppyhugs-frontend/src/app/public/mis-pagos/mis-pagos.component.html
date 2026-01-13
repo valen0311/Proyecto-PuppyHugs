@@ -1,0 +1,111 @@
+<div class="mis-pagos-container">
+  
+    <div class="page-header">
+      <h1>📋 Mis Pagos</h1>
+      <p class="subtitle">Gestiona y revisa tus pagos realizados</p>
+    </div>
+  
+    <!-- Mensajes -->
+    <div *ngIf="successMessage" class="alert alert-success">
+      ✅ {{ successMessage }}
+    </div>
+  
+    <div *ngIf="errorMessage" class="alert alert-error">
+      ❌ {{ errorMessage }}
+    </div>
+  
+    <!-- Loading -->
+    <div *ngIf="pagosLoading" class="loading-container">
+      <div class="spinner"></div>
+      <p>Cargando tus pagos...</p>
+    </div>
+  
+    <!-- Sin pagos -->
+    <div *ngIf="!pagosLoading && pagos.length === 0" class="empty-state">
+      <div class="empty-icon">💳</div>
+      <h2>No tienes pagos registrados</h2>
+      <p>Cuando realices un pago, aparecerá aquí.</p>
+      <a routerLink="/cliente/pago" class="btn-primary">Realizar Pago</a>
+    </div>
+  
+    <!-- Lista de pagos -->
+    <div *ngIf="!pagosLoading && pagos.length > 0" class="pagos-grid">
+      
+      <div *ngFor="let pago of pagos" class="pago-card">
+        
+        <div class="pago-header">
+          <div class="pago-id">
+            <span class="label">Pago #</span>
+            <span class="value">{{ pago.id }}</span>
+          </div>
+          <span class="pago-estado" [ngClass]="getEstadoClass(pago.estado)">
+            {{ pago.estado }}
+          </span>
+        </div>
+  
+        <div class="pago-body">
+          
+          <div class="pago-info-row">
+            <span class="info-label">💰 Monto:</span>
+            <span class="info-value">${{ pago.montoTotal.toFixed(2) }}</span>
+          </div>
+  
+          <div class="pago-info-row">
+            <span class="info-label">💳 Método:</span>
+            <span class="info-value">{{ pago.metodoPago }}</span>
+          </div>
+  
+          <div class="pago-info-row">
+            <span class="info-label">📦 Pedido:</span>
+            <span class="info-value">#{{ pago.pedidoId }}</span>
+          </div>
+  
+          <div class="pago-info-row">
+            <span class="info-label">📅 Fecha:</span>
+            <span class="info-value">{{ formatearFecha(pago.fecha) }}</span>
+          </div>
+  
+        </div>
+  
+        <div class="pago-actions">
+          <button 
+            (click)="confirmarEliminar(pago.id)" 
+            class="btn-delete"
+            [disabled]="pago.estado === 'EXITOSO'">
+            🗑️ Eliminar
+          </button>
+          <small *ngIf="pago.estado === 'EXITOSO'" class="delete-info">
+            Los pagos exitosos no se pueden eliminar
+          </small>
+        </div>
+  
+      </div>
+  
+    </div>
+  
+    <!-- Modal de confirmación -->
+    <div *ngIf="mostrarConfirmacion" class="modal-overlay" (click)="cancelarEliminar()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        
+        <div class="modal-header">
+          <h2>⚠️ Confirmar Eliminación</h2>
+        </div>
+  
+        <div class="modal-body">
+          <p>¿Estás seguro de que deseas eliminar este pago?</p>
+          <p class="warning-text">Esta acción no se puede deshacer.</p>
+        </div>
+  
+        <div class="modal-actions">
+          <button (click)="cancelarEliminar()" class="btn-secondary">
+            Cancelar
+          </button>
+          <button (click)="eliminarPago()" class="btn-danger">
+            Eliminar
+          </button>
+        </div>
+  
+      </div>
+    </div>
+  
+  </div>

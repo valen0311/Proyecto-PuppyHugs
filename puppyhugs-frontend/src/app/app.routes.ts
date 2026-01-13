@@ -1,6 +1,6 @@
 /// src/app/app.routes.ts
 
- import { Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 
 // 1. IMPORTAMOS LOS COMPONENTES "ESTÁTICOS"
 import { LoginComponent } from './public/login/login.component';
@@ -86,6 +86,11 @@ import { ClienteLayoutComponent } from './public/cliente-layout/cliente-layout.c
         path: 'factura', // Ruta: /cliente/factura
         loadComponent: () => import('./public/ver-factura/ver-factura.component')
                              .then(m => m.VerFacturaComponent)
+      },
+      {
+        path: 'mis-pagos', // 🆕 NUEVA RUTA: /cliente/mis-pagos
+        loadComponent: () => import('./public/mis-pagos/mis-pagos.component')
+                             .then(m => m.MisPagosComponent)
       },
       {
         path: '',

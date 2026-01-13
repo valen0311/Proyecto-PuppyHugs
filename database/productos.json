@@ -3,7 +3,7 @@
   "nombre" : "Collar Ajustable Reflectante",
   "codigoInterno" : "PASEO-001",
   "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 49,
+  "cantidadDisponible" : 38,
   "precio" : 12.99,
   "estado" : "ACTIVO"
 }, {
@@ -11,7 +11,7 @@
   "nombre" : "Alimento Premium para Cachorros",
   "codigoInterno" : "ALM-001",
   "categoria" : "ARTICULO",
-  "cantidadDisponible" : 100,
+  "cantidadDisponible" : 98,
   "precio" : 35.50,
   "estado" : "ACTIVO"
 }, {
@@ -19,7 +19,7 @@
   "nombre" : "Cama Ortopédica Mediana",
   "codigoInterno" : "ACC-001",
   "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 24,
+  "cantidadDisponible" : 19,
   "precio" : 45.00,
   "estado" : "ACTIVO"
 }, {
@@ -27,7 +27,7 @@
   "nombre" : "Champú Hipoalergénico",
   "codigoInterno" : "HIG-001",
   "categoria" : "ARTICULO",
-  "cantidadDisponible" : 80,
+  "cantidadDisponible" : 77,
   "precio" : 18.75,
   "estado" : "ACTIVO"
 }, {
@@ -43,7 +43,7 @@
   "nombre" : "Snacks Huesitos de Pollo",
   "codigoInterno" : "ALM-012",
   "categoria" : "ARTICULO",
-  "cantidadDisponible" : 150,
+  "cantidadDisponible" : 145,
   "precio" : 7.25,
   "estado" : "ACTIVO"
 }, {

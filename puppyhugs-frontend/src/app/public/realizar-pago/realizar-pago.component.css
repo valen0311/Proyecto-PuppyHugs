@@ -1,7 +1,7 @@
 /* src/app/public/realizar-pago/realizar-pago.component.css */
 
 .pago-container {
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 2rem 1rem;
   animation: fadeIn 0.5s ease-out;
@@ -57,6 +57,13 @@
   flex-direction: column;
 }
 
+.section-label {
+  color: #FF69B4;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
 .form-group label {
   color: #FF69B4;
   font-weight: 600;
@@ -64,7 +71,6 @@
   font-size: 0.95rem;
 }
 
-.form-group input,
 .form-group select {
   width: 100%;
   padding: 12px 16px;
@@ -77,7 +83,6 @@
   box-sizing: border-box;
 }
 
-.form-group input:focus,
 .form-group select:focus {
   outline: none;
   border-color: #FFB6C1;
@@ -85,29 +90,152 @@
   box-shadow: 0 0 0 4px rgba(255, 182, 193, 0.1);
 }
 
-.form-group input.invalid,
-.form-group select.invalid {
-  border-color: #FF6B6B;
-  background-color: #FFF5F5;
+/* --- GRID DE PRODUCTOS --- */
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-.input-with-icon {
-  position: relative;
+.producto-item {
+  background: #FFFFFF;
+  border: 2px solid #E0E0E0;
+  border-radius: 15px;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.producto-item.selected {
+  border-color: #FFB6C1;
+  background-color: #FFF5F7;
+  box-shadow: 0 4px 12px rgba(255, 182, 193, 0.2);
+}
+
+.producto-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.producto-checkbox input[type="checkbox"] {
+  margin-top: 0.25rem;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #FF69B4;
+}
+
+.producto-info {
+  flex: 1;
+  cursor: pointer;
+  user-select: none;
+}
+
+.producto-nombre {
+  font-weight: 600;
+  color: #333;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.producto-precio {
+  color: #FF69B4;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0.25rem 0;
+}
+
+.producto-stock {
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.producto-cantidad {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #E0E0E0;
   display: flex;
   align-items: center;
+  gap: 0.5rem;
 }
 
-.currency-icon {
-  position: absolute;
-  left: 16px;
+.producto-cantidad label {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.cantidad-input {
+  width: 80px;
+  padding: 8px 12px;
+  border: 2px solid #E0E0E0;
+  border-radius: 10px;
+  font-size: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.cantidad-input:focus {
+  outline: none;
+  border-color: #FFB6C1;
+  box-shadow: 0 0 0 3px rgba(255, 182, 193, 0.1);
+}
+
+/* --- RESUMEN DE COMPRA --- */
+.resumen-compra {
+  background: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+
+.resumen-compra h3 {
   color: #FF69B4;
-  font-weight: 700;
-  font-size: 1.2rem;
-  z-index: 1;
+  font-size: 1.1rem;
+  margin: 0 0 1rem 0;
+  font-weight: 600;
 }
 
-.input-with-icon input {
-  padding-left: 40px;
+.resumen-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #D0D0D0;
+}
+
+.resumen-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.resumen-nombre {
+  font-weight: 500;
+}
+
+.resumen-subtotal {
+  font-weight: 600;
+  color: #666;
+}
+
+.resumen-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.total-amount {
+  color: #FF69B4;
+  font-size: 1.5rem;
 }
 
 .error-message {
@@ -210,6 +338,38 @@
   margin: 0;
 }
 
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 1rem;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  background-color: #FFB6C1;
+  border-radius: 50%;
+  animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+  0%, 80%, 100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
 /* --- CONTENEDOR DE ÉXITO --- */
 .success-container {
   display: flex;
@@ -290,6 +450,11 @@
   text-align: left;
 }
 
+.success-details h3 {
+  color: #2E7D32;
+  margin-top: 0;
+}
+
 .success-details p {
   color: #333;
   margin: 0.5rem 0;
@@ -317,6 +482,17 @@
   }
 }
 
+/* --- LOADING --- */
+.loading-productos {
+  text-align: center;
+  padding: 3rem;
+}
+
+.loading-productos p {
+  color: #888;
+  margin-top: 1rem;
+}
+
 /* --- RESPONSIVE --- */
 @media (max-width: 768px) {
   .pago-container {
@@ -329,5 +505,17 @@
 
   .card-header h2 {
     font-size: 1.5rem;
+  }
+
+  .productos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .resumen-total {
+    font-size: 1rem;
+  }
+
+  .total-amount {
+    font-size: 1.3rem;
   }
 }

@@ -173,4 +173,32 @@
   "fecha" : "2026-01-12T21:31:00.3611835",
   "metodoPago" : "MASTERCARD",
   "estado" : "EXITOSO"
+}, {
+  "id" : 26,
+  "pedidoId" : 17,
+  "montoTotal" : 122.96000000000001,
+  "fecha" : "2026-01-12T22:50:27.950417",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
+}, {
+  "id" : 27,
+  "pedidoId" : 18,
+  "montoTotal" : 18.75,
+  "fecha" : "2026-01-12T22:51:06.2859586",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
+}, {
+  "id" : 28,
+  "pedidoId" : 19,
+  "montoTotal" : 128.43,
+  "fecha" : "2026-01-12T23:01:05.5984068",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
+}, {
+  "id" : 29,
+  "pedidoId" : 20,
+  "montoTotal" : 261.25,
+  "fecha" : "2026-01-12T23:02:06.6044305",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
 } ]
