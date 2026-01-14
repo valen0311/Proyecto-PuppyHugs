@@ -11,7 +11,7 @@
   "nombre" : "Alimento Premium para Cachorros",
   "codigoInterno" : "ALM-001",
   "categoria" : "ARTICULO",
-  "cantidadDisponible" : 98,
+  "cantidadDisponible" : 90,
   "precio" : 35.50,
   "estado" : "ACTIVO"
 }, {
@@ -19,7 +19,7 @@
   "nombre" : "Cama Ortopédica Mediana",
   "codigoInterno" : "ACC-001",
   "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 19,
+  "cantidadDisponible" : 14,
   "precio" : 45.00,
   "estado" : "ACTIVO"
 }, {
@@ -203,7 +203,7 @@
   "nombre" : "Paseador Extensible 5 metros",
   "codigoInterno" : "PASEO-002",
   "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 67,
+  "cantidadDisponible" : 64,
   "precio" : 0.45,
   "estado" : "ACTIVO"
 } ]

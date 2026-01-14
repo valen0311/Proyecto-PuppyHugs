@@ -1,12 +1,15 @@
 package com.puppyhugs.service;
 
 import com.puppyhugs.model.Pago;
+import com.puppyhugs.model.Venta;
 import com.puppyhugs.repository.PagoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Servicio para la lógica de negocio de Pagos.
@@ -21,8 +24,12 @@ public class PagoService {
     @Autowired
     private PagoRepository pagoRepository;
 
+    @Autowired
+    private VentaService ventaService; // 🆕 Inyectamos el servicio de ventas
+
     /**
      * Registra un nuevo pago (Implementa HU-4).
+     * 🆕 Ahora finaliza automáticamente la venta si el pago es exitoso.
      *
      * @param pago El pago a procesar.
      * @return El pago guardado con su estado final (EXITOSO o FALLIDO).
@@ -36,42 +43,105 @@ public class PagoService {
             throw new IllegalArgumentException("Error HU-4: PedidoID, Monto y Método de Pago son obligatorios.");
         }
 
+        // 🆕 Verificar que la venta existe y obtener sus datos
+        Venta venta;
+        try {
+            List<Venta> ventas = ventaService.getVentas();
+            venta = ventas.stream()
+                    .filter(v -> v.getId().equals(pago.getPedidoId()))
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("No existe una venta con ID " + pago.getPedidoId()));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("No existe una venta con ID " + pago.getPedidoId());
+        }
+
+        // 🆕 Verificar que el monto del pago coincida con el total de la venta
+        if (pago.getMontoTotal().compareTo(venta.getTotalVenta()) != 0) {
+            throw new IllegalArgumentException("El monto del pago (" + pago.getMontoTotal() +
+                    ") no coincide con el total de la venta (" + venta.getTotalVenta() + ").");
+        }
+
         // Criterio HU-4: Validar datos de tarjeta (CVV, fecha, número)
         // --- SIMULACIÓN ---
         // En un proyecto real, aquí se llamaría a una pasarela de pagos
         // (ej. Stripe, PayPal) con los datos completos de la tarjeta.
-        // Como no tenemos esos campos, simulamos la validación.
+
+        boolean pagoExitoso = false;
 
         // Restricción 3.1: "Sólo se aceptarán tarjetas MASTERCARD"
         if (!METODO_PAGO_ACEPTADO.equalsIgnoreCase(pago.getMetodoPago())) {
-
             // Si el método no es MASTERCARD, el pago falla.
             pago.setEstado(Pago.EstadoPago.FALLIDO);
-            pago.setFecha(LocalDateTime.now()); // Registramos la fecha del intento
-
-            // Guardamos el intento fallido
-            return pagoRepository.save(pago);
-
-            // (Alternativamente, podríamos lanzar una excepción, pero
-            // registrar el fallo es mejor trazabilidad)
-            // throw new IllegalArgumentException("Error Restricción 3.1: Método de pago no válido. Solo se acepta MASTERCARD.");
-        }
-
+            pago.setFecha(LocalDateTime.now());
+            pagoExitoso = false;
+        } 
         // Restricción 3.2: Monto en USD (se asume que el montoTotal ya viene en USD)
-        if (pago.getMontoTotal().compareTo(BigDecimal.ZERO) <= 0) {
+        else if (pago.getMontoTotal().compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Error HU-4: El monto debe ser positivo.");
+        } 
+        else {
+            // Si todas las validaciones pasan
+            pago.setEstado(Pago.EstadoPago.EXITOSO);
+            pago.setFecha(LocalDateTime.now());
+            pagoExitoso = true;
         }
 
-        // --- Fin de la Simulación ---
+        // Guardamos el pago (exitoso o fallido)
+        Pago pagoRegistrado = pagoRepository.save(pago);
 
-        // Si todas las validaciones (incluyendo la simulación de pasarela)
-        // y la restricción de MASTERCARD pasan:
+        // 🆕 Si el pago fue exitoso, finalizar la venta automáticamente (HU-6)
+        if (pagoExitoso) {
+            try {
+                ventaService.finalizarVenta(pago.getPedidoId(), pagoRegistrado.getId());
+            } catch (Exception e) {
+                // Si hay error al finalizar la venta, registramos pero no bloqueamos
+                System.err.println("Error al finalizar venta: " + e.getMessage());
+                // El pago ya está guardado como EXITOSO, pero la venta no se actualizó
+            }
+        }
 
-        pago.setEstado(Pago.EstadoPago.EXITOSO);
-        pago.setFecha(LocalDateTime.now());
+        return pagoRegistrado;
+    }
 
-        // Criterio HU-4: "El pago debe ser almacenado en un JSON."
-        // (El repositorio en memoria simula esto)
-        return pagoRepository.save(pago);
+    /**
+     * Obtiene todos los pagos registrados.
+     *
+     * @return Lista de todos los pagos
+     */
+    public List<Pago> obtenerTodosLosPagos() {
+        return pagoRepository.findAll();
+    }
+
+    /**
+     * Obtiene un pago por su ID.
+     *
+     * @param id El ID del pago
+     * @return El pago encontrado
+     * @throws IllegalArgumentException Si el pago no existe
+     */
+    public Pago obtenerPagoPorId(Long id) {
+        Optional<Pago> pagoOpt = pagoRepository.findById(id);
+        if (pagoOpt.isEmpty()) {
+            throw new IllegalArgumentException("Pago con ID " + id + " no encontrado.");
+        }
+        return pagoOpt.get();
+    }
+
+    /**
+     * Elimina un pago por su ID.
+     * RESTRICCIÓN: No se pueden eliminar pagos con estado EXITOSO.
+     *
+     * @param id El ID del pago a eliminar
+     * @throws IllegalArgumentException Si el pago no existe o si es EXITOSO
+     */
+    public void eliminarPago(Long id) {
+        Pago pago = obtenerPagoPorId(id); // Lanza excepción si no existe
+
+        // Verificar que no sea un pago exitoso
+        if (pago.getEstado() == Pago.EstadoPago.EXITOSO) {
+            throw new IllegalArgumentException("No se puede eliminar un pago exitoso.");
+        }
+
+        pagoRepository.deleteById(id);
     }
 }

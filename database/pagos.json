@@ -27,13 +27,6 @@
   "metodoPago" : "MASTERCARD",
   "estado" : "EXITOSO"
 }, {
-  "id" : 5,
-  "pedidoId" : 5,
-  "montoTotal" : 34.85,
-  "fecha" : "2025-11-11T11:05:41.3367182",
-  "metodoPago" : "PAYPAL",
-  "estado" : "PENDIENTE"
-}, {
   "id" : 6,
   "pedidoId" : 6,
   "montoTotal" : 54.20,
@@ -48,26 +41,12 @@
   "metodoPago" : "TRANSFERENCIA",
   "estado" : "EXITOSO"
 }, {
-  "id" : 8,
-  "pedidoId" : 8,
-  "montoTotal" : 14.99,
-  "fecha" : "2025-11-11T13:12:49.7852139",
-  "metodoPago" : "PAYPAL",
-  "estado" : "FALLIDO"
-}, {
   "id" : 9,
   "pedidoId" : 9,
   "montoTotal" : 61.30,
   "fecha" : "2025-11-11T14:10:33.2136754",
   "metodoPago" : "VISA",
   "estado" : "EXITOSO"
-}, {
-  "id" : 10,
-  "pedidoId" : 10,
-  "montoTotal" : 8.50,
-  "fecha" : "2025-11-11T15:22:14.8892317",
-  "metodoPago" : "MASTERCARD",
-  "estado" : "PENDIENTE"
 }, {
   "id" : 11,
   "pedidoId" : 1,
@@ -206,6 +185,20 @@
   "pedidoId" : 21,
   "montoTotal" : 22.34,
   "fecha" : "2026-01-13T19:23:14.0392584",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
+}, {
+  "id" : 31,
+  "pedidoId" : 22,
+  "montoTotal" : 509,
+  "fecha" : "2026-01-14T12:02:28.7666306",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
+}, {
+  "id" : 32,
+  "pedidoId" : 23,
+  "montoTotal" : 1.35,
+  "fecha" : "2026-01-14T12:04:03.5137952",
   "metodoPago" : "MASTERCARD",
   "estado" : "EXITOSO"
 } ]
