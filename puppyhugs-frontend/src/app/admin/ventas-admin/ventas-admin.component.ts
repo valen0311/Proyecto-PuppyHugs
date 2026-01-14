@@ -84,4 +84,30 @@ export class VentasAdminComponent implements OnInit {
       }
     });
   }
+
+  /**
+   * Anula una venta y devuelve los productos al stock.
+   * Cambia el estado de la venta a CANCELADA.
+   */
+  public anularVenta(ventaId: number | undefined): void {
+    if (!ventaId) {
+      alert('ID de venta no válido');
+      return;
+    }
+
+    if (!confirm('¿Estás seguro de que deseas anular esta venta? Los productos serán devueltos al stock.')) {
+      return;
+    }
+
+    this.ventaService.anularVenta(ventaId).subscribe({
+      next: (ventaAnulada: Venta) => {
+        alert('Venta anulada exitosamente. Los productos han sido devueltos al stock.');
+        this.cargarVentas();
+      },
+      error: (err: any) => {
+        console.error('Error al anular la venta:', err);
+        alert('Error al anular la venta. Verifique que la venta exista.');
+      }
+    });
+  }
 }
