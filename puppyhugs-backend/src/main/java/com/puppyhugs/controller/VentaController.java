@@ -83,6 +83,24 @@ public class VentaController {
     }
 
     /**
+     * Endpoint para anular una venta y devolver los productos al stock.
+     * Escucha peticiones PUT en "/api/ventas/{ventaId}/anular".
+     * @param ventaId ID de la venta a anular
+     * @return 200 OK con la venta actualizada con estado CANCELADA.
+     */
+    @PutMapping("/{ventaId}/anular")
+    public ResponseEntity<?> anularVenta(@PathVariable Long ventaId) {
+        try {
+            Venta ventaAnulada = ventaService.anularVenta(ventaId);
+            return ResponseEntity.ok(ventaAnulada);
+
+        } catch (IllegalArgumentException e) {
+            // Manejo de errores: venta no existe.
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    /**
      * Endpoint para generar y descargar la factura en PDF.
      * GET /api/ventas/{ventaId}/factura
      */

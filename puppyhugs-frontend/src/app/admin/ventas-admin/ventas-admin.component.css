@@ -102,7 +102,7 @@ tbody tr:hover {
   color: #c62828; /* Rojo oscuro */
 }
 
-/* --- NUEVOS ESTILOS PARA EL BOTÓN DE FACTURA --- */
+/* --- ESTILOS PARA LOS BOTONES --- */
 
 .btn-factura {
   background-color: #4CAF50;
@@ -113,6 +113,7 @@ tbody tr:hover {
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s;
+  margin-right: 5px;
 }
 
 .btn-factura:hover {
@@ -120,5 +121,30 @@ tbody tr:hover {
 }
 
 .btn-factura:active {
+  transform: scale(0.98);
+}
+
+.btn-anular {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.btn-anular:hover:not(:disabled) {
+  background-color: #c0392b;
+}
+
+.btn-anular:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-anular:active:not(:disabled) {
   transform: scale(0.98);
 }

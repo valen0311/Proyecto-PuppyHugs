@@ -54,6 +54,13 @@
             title="Generar Factura PDF">
             📄 Factura
           </button>
+          <button
+            class="btn-anular"
+            (click)="anularVenta(venta.id)"
+            [disabled]="venta.estado === 'CANCELADA'"
+            title="Anular Venta">
+            ❌ Anular
+          </button>
         </td>
       </tr>
       </tbody>

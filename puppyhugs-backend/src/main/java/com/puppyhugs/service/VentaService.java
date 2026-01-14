@@ -121,4 +121,31 @@ public class VentaService {
         // 6. Guardar y retornar
         return ventaRepository.save(venta);
     }
+
+    /**
+     * Anula una venta y devuelve los productos al stock.
+     * Cambia el estado de la venta a CANCELADA sin eliminar el registro.
+     *
+     * @param ventaId ID de la venta a anular
+     * @return La venta actualizada con estado CANCELADA
+     * @throws IllegalArgumentException si la venta no existe
+     */
+    public Venta anularVenta(Long ventaId) {
+        // 1. Validar que la venta exista
+        Venta venta = ventaRepository.findById(ventaId)
+                .orElseThrow(() -> new IllegalArgumentException("La venta con ID " + ventaId + " no existe."));
+
+        // 2. Devolver los productos al stock
+        for (Map.Entry<Long, Integer> item : venta.getProductos().entrySet()) {
+            Producto producto = productoRepository.findById(item.getKey()).get();
+            producto.setCantidadDisponible(producto.getCantidadDisponible() + item.getValue());
+            productoRepository.save(producto);
+        }
+
+        // 3. Actualizar el estado de la venta a CANCELADA
+        venta.setEstado(Venta.EstadoVenta.CANCELADA);
+
+        // 4. Guardar y retornar
+        return ventaRepository.save(venta);
+    }
 }

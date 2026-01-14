@@ -47,4 +47,13 @@ export class VentaService {
       responseType: 'blob'
     });
   }
+
+  /**
+   * Llama al endpoint: PUT /api/ventas/{ventaId}/anular
+   * Anula una venta y devuelve los productos al stock.
+   * @param ventaId El ID de la venta a anular
+   */
+  public anularVenta(ventaId: number): Observable<Venta> {
+    return this.http.put<Venta>(`${this.apiUrl}/${ventaId}/anular`, {});
+  }
 }
