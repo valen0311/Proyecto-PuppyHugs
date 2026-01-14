@@ -215,7 +215,7 @@
   },
   "totalVenta" : 22.34,
   "fecha" : "2026-01-13T19:23:13.9999823",
-  "estado" : "PAGADA",
+  "estado" : "CANCELADA",
   "pagoId" : null
 }, {
   "id" : 22,

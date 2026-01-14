@@ -156,7 +156,7 @@
   "nombre" : "Chaleco Reflectante de Seguridad",
   "codigoInterno" : "PASEO-007",
   "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 33,
+  "cantidadDisponible" : 34,
   "precio" : 19.99,
   "estado" : "ACTIVO",
   "imagenUrl" : "https://www.puntosafety.cl/wp-content/uploads/2020/09/6663-Chaleco-Reflectante-Supervisor-Naranjo.jpg"
@@ -219,7 +219,7 @@
   "nombre" : "shampoopuppy",
   "codigoInterno" : "ACC-123",
   "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 0,
+  "cantidadDisponible" : 4,
   "precio" : 0.25,
   "estado" : "ACTIVO",
   "imagenUrl" : "https://petspa.com.co/co/wp-content/uploads/sites/2/2023/04/000658_1.png"
@@ -228,7 +228,7 @@
   "nombre" : "Paseador Extensible 5 metros",
   "codigoInterno" : "PASEO-002",
   "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 67,
+  "cantidadDisponible" : 70,
   "precio" : 0.45,
   "estado" : "ACTIVO",
   "imagenUrl" : "https://http2.mlstatic.com/D_Q_NP_2X_626263-MLV50673367634_072022-N.webp"
