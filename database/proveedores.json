@@ -1,15 +1,7 @@
 [ {
-  "id" : 4,
-  "razonSocial" : "Huellas C.A.",
-  "identificacionFiscal" : "J-40499887-2",
-  "direccion" : "Sector La Limpia, Valencia",
-  "telefono" : "02418223344",
-  "correoElectronico" : "servicio@huellitaslimpias.com",
-  "tipoProveedor" : "Higiene"
-}, {
   "id" : 5,
   "razonSocial" : "Veterinaria Global S.R.L.",
-  "identificacionFiscal" : "J-40533445-9",
+  "identificacionFiscal" : "J-40533569-7",
   "direccion" : "Av. Libertador, Caracas",
   "telefono" : "02127654321",
   "correoElectronico" : "contacto@vglobal.com",

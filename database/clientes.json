@@ -32,7 +32,7 @@
   "password" : "carlos789",
   "direccion" : "Urbanización El Sol, Lote 8",
   "telefono" : "04169876543",
-  "activo" : true,
+  "activo" : false,
   "rol" : "ROL_CLIENTE"
 }, {
   "id" : 5,
@@ -77,6 +77,15 @@
   "password" : "Qwerty20*",
   "direccion" : "El silencion",
   "telefono" : "04123084712",
+  "activo" : true,
+  "rol" : "ROL_CLIENTE"
+}, {
+  "id" : 10,
+  "nombreCompleto" : "Lupita Perez",
+  "correoElectronico" : "lupita01@gmail.com",
+  "password" : "261726",
+  "direccion" : "San Antonio de Los Altos",
+  "telefono" : "04142132560",
   "activo" : true,
   "rol" : "ROL_CLIENTE"
 } ]

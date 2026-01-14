@@ -139,7 +139,7 @@
   "nombre" : "Chaleco Reflectante de Seguridad",
   "codigoInterno" : "PASEO-007",
   "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 35,
+  "cantidadDisponible" : 34,
   "precio" : 19.99,
   "estado" : "ACTIVO"
 }, {
@@ -195,7 +195,7 @@
   "nombre" : "shampoopuppy",
   "codigoInterno" : "ACC-123",
   "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 5,
+  "cantidadDisponible" : 1,
   "precio" : 0.25,
   "estado" : "ACTIVO"
 }, {
@@ -203,7 +203,7 @@
   "nombre" : "Paseador Extensible 5 metros",
   "codigoInterno" : "PASEO-002",
   "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 70,
+  "cantidadDisponible" : 67,
   "precio" : 0.45,
   "estado" : "ACTIVO"
 } ]

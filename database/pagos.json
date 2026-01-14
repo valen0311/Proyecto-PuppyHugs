@@ -201,4 +201,11 @@
   "fecha" : "2026-01-12T23:02:06.6044305",
   "metodoPago" : "MASTERCARD",
   "estado" : "EXITOSO"
+}, {
+  "id" : 30,
+  "pedidoId" : 21,
+  "montoTotal" : 22.34,
+  "fecha" : "2026-01-13T19:23:14.0392584",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
 } ]

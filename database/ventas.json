@@ -205,4 +205,16 @@
   "fecha" : "2026-01-12T23:02:06.5826012",
   "estado" : "PENDIENTE_DE_PAGO",
   "pagoId" : null
+}, {
+  "id" : 21,
+  "clienteId" : 10,
+  "productos" : {
+    "18" : 1,
+    "25" : 4,
+    "26" : 3
+  },
+  "totalVenta" : 22.34,
+  "fecha" : "2026-01-13T19:23:13.9999823",
+  "estado" : "PENDIENTE_DE_PAGO",
+  "pagoId" : null
 } ]
