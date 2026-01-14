@@ -2,7 +2,7 @@
 
 import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { PagoService } from '../../services/pago.service';
@@ -20,6 +20,7 @@ export class MisPagosComponent implements OnInit {
 
   private pagoService = inject(PagoService);
   private platformId = inject(PLATFORM_ID);
+  private router = inject(Router);
 
   public cliente: Cliente | null = null;
   public pagos: Pago[] = [];
@@ -64,6 +65,16 @@ export class MisPagosComponent implements OnInit {
         this.pagosLoading = false;
         this.errorMessage = 'Error al cargar los pagos. Por favor intenta nuevamente.';
       }
+    });
+  }
+
+  /**
+   * 🆕 Navega a la vista de factura usando el pedidoId del pago
+   */
+  public verFactura(pago: Pago): void {
+    // El pedidoId en el pago corresponde al ID de la venta
+    this.router.navigate(['/cliente/factura'], {
+      queryParams: { ventaId: pago.pedidoId }
     });
   }
 

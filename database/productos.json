@@ -3,7 +3,7 @@
   "nombre" : "Collar Ajustable Reflectante",
   "codigoInterno" : "PASEO-001",
   "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 38,
+  "cantidadDisponible" : 8,
   "precio" : 12.99,
   "estado" : "ACTIVO"
 }, {
@@ -205,5 +205,13 @@
   "categoria" : "ACCESORIO",
   "cantidadDisponible" : 64,
   "precio" : 0.45,
+  "estado" : "ACTIVO"
+}, {
+  "id" : 27,
+  "nombre" : "Cattab Plus",
+  "codigoInterno" : "00334658",
+  "categoria" : "MEDICINA",
+  "cantidadDisponible" : 70,
+  "precio" : 10,
   "estado" : "ACTIVO"
 } ]

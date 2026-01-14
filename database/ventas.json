@@ -238,4 +238,14 @@
   "fecha" : "2026-01-14T12:04:03.4784988",
   "estado" : "PAGADA",
   "pagoId" : 32
+}, {
+  "id" : 24,
+  "clienteId" : 2,
+  "productos" : {
+    "1" : 30
+  },
+  "totalVenta" : 389.70,
+  "fecha" : "2026-01-14T12:54:42.1673547",
+  "estado" : "PAGADA",
+  "pagoId" : 33
 } ]
