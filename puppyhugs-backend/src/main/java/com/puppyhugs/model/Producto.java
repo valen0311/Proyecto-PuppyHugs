@@ -1,6 +1,5 @@
 package com.puppyhugs.model;
 
-
 import java.math.BigDecimal;
 
 /**
@@ -16,6 +15,9 @@ public class Producto {
   private Integer cantidadDisponible;
   private BigDecimal precio; // Restricción 3.2: en USD
   private EstadoProducto estado;
+  
+  // --- NUEVO CAMPO AGREGADO ---
+  private String imagenUrl; 
 
   // --- Enums requeridos por HU-1 ---
 
@@ -95,5 +97,15 @@ public class Producto {
 
   public void setEstado(EstadoProducto estado) {
     this.estado = estado;
+  }
+
+  // --- NUEVOS GETTERS Y SETTERS PARA LA IMAGEN ---
+
+  public String getImagenUrl() {
+    return imagenUrl;
+  }
+
+  public void setImagenUrl(String imagenUrl) {
+    this.imagenUrl = imagenUrl;
   }
 }

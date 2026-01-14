@@ -22,4 +22,10 @@ export interface Producto {
   cantidadDisponible: number; // Java 'int' se convierte en 'number'
   precio: number; // Java 'BigDecimal' se convierte en 'number'
   estado: EstadoProducto;
+
+  /**
+   * URL de la imagen del producto.
+   * Es opcional (?) para mantener compatibilidad con productos antiguos o creaciones nuevas.
+   */
+  imagenUrl?: string;
 }

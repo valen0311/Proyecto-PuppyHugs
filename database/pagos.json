@@ -208,4 +208,18 @@
   "fecha" : "2026-01-14T12:54:42.2679414",
   "metodoPago" : "MASTERCARD",
   "estado" : "EXITOSO"
+}, {
+  "id" : 34,
+  "pedidoId" : 25,
+  "montoTotal" : 45.5,
+  "fecha" : "2026-01-14T13:29:24.4251521",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
+}, {
+  "id" : 35,
+  "pedidoId" : 26,
+  "montoTotal" : 88.64,
+  "fecha" : "2026-01-14T14:14:04.3715011",
+  "metodoPago" : "MASTERCARD",
+  "estado" : "EXITOSO"
 } ]

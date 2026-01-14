@@ -5,15 +5,17 @@
   "categoria" : "ACCESORIO",
   "cantidadDisponible" : 8,
   "precio" : 12.99,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://banner2.cleanpng.com/20180620/aqj/aa6vfj2z6.webp"
 }, {
   "id" : 2,
   "nombre" : "Alimento Premium para Cachorros",
   "codigoInterno" : "ALM-001",
   "categoria" : "ARTICULO",
-  "cantidadDisponible" : 90,
+  "cantidadDisponible" : 88,
   "precio" : 35.50,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://banner2.cleanpng.com/20180630/hoe/kisspng-dog-food-honda-activa-chicken-gold-activa-5b377e5cee13b1.9614341615303634849752.jpg"
 }, {
   "id" : 3,
   "nombre" : "Cama Ortopédica Mediana",
@@ -21,7 +23,8 @@
   "categoria" : "ACCESORIO",
   "cantidadDisponible" : 14,
   "precio" : 45.00,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://banner2.cleanpng.com/20180411/zbq/avf3uo27e.webp"
 }, {
   "id" : 4,
   "nombre" : "Champú Hipoalergénico",
@@ -29,7 +32,8 @@
   "categoria" : "ARTICULO",
   "cantidadDisponible" : 77,
   "precio" : 18.75,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://banner2.cleanpng.com/20180410/ele/kisspng-puppy-dog-grooming-cat-pet-shampoo-5acc5b15b7e5e0.2496600715233421017533.jpg"
 }, {
   "id" : 5,
   "nombre" : "Hueso de Caucho Resistente",
@@ -37,7 +41,8 @@
   "categoria" : "JUGUETE",
   "cantidadDisponible" : 150,
   "precio" : 8.99,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://banner2.cleanpng.com/lnd/20240513/lhl/awv08rvz8.webp"
 }, {
   "id" : 6,
   "nombre" : "Snacks Huesitos de Pollo",
@@ -45,7 +50,8 @@
   "categoria" : "ARTICULO",
   "cantidadDisponible" : 145,
   "precio" : 7.25,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://banner2.cleanpng.com/cb3/xkt/hct/a0668f0uo.webp"
 }, {
   "id" : 7,
   "nombre" : "Correa de Cuero Reforzada",
@@ -53,7 +59,8 @@
   "categoria" : "ACCESORIO",
   "cantidadDisponible" : 26,
   "precio" : 45.00,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://banner2.cleanpng.com/20180501/qdw/kisspng-leash-dog-blue-flexi-pet-red-collar-dog-5ae91713433ae3.9593690515252252352754.jpg"
 }, {
   "id" : 8,
   "nombre" : "Kit de Limpieza Dental",
@@ -61,7 +68,8 @@
   "categoria" : "ARTICULO",
   "cantidadDisponible" : 59,
   "precio" : 12.50,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://banner2.cleanpng.com/20231114/vzv/transparent-toothbrush-blue-toothbrush-toothpaste-tube-of-toot-blue-toothbrush-with-toothpaste-tube-and-1711017175879.webp"
 }, {
   "id" : 9,
   "nombre" : "Pelota Resistente de Goma",
@@ -69,7 +77,8 @@
   "categoria" : "JUGUETE",
   "cantidadDisponible" : 120,
   "precio" : 5.99,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://banner2.cleanpng.com/20180423/sbq/kisspng-exercise-equipment-exercise-balls-treadmill-fitnes-yoga-ball-5add7e3b0a79e2.3991327515244652110429.jpg"
 }, {
   "id" : 10,
   "nombre" : "Recipiente Doble de Acero Inox",
@@ -77,7 +86,8 @@
   "categoria" : "ACCESORIO",
   "cantidadDisponible" : 24,
   "precio" : 29.95,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://images.unsplash.com/photo-1585846416120-3a7354ed7d39?auto=format&fit=crop&w=500&q=80"
 }, {
   "id" : 11,
   "nombre" : "Vitaminas para Pelo y Piel",
@@ -85,7 +95,8 @@
   "categoria" : "MEDICINA",
   "cantidadDisponible" : 45,
   "precio" : 22.00,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=500&q=80"
 }, {
   "id" : 12,
   "nombre" : "Manta Térmica para Invierno",
@@ -93,15 +104,17 @@
   "categoria" : "ACCESORIO",
   "cantidadDisponible" : 18,
   "precio" : 65.50,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://banner2.cleanpng.com/20180807/jvb/75faf22644542720f281070a58bde200.webp"
 }, {
   "id" : 13,
-  "nombre" : "Rascador para Perro de Tres Niveles",
+  "nombre" : "Rascador de Tres Niveles",
   "codigoInterno" : "PET-001",
   "categoria" : "ACCESORIO",
   "cantidadDisponible" : 10,
   "precio" : 85.00,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://banner2.cleanpng.com/20180702/fo/kisspng-green-sprague-floor-covering-5b3ac442044227.8382296615305779860175.jpg"
 }, {
   "id" : 14,
   "nombre" : "Comida Húmeda Paté Gourmet",
@@ -109,15 +122,17 @@
   "categoria" : "ARTICULO",
   "cantidadDisponible" : 200,
   "precio" : 4.50,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://banner2.cleanpng.com/20180605/eal/aa996p1b6.webp"
 }, {
   "id" : 15,
   "nombre" : "Cepillo Deslanador Profesional",
   "codigoInterno" : "HIG-009",
   "categoria" : "ARTICULO",
-  "cantidadDisponible" : 55,
+  "cantidadDisponible" : 54,
   "precio" : 32.90,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcTt-U4sVgW2XrB5gOhhjIWNn_Z-vk3bwvJ7iILzEpnUsCGDJCseDseDFBHQmjKu9DwX-aj0wJ_hqj-Qb7Ri4w&s=19"
 }, {
   "id" : 16,
   "nombre" : "Juguete Dispensador de Premios",
@@ -125,23 +140,26 @@
   "categoria" : "JUGUETE",
   "cantidadDisponible" : 70,
   "precio" : 15.75,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://www.tiendanimal.es/dw/image/v2/BDLQ_PRD/on/demandware.static/-/Sites-kiwoko-master-catalog/default/dwb8212c7b/images/large/edipets-juguete-interactivo-dispensador-comida-par-mta-42014.jpg?sw=780&sh=780&sm=fit&q=85"
 }, {
   "id" : 17,
-  "nombre" : "Filtro de Agua de Carbón Activo (Repuesto)",
+  "nombre" : "Filtro de Agua de Carbón Activo",
   "codigoInterno" : "ACC-030",
   "categoria" : "ACCESORIO",
   "cantidadDisponible" : 100,
   "precio" : 8.00,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://watertarget.com.mx/wp-content/uploads/2022/12/FILTRO-CARBON-ACTIVADO.png"
 }, {
   "id" : 18,
   "nombre" : "Chaleco Reflectante de Seguridad",
   "codigoInterno" : "PASEO-007",
   "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 34,
+  "cantidadDisponible" : 33,
   "precio" : 19.99,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://www.puntosafety.cl/wp-content/uploads/2020/09/6663-Chaleco-Reflectante-Supervisor-Naranjo.jpg"
 }, {
   "id" : 19,
   "nombre" : "Comedero Lento Antiglotones",
@@ -149,7 +167,8 @@
   "categoria" : "ACCESORIO",
   "cantidadDisponible" : 37,
   "precio" : 14.50,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://http2.mlstatic.com/D_NQ_NP_882659-MLV70907842817_082023-O.webp"
 }, {
   "id" : 20,
   "nombre" : "Transportadora Rígida Grande",
@@ -157,7 +176,8 @@
   "categoria" : "ARTICULO",
   "cantidadDisponible" : 12,
   "precio" : 75.00,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://mercadolider-media.sfo3.digitaloceanspaces.com/wp-content/uploads/2023/03/14122925/Transportadora-r3.jpg"
 }, {
   "id" : 21,
   "nombre" : "Arena Sanitaria Premium (10kg)",
@@ -165,7 +185,8 @@
   "categoria" : "ARTICULO",
   "cantidadDisponible" : 90,
   "precio" : 16.25,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://cdnx.jumpseller.com/elparrillero/image/33176954/D_NQ_NP_970531-MLC53889610085_022023-O.webp?1724016114"
 }, {
   "id" : 22,
   "nombre" : "Arnés Antitirones Acolchado",
@@ -173,7 +194,8 @@
   "categoria" : "ACCESORIO",
   "cantidadDisponible" : 50,
   "precio" : 28.99,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1725017461-71Dt4w3YfRL.jpg?crop=1xw:1.00xh;center,top&resize=980:*"
 }, {
   "id" : 23,
   "nombre" : "Tijeras para Uñas con Sensor",
@@ -181,7 +203,8 @@
   "categoria" : "ARTICULO",
   "cantidadDisponible" : 30,
   "precio" : 19.50,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://img.kwcdn.com/product/fancy/dd1f1e9f-8f35-4f29-8ffe-b3011cb44cd3.jpg?imageMogr2/auto-orient%7CimageView2/2/w/800/q/70/format/webp"
 }, {
   "id" : 24,
   "nombre" : "Juego Interactivo de Escondite",
@@ -189,15 +212,17 @@
   "categoria" : "JUGUETE",
   "cantidadDisponible" : 65,
   "precio" : 11.90,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://images.unsplash.com/photo-1615266895738-11f1371cd7e5?auto=format&fit=crop&w=500&q=80"
 }, {
   "id" : 25,
   "nombre" : "shampoopuppy",
   "codigoInterno" : "ACC-123",
   "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 1,
+  "cantidadDisponible" : 0,
   "precio" : 0.25,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://petspa.com.co/co/wp-content/uploads/sites/2/2023/04/000658_1.png"
 }, {
   "id" : 26,
   "nombre" : "Paseador Extensible 5 metros",
@@ -205,13 +230,15 @@
   "categoria" : "ACCESORIO",
   "cantidadDisponible" : 64,
   "precio" : 0.45,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://http2.mlstatic.com/D_Q_NP_2X_626263-MLV50673367634_072022-N.webp"
 }, {
   "id" : 27,
   "nombre" : "Cattab Plus",
   "codigoInterno" : "00334658",
   "categoria" : "MEDICINA",
-  "cantidadDisponible" : 70,
+  "cantidadDisponible" : 69,
   "precio" : 10,
-  "estado" : "ACTIVO"
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://http2.mlstatic.com/D_NQ_NP_640125-MLV50854684067_072022-O.webp"
 } ]
