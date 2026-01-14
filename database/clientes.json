@@ -32,7 +32,7 @@
   "password" : "carlos789",
   "direccion" : "Urbanización El Sol, Lote 8",
   "telefono" : "04169876543",
-  "activo" : false,
+  "activo" : true,
   "rol" : "ROL_CLIENTE"
 }, {
   "id" : 5,

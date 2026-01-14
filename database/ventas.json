@@ -27,7 +27,7 @@
   },
   "totalVenta" : 39.96,
   "fecha" : "2025-11-11T09:14:22.1425214",
-  "estado" : "PENDIENTE_DE_PAGO",
+  "estado" : "PAGADA",
   "pagoId" : null
 }, {
   "id" : 4,
@@ -48,7 +48,7 @@
   },
   "totalVenta" : 24.49,
   "fecha" : "2025-11-11T11:20:55.9920102",
-  "estado" : "PENDIENTE_DE_PAGO",
+  "estado" : "PAGADA",
   "pagoId" : null
 }, {
   "id" : 6,
@@ -79,7 +79,7 @@
   },
   "totalVenta" : 44.97,
   "fecha" : "2025-11-11T14:15:10.5512301",
-  "estado" : "PENDIENTE_DE_PAGO",
+  "estado" : "PAGADA",
   "pagoId" : null
 }, {
   "id" : 9,
@@ -100,7 +100,7 @@
   },
   "totalVenta" : 24.98,
   "fecha" : "2025-11-11T16:55:45.33222",
-  "estado" : "PENDIENTE_DE_PAGO",
+  "estado" : "PAGADA",
   "pagoId" : null
 }, {
   "id" : 11,
@@ -110,7 +110,7 @@
   },
   "totalVenta" : 12.99,
   "fecha" : "2026-01-12T20:56:16.514379",
-  "estado" : "PENDIENTE_DE_PAGO",
+  "estado" : "PAGADA",
   "pagoId" : null
 }, {
   "id" : 12,
@@ -120,7 +120,7 @@
   },
   "totalVenta" : 43.50,
   "fecha" : "2026-01-12T20:58:21.979266",
-  "estado" : "PENDIENTE_DE_PAGO",
+  "estado" : "PAGADA",
   "pagoId" : null
 }, {
   "id" : 13,
@@ -130,7 +130,7 @@
   },
   "totalVenta" : 29.95,
   "fecha" : "2026-01-12T21:01:47.845888",
-  "estado" : "PENDIENTE_DE_PAGO",
+  "estado" : "PAGADA",
   "pagoId" : null
 }, {
   "id" : 14,
@@ -140,7 +140,7 @@
   },
   "totalVenta" : 180.00,
   "fecha" : "2026-01-12T21:17:07.1051469",
-  "estado" : "PENDIENTE_DE_PAGO",
+  "estado" : "PAGADA",
   "pagoId" : null
 }, {
   "id" : 15,
@@ -150,7 +150,7 @@
   },
   "totalVenta" : 12.50,
   "fecha" : "2026-01-12T21:24:43.5428765",
-  "estado" : "PENDIENTE_DE_PAGO",
+  "estado" : "PAGADA",
   "pagoId" : null
 }, {
   "id" : 16,
@@ -160,7 +160,7 @@
   },
   "totalVenta" : 45.00,
   "fecha" : "2026-01-12T21:31:00.2853626",
-  "estado" : "PENDIENTE_DE_PAGO",
+  "estado" : "PAGADA",
   "pagoId" : null
 }, {
   "id" : 17,
@@ -171,7 +171,7 @@
   },
   "totalVenta" : 122.96,
   "fecha" : "2026-01-12T22:50:27.8890578",
-  "estado" : "PENDIENTE_DE_PAGO",
+  "estado" : "PAGADA",
   "pagoId" : null
 }, {
   "id" : 18,
@@ -181,7 +181,7 @@
   },
   "totalVenta" : 18.75,
   "fecha" : "2026-01-12T22:51:06.2694105",
-  "estado" : "PENDIENTE_DE_PAGO",
+  "estado" : "PAGADA",
   "pagoId" : null
 }, {
   "id" : 19,
@@ -192,7 +192,7 @@
   },
   "totalVenta" : 128.43,
   "fecha" : "2026-01-12T23:01:05.5516992",
-  "estado" : "PENDIENTE_DE_PAGO",
+  "estado" : "PAGADA",
   "pagoId" : null
 }, {
   "id" : 20,
@@ -203,7 +203,7 @@
   },
   "totalVenta" : 261.25,
   "fecha" : "2026-01-12T23:02:06.5826012",
-  "estado" : "PENDIENTE_DE_PAGO",
+  "estado" : "PAGADA",
   "pagoId" : null
 }, {
   "id" : 21,
@@ -215,7 +215,7 @@
   },
   "totalVenta" : 22.34,
   "fecha" : "2026-01-13T19:23:13.9999823",
-  "estado" : "PENDIENTE_DE_PAGO",
+  "estado" : "PAGADA",
   "pagoId" : null
 }, {
   "id" : 22,
