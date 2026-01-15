@@ -121,7 +121,7 @@
   flex-shrink: 0;
 }
 
-/* --- ESTILOS DE IMAGEN (MEJORADO) --- */
+/* --- ESTILOS DE IMAGEN (OPTIMIZADO) --- */
 .producto-info {
   flex: 1;
   cursor: pointer;
@@ -131,30 +131,29 @@
   gap: 15px;
 }
 
-/* Contenedor de imagen mejorado */
+/* Contenedor cuadrado fijo */
 .producto-imagen-container {
-  width: 80px; /* Un pelín más grande para que luzcan */
+  width: 80px; 
   height: 80px;
   flex-shrink: 0;
   border-radius: 10px;
   overflow: hidden;
-  background-color: #ffffff; /* Blanco puro para resaltar PNGs */
+  background-color: #ffffff; 
   border: 1px solid #eee;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 5px; /* Padding para que la imagen "respire" y no toque los bordes */
+  padding: 4px; /* Un poco de aire para que la imagen no toque los bordes */
 }
 
 .producto-img {
   width: 100%;
   height: 100%;
-  /* 'contain' es el secreto: muestra TODO el producto sin recortarlo */
+  /* IMPORTANTE: Esto asegura que las imagenes se vean completas dentro del cuadro */
   object-fit: contain; 
   transition: transform 0.3s ease;
 }
 
-/* Efecto zoom suave al pasar el mouse por encima */
 .producto-item:hover .producto-img {
   transform: scale(1.1);
 }
@@ -238,7 +237,7 @@
   gap: 0.75rem;
   margin-bottom: 1rem;
   padding-bottom: 1rem;
-  border-bottom: 2px solid #D0D0D0;
+  /* border-bottom removido aquí porque ahora usamos el divider */
 }
 
 .resumen-item {
@@ -253,9 +252,24 @@
   font-weight: 500;
 }
 
-.resumen-subtotal {
-  font-weight: 600;
+/* Estilos Nuevos para Totales */
+.resumen-subtotal-item {
+    font-weight: 600;
+    color: #666;
+}
+
+.resumen-subtotal,
+.resumen-iva {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem 0;
+  font-size: 0.95rem;
   color: #666;
+}
+
+.resumen-divider {
+  border-top: 1px dashed #c4c4c4; /* Línea punteada sutil */
+  margin: 0.8rem 0;
 }
 
 .resumen-total {
@@ -265,6 +279,7 @@
   font-size: 1.2rem;
   font-weight: 700;
   color: #333;
+  padding-top: 0.5rem;
 }
 
 .total-amount {

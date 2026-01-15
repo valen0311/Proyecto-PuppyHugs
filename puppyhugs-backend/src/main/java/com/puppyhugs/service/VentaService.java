@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,9 @@ import java.util.Optional;
 
 @Service
 public class VentaService {
+
+    // 🆕 Constante para el IVA (16%)
+    private static final BigDecimal IVA_RATE = new BigDecimal("0.16");
 
     @Autowired
     private VentaRepository ventaRepository;
@@ -33,7 +37,6 @@ public class VentaService {
     @Autowired
     private PagoRepository pagoRepository;
 
-    // 🆕 Usar @Lazy para romper la referencia circular
     @Autowired
     @Lazy
     private PagoService pagoService;
@@ -53,9 +56,9 @@ public class VentaService {
             throw new IllegalArgumentException("La venta debe tener al menos un producto.");
         }
 
-        BigDecimal totalCalculado = BigDecimal.ZERO;
+        BigDecimal subtotal = BigDecimal.ZERO;
 
-        // Validar productos y calcular el total
+        // Validar productos y calcular el subtotal (sin IVA)
         for (Map.Entry<Long, Integer> item : venta.getProductos().entrySet()) {
             Long productoId = item.getKey();
             Integer cantidad = item.getValue();
@@ -71,8 +74,14 @@ public class VentaService {
                 throw new IllegalArgumentException("No hay suficiente stock para el producto con ID " + productoId + ".");
             }
 
-            totalCalculado = totalCalculado.add(producto.getPrecio().multiply(new BigDecimal(cantidad)));
+            subtotal = subtotal.add(producto.getPrecio().multiply(new BigDecimal(cantidad)));
         }
+
+        // 🆕 Calcular IVA (16% del subtotal)
+        BigDecimal iva = subtotal.multiply(IVA_RATE).setScale(2, RoundingMode.HALF_UP);
+
+        // 🆕 Calcular total CON IVA incluido
+        BigDecimal totalConIVA = subtotal.add(iva).setScale(2, RoundingMode.HALF_UP);
 
         // Descontar el stock de los productos
         for (Map.Entry<Long, Integer> item : venta.getProductos().entrySet()) {
@@ -81,10 +90,14 @@ public class VentaService {
             productoRepository.save(producto);
         }
 
-        // Configurar la venta
-        venta.setTotalVenta(totalCalculado);
+        // 🆕 Configurar la venta con el total que INCLUYE IVA
+        venta.setTotalVenta(totalConIVA);
         venta.setFecha(LocalDateTime.now());
         venta.setEstado(Venta.EstadoVenta.PENDIENTE_DE_PAGO);
+
+        System.out.println("💰 Subtotal: $" + subtotal);
+        System.out.println("📊 IVA (16%): $" + iva);
+        System.out.println("✅ Total CON IVA: $" + totalConIVA);
 
         return ventaRepository.save(venta);
     }
@@ -132,7 +145,7 @@ public class VentaService {
     /**
      * Anula una venta y devuelve los productos al stock.
      * Cambia el estado de la venta a CANCELADA sin eliminar el registro.
-     * 🆕 Ahora también cancela el pago asociado si existe.
+     * Ahora también cancela el pago asociado si existe.
      *
      * @param ventaId ID de la venta a anular
      * @return La venta actualizada con estado CANCELADA
@@ -153,7 +166,7 @@ public class VentaService {
         // 3. Actualizar el estado de la venta a CANCELADA
         venta.setEstado(Venta.EstadoVenta.CANCELADA);
 
-        // 🆕 4. Buscar y cancelar el pago asociado si existe
+        // 4. Buscar y cancelar el pago asociado si existe
         try {
             List<Pago> todosLosPagos = pagoService.obtenerTodosLosPagos();
             
@@ -173,8 +186,6 @@ public class VentaService {
             
         } catch (Exception e) {
             System.err.println("❌ Error al cancelar pago de la VENTA #" + ventaId + ": " + e.getMessage());
-            // La venta ya se anuló, pero el pago no se pudo cancelar
-            // Esto no debe bloquear la operación de anulación de venta
         }
 
         // 5. Guardar y retornar

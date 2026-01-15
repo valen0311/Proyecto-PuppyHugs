@@ -33,6 +33,9 @@ interface ProductoSeleccionado {
 })
 export class RealizarPagoComponent implements OnInit {
 
+  // 🆕 Constante para el IVA (16%)
+  private readonly IVA_RATE = 0.16;
+
   private pagoService = inject(PagoService);
   private ventaService = inject(VentaService);
   private productoService = inject(ProductoService);
@@ -127,12 +130,26 @@ export class RealizarPagoComponent implements OnInit {
   }
 
   /**
-   * Calcula el monto total de todos los productos seleccionados
+   * 🆕 Calcula el subtotal (sin IVA) de todos los productos seleccionados
    */
-  public get montoTotal(): number {
+  public get subtotal(): number {
     return this.productosSeleccionados
       .filter(ps => ps.seleccionado)
       .reduce((total, ps) => total + (ps.producto.precio * ps.cantidad), 0);
+  }
+
+  /**
+   * 🆕 Calcula el IVA (16% del subtotal)
+   */
+  public get iva(): number {
+    return this.subtotal * this.IVA_RATE;
+  }
+
+  /**
+   * 🆕 Calcula el monto total CON IVA incluido
+   */
+  public get montoTotal(): number {
+    return this.subtotal + this.iva;
   }
 
   /**
@@ -185,7 +202,7 @@ export class RealizarPagoComponent implements OnInit {
       productosMap[ps.producto.id!] = ps.cantidad;
     });
 
-    // Crear venta
+    // Crear venta (el backend ya calculará el total con IVA)
     const ventaData: any = {
       clienteId: this.cliente!.id,
       productos: productosMap
@@ -196,7 +213,7 @@ export class RealizarPagoComponent implements OnInit {
         console.log('✅ Venta creada:', venta);
         this.ventaRegistrada = venta;
 
-        // Registrar el pago
+        // Registrar el pago con el monto total (que ya incluye IVA)
         const pagoData: RegistroPagoRequest = {
           pedidoId: Number(venta.id),
           montoTotal: this.montoTotal,

@@ -67,15 +67,31 @@
 
       <div *ngIf="hayProductosSeleccionados" class="resumen-compra">
         <h3>📋 Resumen de tu compra</h3>
+        
         <div class="resumen-items">
-          <div *ngFor="let ps of productosParaComprar" class="resumen-item">
+            <div *ngFor="let ps of productosParaComprar" class="resumen-item">
             <span class="resumen-nombre">{{ ps.producto.nombre }} x{{ ps.cantidad }}</span>
-            <span class="resumen-subtotal">${{ (ps.producto.precio * ps.cantidad).toFixed(2) }}</span>
-          </div>
+            <span class="resumen-subtotal-item">${{ (ps.producto.precio * ps.cantidad).toFixed(2) }}</span>
+            </div>
         </div>
+
+        <div class="resumen-divider"></div>
+
+        <div class="resumen-subtotal">
+            <span>Subtotal:</span>
+            <span>${{ subtotal ? subtotal.toFixed(2) : '0.00' }}</span>
+        </div>
+
+        <div class="resumen-iva">
+            <span>IVA (16%):</span>
+            <span>${{ iva ? iva.toFixed(2) : '0.00' }}</span>
+        </div>
+
+        <div class="resumen-divider"></div>
+
         <div class="resumen-total">
-          <span>Total:</span>
-          <span class="total-amount">${{ montoTotal.toFixed(2) }}</span>
+            <span>Total:</span>
+            <span class="total-amount">${{ montoTotal.toFixed(2) }}</span>
         </div>
       </div>
 
