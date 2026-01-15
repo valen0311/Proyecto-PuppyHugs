@@ -65,10 +65,15 @@
           <span class="info-value">{{ formatearFecha(pago.fecha) }}</span>
         </div>
 
+        <!-- 🆕 Mensaje para pagos cancelados -->
+        <div *ngIf="pago.estado === 'CANCELADO'" class="cancelado-info">
+          ⚠️ Este pago fue cancelado por el administrador
+        </div>
+
       </div>
 
       <div class="pago-actions">
-        <!-- 🆕 Botón Ver Factura - Solo para pagos EXITOSOS -->
+        <!-- Botón Ver Factura - Solo para pagos EXITOSOS -->
         <button 
           *ngIf="pago.estado === 'EXITOSO'"
           (click)="verFactura(pago)" 
@@ -76,14 +81,21 @@
           📄 Ver Factura
         </button>
 
+        <!-- Botón Eliminar - Habilitado para todos excepto EXITOSOS -->
         <button 
           (click)="confirmarEliminar(pago.id)" 
           class="btn-delete"
-          [disabled]="pago.estado === 'EXITOSO'">
+          [disabled]="!puedeEliminar(pago.estado)">
           🗑️ Eliminar
         </button>
+        
         <small *ngIf="pago.estado === 'EXITOSO'" class="delete-info">
           Los pagos exitosos no se pueden eliminar
+        </small>
+        
+        <!-- 🆕 Info para pagos cancelados -->
+        <small *ngIf="pago.estado === 'CANCELADO'" class="delete-info-cancelado">
+          Puedes eliminar este pago cancelado
         </small>
       </div>
 

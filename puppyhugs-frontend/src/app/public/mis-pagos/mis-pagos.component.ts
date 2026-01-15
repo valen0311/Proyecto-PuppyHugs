@@ -51,8 +51,6 @@ export class MisPagosComponent implements OnInit {
 
     this.pagoService.obtenerTodosLosPagos().subscribe({
       next: (pagos: Pago[]) => {
-        // TODO: Si tu backend tiene endpoint para filtrar por cliente, úsalo
-        // Por ahora mostramos todos los pagos
         this.pagos = pagos.sort((a, b) => {
           // Ordenar por fecha, más recientes primero
           return new Date(b.fecha).getTime() - new Date(a.fecha).getTime();
@@ -69,10 +67,13 @@ export class MisPagosComponent implements OnInit {
   }
 
   /**
-   * 🆕 Navega a la vista de factura usando el pedidoId del pago
+   * Navega a la vista de factura usando el pedidoId del pago
+   * 🆕 Deshabilitado para pagos CANCELADOS
    */
   public verFactura(pago: Pago): void {
-    // El pedidoId en el pago corresponde al ID de la venta
+    if (pago.estado === 'CANCELADO') {
+      return; // No permitir ver factura de pagos cancelados
+    }
     this.router.navigate(['/cliente/factura'], {
       queryParams: { ventaId: pago.pedidoId }
     });
@@ -96,6 +97,7 @@ export class MisPagosComponent implements OnInit {
 
   /**
    * Elimina un pago
+   * 🆕 Ahora permite eliminar pagos CANCELADOS
    */
   public eliminarPago(): void {
     if (!this.pagoAEliminar) return;
@@ -138,6 +140,14 @@ export class MisPagosComponent implements OnInit {
   }
 
   /**
+   * 🆕 Verifica si el botón de eliminar debe estar habilitado
+   */
+  public puedeEliminar(estado: string): boolean {
+    // Se puede eliminar si NO es EXITOSO
+    return estado !== 'EXITOSO';
+  }
+
+  /**
    * Formatea la fecha para mostrar
    */
   public formatearFecha(fecha: string): string {
@@ -153,6 +163,7 @@ export class MisPagosComponent implements OnInit {
 
   /**
    * Obtiene la clase CSS según el estado del pago
+   * 🆕 Agregada clase para estado CANCELADO
    */
   public getEstadoClass(estado: string): string {
     switch (estado) {
@@ -162,6 +173,8 @@ export class MisPagosComponent implements OnInit {
         return 'estado-pendiente';
       case 'FALLIDO':
         return 'estado-fallido';
+      case 'CANCELADO':
+        return 'estado-cancelado';
       default:
         return '';
     }

@@ -25,11 +25,11 @@ public class PagoService {
     private PagoRepository pagoRepository;
 
     @Autowired
-    private VentaService ventaService; // 🆕 Inyectamos el servicio de ventas
+    private VentaService ventaService;
 
     /**
      * Registra un nuevo pago (Implementa HU-4).
-     * 🆕 Ahora finaliza automáticamente la venta si el pago es exitoso.
+     * Ahora finaliza automáticamente la venta si el pago es exitoso.
      *
      * @param pago El pago a procesar.
      * @return El pago guardado con su estado final (EXITOSO o FALLIDO).
@@ -43,7 +43,7 @@ public class PagoService {
             throw new IllegalArgumentException("Error HU-4: PedidoID, Monto y Método de Pago son obligatorios.");
         }
 
-        // 🆕 Verificar que la venta existe y obtener sus datos
+        // Verificar que la venta existe y obtener sus datos
         Venta venta;
         try {
             List<Venta> ventas = ventaService.getVentas();
@@ -55,22 +55,16 @@ public class PagoService {
             throw new IllegalArgumentException("No existe una venta con ID " + pago.getPedidoId());
         }
 
-        // 🆕 Verificar que el monto del pago coincida con el total de la venta
+        // Verificar que el monto del pago coincida con el total de la venta
         if (pago.getMontoTotal().compareTo(venta.getTotalVenta()) != 0) {
             throw new IllegalArgumentException("El monto del pago (" + pago.getMontoTotal() +
                     ") no coincide con el total de la venta (" + venta.getTotalVenta() + ").");
         }
 
-        // Criterio HU-4: Validar datos de tarjeta (CVV, fecha, número)
-        // --- SIMULACIÓN ---
-        // En un proyecto real, aquí se llamaría a una pasarela de pagos
-        // (ej. Stripe, PayPal) con los datos completos de la tarjeta.
-
         boolean pagoExitoso = false;
 
         // Restricción 3.1: "Sólo se aceptarán tarjetas MASTERCARD"
         if (!METODO_PAGO_ACEPTADO.equalsIgnoreCase(pago.getMetodoPago())) {
-            // Si el método no es MASTERCARD, el pago falla.
             pago.setEstado(Pago.EstadoPago.FALLIDO);
             pago.setFecha(LocalDateTime.now());
             pagoExitoso = false;
@@ -80,7 +74,6 @@ public class PagoService {
             throw new IllegalArgumentException("Error HU-4: El monto debe ser positivo.");
         } 
         else {
-            // Si todas las validaciones pasan
             pago.setEstado(Pago.EstadoPago.EXITOSO);
             pago.setFecha(LocalDateTime.now());
             pagoExitoso = true;
@@ -89,14 +82,12 @@ public class PagoService {
         // Guardamos el pago (exitoso o fallido)
         Pago pagoRegistrado = pagoRepository.save(pago);
 
-        // 🆕 Si el pago fue exitoso, finalizar la venta automáticamente (HU-6)
+        // Si el pago fue exitoso, finalizar la venta automáticamente (HU-6)
         if (pagoExitoso) {
             try {
                 ventaService.finalizarVenta(pago.getPedidoId(), pagoRegistrado.getId());
             } catch (Exception e) {
-                // Si hay error al finalizar la venta, registramos pero no bloqueamos
                 System.err.println("Error al finalizar venta: " + e.getMessage());
-                // El pago ya está guardado como EXITOSO, pero la venta no se actualizó
             }
         }
 
@@ -128,20 +119,43 @@ public class PagoService {
     }
 
     /**
+     * 🆕 Cancela un pago (cuando el admin anula la venta).
+     * Cambia el estado del pago a CANCELADO.
+     *
+     * @param id El ID del pago a cancelar
+     * @return El pago cancelado
+     * @throws IllegalArgumentException Si el pago no existe o ya está cancelado
+     */
+    public Pago cancelarPago(Long id) {
+        Pago pago = obtenerPagoPorId(id);
+
+        // Verificar que no esté ya cancelado
+        if (pago.getEstado() == Pago.EstadoPago.CANCELADO) {
+            throw new IllegalArgumentException("El pago ya está cancelado.");
+        }
+
+        // Cambiar estado a CANCELADO
+        pago.setEstado(Pago.EstadoPago.CANCELADO);
+        return pagoRepository.save(pago);
+    }
+
+    /**
      * Elimina un pago por su ID.
      * RESTRICCIÓN: No se pueden eliminar pagos con estado EXITOSO.
+     * 🆕 Ahora permite eliminar pagos CANCELADOS.
      *
      * @param id El ID del pago a eliminar
      * @throws IllegalArgumentException Si el pago no existe o si es EXITOSO
      */
     public void eliminarPago(Long id) {
-        Pago pago = obtenerPagoPorId(id); // Lanza excepción si no existe
+        Pago pago = obtenerPagoPorId(id);
 
         // Verificar que no sea un pago exitoso
         if (pago.getEstado() == Pago.EstadoPago.EXITOSO) {
             throw new IllegalArgumentException("No se puede eliminar un pago exitoso.");
         }
 
+        // Se permite eliminar pagos FALLIDOS, PENDIENTES y CANCELADOS
         pagoRepository.deleteById(id);
     }
 }

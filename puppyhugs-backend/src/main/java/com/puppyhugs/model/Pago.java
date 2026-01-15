@@ -28,11 +28,13 @@ public class Pago {
 
     /**
      * Estados posibles de un pago (HU-4)
+     * 🆕 Agregado estado CANCELADO para ventas anuladas por el admin
      */
     public enum EstadoPago {
         EXITOSO,
         FALLIDO,
-        PENDIENTE
+        PENDIENTE,
+        CANCELADO  // 🆕 Nuevo estado
     }
 
     // --- Constructor ---

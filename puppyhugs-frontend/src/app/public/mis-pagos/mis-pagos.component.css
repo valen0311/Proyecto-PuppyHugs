@@ -210,6 +210,13 @@
   color: #D32F2F;
 }
 
+/* 🆕 Estado cancelado */
+.estado-cancelado {
+  background: #FBE9E7;
+  color: #BF360C;
+  border: 1px solid #FF6E40;
+}
+
 /* --- PAGO BODY --- */
 .pago-body {
   display: flex;
@@ -235,6 +242,18 @@
   font-size: 1rem;
 }
 
+/* 🆕 Mensaje de cancelación */
+.cancelado-info {
+  padding: 0.75rem;
+  background: #FFF3E0;
+  border-left: 4px solid #FF6E40;
+  border-radius: 8px;
+  color: #BF360C;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
 /* --- PAGO ACTIONS --- */
 .pago-actions {
   display: flex;
@@ -245,7 +264,6 @@
   border-top: 2px solid #E3F2FD;
 }
 
-/* 🆕 Botón Ver Factura */
 .btn-factura {
   width: 100%;
   padding: 10px;
@@ -292,6 +310,14 @@
   color: #888;
   font-size: 0.8rem;
   text-align: center;
+}
+
+/* 🆕 Info para pagos cancelados */
+.delete-info-cancelado {
+  color: #BF360C;
+  font-size: 0.8rem;
+  text-align: center;
+  font-weight: 500;
 }
 
 /* --- MODAL --- */

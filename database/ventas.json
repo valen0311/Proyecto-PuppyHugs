@@ -270,7 +270,7 @@
   },
   "totalVenta" : 88.64,
   "fecha" : "2026-01-14T14:14:04.2714129",
-  "estado" : "PAGADA",
+  "estado" : "CANCELADA",
   "pagoId" : 35
 }, {
   "id" : 27,
@@ -283,4 +283,30 @@
   "fecha" : "2026-01-14T21:18:53.9779214",
   "estado" : "CANCELADA",
   "pagoId" : 36
+}, {
+  "id" : 28,
+  "clienteId" : 9,
+  "productos" : {
+    "1" : 1,
+    "4" : 1,
+    "6" : 1,
+    "7" : 1
+  },
+  "totalVenta" : 85.00,
+  "fecha" : "2026-01-14T22:05:45.2142052",
+  "estado" : "CANCELADA",
+  "pagoId" : 37
+}, {
+  "id" : 29,
+  "clienteId" : 9,
+  "productos" : {
+    "1" : 1,
+    "2" : 1,
+    "3" : 1,
+    "4" : 1
+  },
+  "totalVenta" : 113.25,
+  "fecha" : "2026-01-14T22:20:13.0827555",
+  "estado" : "CANCELADA",
+  "pagoId" : 38
 } ]

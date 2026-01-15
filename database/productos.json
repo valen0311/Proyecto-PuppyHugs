@@ -12,7 +12,7 @@
   "nombre" : "Alimento Premium para Cachorros",
   "codigoInterno" : "ALM-001",
   "categoria" : "ARTICULO",
-  "cantidadDisponible" : 88,
+  "cantidadDisponible" : 89,
   "precio" : 35.50,
   "estado" : "ACTIVO",
   "imagenUrl" : "https://banner2.cleanpng.com/20180630/hoe/kisspng-dog-food-honda-activa-chicken-gold-activa-5b377e5cee13b1.9614341615303634849752.jpg"
@@ -129,7 +129,7 @@
   "nombre" : "Cepillo Deslanador Profesional",
   "codigoInterno" : "HIG-009",
   "categoria" : "ARTICULO",
-  "cantidadDisponible" : 54,
+  "cantidadDisponible" : 55,
   "precio" : 32.90,
   "estado" : "ACTIVO",
   "imagenUrl" : "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcTt-U4sVgW2XrB5gOhhjIWNn_Z-vk3bwvJ7iILzEpnUsCGDJCseDseDFBHQmjKu9DwX-aj0wJ_hqj-Qb7Ri4w&s=19"
@@ -156,7 +156,7 @@
   "nombre" : "Chaleco Reflectante de Seguridad",
   "codigoInterno" : "PASEO-007",
   "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 34,
+  "cantidadDisponible" : 35,
   "precio" : 19.99,
   "estado" : "ACTIVO",
   "imagenUrl" : "https://www.puntosafety.cl/wp-content/uploads/2020/09/6663-Chaleco-Reflectante-Supervisor-Naranjo.jpg"
@@ -219,7 +219,7 @@
   "nombre" : "shampoopuppy",
   "codigoInterno" : "ACC-123",
   "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 4,
+  "cantidadDisponible" : 5,
   "precio" : 0.25,
   "estado" : "ACTIVO",
   "imagenUrl" : "https://petspa.com.co/co/wp-content/uploads/sites/2/2023/04/000658_1.png"

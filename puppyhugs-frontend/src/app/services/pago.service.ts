@@ -38,6 +38,14 @@ export class PagoService {
   }
 
   /**
+   * 🆕 Cancela un pago (cuando el admin anula la venta)
+   * @param id El ID del pago a cancelar
+   */
+  public cancelarPago(id: number): Observable<Pago> {
+    return this.http.put<Pago>(`${this.apiUrl}/${id}/cancelar`, {});
+  }
+
+  /**
    * Elimina un pago
    * @param id El ID del pago a eliminar
    */

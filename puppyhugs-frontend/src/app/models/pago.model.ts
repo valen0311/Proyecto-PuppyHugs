@@ -3,8 +3,9 @@
 /**
  * Define los estados de pago.
  * Coincide con el enum Pago.EstadoPago
+ * 🆕 Agregado estado CANCELADO
  */
-export type EstadoPago = 'EXITOSO' | 'FALLIDO' | 'PENDIENTE';
+export type EstadoPago = 'EXITOSO' | 'FALLIDO' | 'PENDIENTE' | 'CANCELADO';
 
 /**
  * Interfaz para el modelo Pago (la respuesta).

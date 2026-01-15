@@ -46,7 +46,7 @@ public class PagoController {
     }
 
     /**
-     * 🆕 Endpoint para obtener todos los pagos.
+     * Endpoint para obtener todos los pagos.
      * Escucha peticiones GET en "/api/pagos".
      *
      * @return 200 OK con la lista de todos los pagos
@@ -58,7 +58,7 @@ public class PagoController {
     }
 
     /**
-     * 🆕 Endpoint para obtener un pago por ID.
+     * Endpoint para obtener un pago por ID.
      * Escucha peticiones GET en "/api/pagos/{id}".
      *
      * @param id El ID del pago
@@ -75,7 +75,24 @@ public class PagoController {
     }
 
     /**
-     * 🆕 Endpoint para eliminar un pago.
+     * 🆕 Endpoint para cancelar un pago (cuando el admin anula la venta).
+     * Escucha peticiones PUT en "/api/pagos/{id}/cancelar".
+     *
+     * @param id El ID del pago a cancelar
+     * @return 200 OK con el pago cancelado o 400 Bad Request si falla
+     */
+    @PutMapping("/{id}/cancelar")
+    public ResponseEntity<?> cancelarPago(@PathVariable Long id) {
+        try {
+            Pago pagoCancelado = pagoService.cancelarPago(id);
+            return ResponseEntity.ok(pagoCancelado);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    /**
+     * Endpoint para eliminar un pago.
      * Escucha peticiones DELETE en "/api/pagos/{id}".
      *
      * @param id El ID del pago a eliminar
