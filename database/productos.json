@@ -3,8 +3,8 @@
   "nombre" : "Collar Ajustable Reflectante",
   "codigoInterno" : "PASEO-001",
   "categoria" : "ACCESORIO",
-  "cantidadDisponible" : 8,
-  "precio" : 12.99,
+  "cantidadDisponible" : 40,
+  "precio" : 14,
   "estado" : "ACTIVO",
   "imagenUrl" : "https://banner2.cleanpng.com/20180620/aqj/aa6vfj2z6.webp"
 }, {
@@ -87,7 +87,7 @@
   "cantidadDisponible" : 24,
   "precio" : 29.95,
   "estado" : "ACTIVO",
-  "imagenUrl" : "https://images.unsplash.com/photo-1585846416120-3a7354ed7d39?auto=format&fit=crop&w=500&q=80"
+  "imagenUrl" : "https://i5.walmartimages.com/asr/14f50e5a-e12d-4be4-abfb-c58c1744e777.5e6afb73734b95a353169526a330143e.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF"
 }, {
   "id" : 11,
   "nombre" : "Vitaminas para Pelo y Piel",
@@ -213,7 +213,7 @@
   "cantidadDisponible" : 65,
   "precio" : 11.90,
   "estado" : "ACTIVO",
-  "imagenUrl" : "https://images.unsplash.com/photo-1615266895738-11f1371cd7e5?auto=format&fit=crop&w=500&q=80"
+  "imagenUrl" : "https://i5.walmartimages.com/asr/b97f99b1-ef49-426b-b828-3ad129e0e982.f48344efa81743d96d40d88d9adbe477.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF"
 }, {
   "id" : 25,
   "nombre" : "shampoopuppy",
@@ -241,4 +241,13 @@
   "precio" : 10,
   "estado" : "ACTIVO",
   "imagenUrl" : "https://http2.mlstatic.com/D_NQ_NP_640125-MLV50854684067_072022-O.webp"
+}, {
+  "id" : 28,
+  "nombre" : "DogTab Plus",
+  "codigoInterno" : "20264978",
+  "categoria" : "MEDICINA",
+  "cantidadDisponible" : 20,
+  "precio" : 30,
+  "estado" : "ACTIVO",
+  "imagenUrl" : "https://petsplanet.com.ve/wp-content/uploads/2024/12/7591111000025.jpg"
 } ]

@@ -246,7 +246,7 @@
   },
   "totalVenta" : 389.70,
   "fecha" : "2026-01-14T12:54:42.1673547",
-  "estado" : "PAGADA",
+  "estado" : "CANCELADA",
   "pagoId" : 33
 }, {
   "id" : 25,
@@ -272,4 +272,15 @@
   "fecha" : "2026-01-14T14:14:04.2714129",
   "estado" : "PAGADA",
   "pagoId" : 35
+}, {
+  "id" : 27,
+  "clienteId" : 9,
+  "productos" : {
+    "4" : 1,
+    "26" : 1
+  },
+  "totalVenta" : 19.20,
+  "fecha" : "2026-01-14T21:18:53.9779214",
+  "estado" : "CANCELADA",
+  "pagoId" : 36
 } ]

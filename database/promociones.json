@@ -1,10 +1,10 @@
 [ {
   "id" : 3,
   "nombre" : "Liquidación de Juguetes Fin de Semana",
-  "descuento" : 0.4,
+  "descuento" : 0.2,
   "fechaInicio" : "2025-11-04",
   "fechaFin" : "2025-11-18",
-  "productoIds" : [ 16, 24, 9 ]
+  "productoIds" : [ 16, 14 ]
 }, {
   "id" : 4,
   "nombre" : "Oferta Black Friday - Todo Higiene",
